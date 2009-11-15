@@ -451,6 +451,10 @@
             this.buttonDlRank = new System.Windows.Forms.Button();
             this.tabPageTagComment = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
+            this.buttonOpenVideoCutter = new System.Windows.Forms.Button();
+            this.buttonSelectVideocutPath = new System.Windows.Forms.Button();
+            this.textBoxVideocutPath = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -994,7 +998,7 @@
             this.checkBoxIsNoCache.AutoSize = true;
             this.checkBoxIsNoCache.Checked = true;
             this.checkBoxIsNoCache.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxIsNoCache.Location = new System.Drawing.Point(17, 166);
+            this.checkBoxIsNoCache.Location = new System.Drawing.Point(17, 180);
             this.checkBoxIsNoCache.Name = "checkBoxIsNoCache";
             this.checkBoxIsNoCache.Size = new System.Drawing.Size(312, 16);
             this.checkBoxIsNoCache.TabIndex = 36;
@@ -1401,7 +1405,7 @@
             // checkBoxIsOutputLog
             // 
             this.checkBoxIsOutputLog.AutoSize = true;
-            this.checkBoxIsOutputLog.Location = new System.Drawing.Point(17, 144);
+            this.checkBoxIsOutputLog.Location = new System.Drawing.Point(17, 158);
             this.checkBoxIsOutputLog.Name = "checkBoxIsOutputLog";
             this.checkBoxIsOutputLog.Size = new System.Drawing.Size(94, 16);
             this.checkBoxIsOutputLog.TabIndex = 31;
@@ -1410,6 +1414,9 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.buttonSelectVideocutPath);
+            this.tabPage7.Controls.Add(this.textBoxVideocutPath);
+            this.tabPage7.Controls.Add(this.label44);
             this.tabPage7.Controls.Add(this.checkBoxIsNoCache);
             this.tabPage7.Controls.Add(this.checkBoxConfirmFilter);
             this.tabPage7.Controls.Add(this.checkBoxConfirmOverWrite);
@@ -1437,7 +1444,7 @@
             this.checkBoxConfirmFilter.AutoSize = true;
             this.checkBoxConfirmFilter.Checked = true;
             this.checkBoxConfirmFilter.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxConfirmFilter.Location = new System.Drawing.Point(17, 122);
+            this.checkBoxConfirmFilter.Location = new System.Drawing.Point(17, 136);
             this.checkBoxConfirmFilter.Name = "checkBoxConfirmFilter";
             this.checkBoxConfirmFilter.Size = new System.Drawing.Size(210, 16);
             this.checkBoxConfirmFilter.TabIndex = 17;
@@ -1449,7 +1456,7 @@
             this.checkBoxConfirmOverWrite.AutoSize = true;
             this.checkBoxConfirmOverWrite.Checked = true;
             this.checkBoxConfirmOverWrite.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxConfirmOverWrite.Location = new System.Drawing.Point(17, 100);
+            this.checkBoxConfirmOverWrite.Location = new System.Drawing.Point(17, 114);
             this.checkBoxConfirmOverWrite.Name = "checkBoxConfirmOverWrite";
             this.checkBoxConfirmOverWrite.Size = new System.Drawing.Size(205, 16);
             this.checkBoxConfirmOverWrite.TabIndex = 16;
@@ -1458,7 +1465,7 @@
             // 
             // buttonLoadConfig
             // 
-            this.buttonLoadConfig.Location = new System.Drawing.Point(16, 217);
+            this.buttonLoadConfig.Location = new System.Drawing.Point(16, 231);
             this.buttonLoadConfig.Name = "buttonLoadConfig";
             this.buttonLoadConfig.Size = new System.Drawing.Size(127, 23);
             this.buttonLoadConfig.TabIndex = 15;
@@ -1468,7 +1475,7 @@
             // 
             // buttonSaveConfig
             // 
-            this.buttonSaveConfig.Location = new System.Drawing.Point(16, 188);
+            this.buttonSaveConfig.Location = new System.Drawing.Point(16, 202);
             this.buttonSaveConfig.Name = "buttonSaveConfig";
             this.buttonSaveConfig.Size = new System.Drawing.Size(127, 23);
             this.buttonSaveConfig.TabIndex = 14;
@@ -2504,6 +2511,7 @@
             // 
             // tabPage14
             // 
+            this.tabPage14.Controls.Add(this.buttonOpenVideoCutter);
             this.tabPage14.Controls.Add(this.buttonTransShowingCand);
             this.tabPage14.Controls.Add(this.labelTransAfter2);
             this.tabPage14.Controls.Add(this.buttonSelectTransBeforeFileOrDir);
@@ -2867,11 +2875,11 @@
             // buttonBrowserStart
             // 
             this.buttonBrowserStart.Font = new System.Drawing.Font("MS UI Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonBrowserStart.Location = new System.Drawing.Point(232, 309);
+            this.buttonBrowserStart.Location = new System.Drawing.Point(314, 309);
             this.buttonBrowserStart.Name = "buttonBrowserStart";
-            this.buttonBrowserStart.Size = new System.Drawing.Size(141, 18);
+            this.buttonBrowserStart.Size = new System.Drawing.Size(118, 18);
             this.buttonBrowserStart.TabIndex = 15;
-            this.buttonBrowserStart.Text = "シーンカットブラウザ";
+            this.buttonBrowserStart.Text = "シーンカットブラウザ(旧)";
             this.buttonBrowserStart.UseVisualStyleBackColor = true;
             this.buttonBrowserStart.Click += new System.EventHandler(this.buttonBrowserStart_Click);
             // 
@@ -5121,6 +5129,48 @@
             this.label29.TabIndex = 17;
             this.label29.Text = "このタブにあるボタンは各3回までしか押せません";
             // 
+            // buttonOpenVideoCutter
+            // 
+            this.buttonOpenVideoCutter.Location = new System.Drawing.Point(233, 307);
+            this.buttonOpenVideoCutter.Name = "buttonOpenVideoCutter";
+            this.buttonOpenVideoCutter.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpenVideoCutter.TabIndex = 82;
+            this.buttonOpenVideoCutter.Text = "動画カッター";
+            this.buttonOpenVideoCutter.UseVisualStyleBackColor = true;
+            this.buttonOpenVideoCutter.Click += new System.EventHandler(this.buttonOpenVideoCutter_Click);
+            // 
+            // buttonSelectVideocutPath
+            // 
+            this.buttonSelectVideocutPath.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSelectVideocutPath.Location = new System.Drawing.Point(527, 84);
+            this.buttonSelectVideocutPath.Name = "buttonSelectVideocutPath";
+            this.buttonSelectVideocutPath.Size = new System.Drawing.Size(21, 21);
+            this.buttonSelectVideocutPath.TabIndex = 39;
+            this.buttonSelectVideocutPath.Tag = "";
+            this.buttonSelectVideocutPath.Text = "...";
+            this.buttonSelectVideocutPath.UseVisualStyleBackColor = true;
+            this.buttonSelectVideocutPath.Click += new System.EventHandler(this.buttonOpenDialog_Click);
+            // 
+            // textBoxVideocutPath
+            // 
+            this.textBoxVideocutPath.AllowDrop = true;
+            this.textBoxVideocutPath.Location = new System.Drawing.Point(100, 85);
+            this.textBoxVideocutPath.Name = "textBoxVideocutPath";
+            this.textBoxVideocutPath.Size = new System.Drawing.Size(421, 19);
+            this.textBoxVideocutPath.TabIndex = 38;
+            this.textBoxVideocutPath.Text = "bin\\videocut\\videocut.exe";
+            this.textBoxVideocutPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox_DragDrop);
+            this.textBoxVideocutPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox_DragEnter);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(14, 89);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(82, 12);
+            this.label44.TabIndex = 37;
+            this.label44.Text = "動画カッターパス";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -5681,6 +5731,10 @@
         private System.Windows.Forms.TextBox textBoxMylistUpdateDescription;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label labelCopyRight;
+        private System.Windows.Forms.Button buttonOpenVideoCutter;
+        private System.Windows.Forms.Button buttonSelectVideocutPath;
+        private System.Windows.Forms.TextBox textBoxVideocutPath;
+        private System.Windows.Forms.Label label44;
     }
 }
 

@@ -132,6 +132,8 @@ namespace nicorank
             buttonSelectAviSynthScriptPath.Tag = textBoxAviSynthScriptPath;
             buttonSelectAviFromScriptPath.Tag = textBoxAviFromScriptPath;
             buttonSelectCutListPath.Tag = textBoxCutListPath;
+            buttonSelectVideocutPath.Tag = textBoxVideocutPath;
+            // これらは SelectFileBox に置き換える必要がある
         }
 
         private void SaveConfig(string filename)

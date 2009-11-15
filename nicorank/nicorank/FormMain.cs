@@ -22,7 +22,7 @@ namespace nicorank
         public delegate void StringDelegate(string str);
 
         private int program_version_;
-        private const string program_version_suffix_ = "β";
+        private const string program_version_suffix_ = "";
 
         private FormChoicePic form_choice_pic_;
         private FormLayout form_layout_;
@@ -1411,6 +1411,20 @@ namespace nicorank
             labelMylistUpdate.Enabled = radioButtonMylistUpdate.Checked;
             textBoxMylistUpdateId.Enabled = radioButtonMylistUpdate.Checked;
             buttonMylistNew.Text = (radioButtonMylistUpdate.Checked ? "更新" : "新規作成");
+        }
+
+        private void buttonOpenVideoCutter_Click(object sender, EventArgs e)
+        {
+            string videocut_path = textBoxVideocutPath.Text;
+
+            if (File.Exists(videocut_path))
+            {
+                IJProcess.RunProcess(videocut_path, "", true);
+            }
+            else
+            {
+                textBoxInfo.AppendText("動画カッターが存在しません。パスを正しく指定してください。\r\n");
+            }
         }
     }
 }
