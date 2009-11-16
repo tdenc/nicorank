@@ -36,9 +36,9 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonSave = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonAppend = new System.Windows.Forms.Button();
             this.checkBoxFixLength = new System.Windows.Forms.CheckBox();
             this.textBoxVideoLength = new System.Windows.Forms.TextBox();
@@ -120,6 +120,11 @@
             this.Column5.Name = "Column5";
             this.Column5.Width = 60;
             // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "その他";
+            this.Column6.Name = "Column6";
+            // 
             // buttonSave
             // 
             this.buttonSave.Location = new System.Drawing.Point(135, 50);
@@ -133,11 +138,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "その他";
-            this.Column6.Name = "Column6";
             // 
             // buttonAppend
             // 
@@ -203,7 +203,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.selectFileBoxCutListFile);
             this.Controls.Add(this.buttonOpen);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "CutListForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
