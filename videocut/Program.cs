@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) 2008 - 2009 rankingloid
+//
+// under GNU General Public License Version 2.
+//
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
