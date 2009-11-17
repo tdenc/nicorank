@@ -538,8 +538,8 @@ namespace nicorank
                         buff.Append(GetGroupingVideo(group_num, 1, 0, setting, len, t_suffix));
                         break;
                     case Kind.VideoWithAudio:
-                        buff.Append(GetVideoLine(group_num, 1, v_name, false, setting, len, v_suffix));
                         buff.Append(GetAudioLine(group_num, 1, setting, a_name, len, a_suffix));
+                        buff.Append(GetVideoLine(group_num, 1, v_name, false, setting, len, v_suffix));
                         buff.Append(GetGroupingVideo(group_num, 1, 1, setting, len, t_suffix));
                         break;
                     case Kind.Image:
