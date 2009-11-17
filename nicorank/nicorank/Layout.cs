@@ -30,7 +30,6 @@ namespace nicorank
         private StringVal filename_val_ = new StringVal("%d.*");
         private StringVal filetype_val_ = new StringVal("png");
         private StringVal background_val_ = new StringVal("white");
-        private StringVal antialias_val_ = new StringVal("on");
         private StringVal base_dir_relative_val_ = new StringVal("auto");
 
         private string layout_dir_;
@@ -79,9 +78,6 @@ namespace nicorank
                         img_width_val_ = new IntVal(line.GetData(1), i + 1, 2);
                         img_height_val_ = new IntVal(line.GetData(2), i + 1, 3);
                         break;
-                    case "antialias":
-                        antialias_val_ = new StringVal(line.GetData(1), i + 1, 2);
-                        break;
                     case "readrankrange":
                         range_start_val_ = new IntVal(line.GetData(1), i + 1, 2);
                         range_end_val_ = new IntVal(line.GetData(2), i + 1, 3);
@@ -115,6 +111,8 @@ namespace nicorank
             {
                 case "basedir":
                     return new LayoutElementBaseDir(line, line_number);
+                case "antialias":
+                    return new LayoutElementAntiAlias(line, line_number);
                 case "テキスト":
                     return new LayoutElementNormalText(line, line_number);
                 case "テキスト四角形":
@@ -148,7 +146,15 @@ namespace nicorank
 
             for (int i = 0; i < element_list_.Count; ++i) // 描画
             {
-                element_list_[i].Draw(graphics, data);
+                if (element_list_[i] is ILayoutEffect)
+                {
+                    ILayoutEffect effect = element_list_[i] as ILayoutEffect;
+                    effect.DoEffect(graphics, data);
+                }
+                else
+                {
+                    element_list_[i].Draw(graphics, data);
+                }
             }
 
             FinalizeForDrawingPicture();
@@ -224,7 +230,15 @@ namespace nicorank
                             InitializeGraphics(graphics, data);
                             for (int j = 0; j < element_list_.Count; ++j) // 描画
                             {
-                                element_list_[j].DrawFrame(graphics, data, i);
+                                if (element_list_[j] is ILayoutEffect)
+                                {
+                                    ILayoutEffect effect = element_list_[j] as ILayoutEffect;
+                                    effect.DoEffect(graphics, data);
+                                }
+                                else
+                                {
+                                    element_list_[j].DrawFrame(graphics, data, i);
+                                }
                             }
                         }
                         avi_writer.AddFrame(bitmap);
@@ -333,10 +347,6 @@ namespace nicorank
                 {
                     graphics.FillRectangle(brush, 0, 0, img_width_val_.GetInt(data), img_height_val_.GetInt(data));
                 }
-            }
-            if (antialias_val_.GetString(data).ToLower() == "on")
-            {
-                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             }
         }
 
@@ -953,6 +963,39 @@ namespace nicorank
         public string GetBaseDir(LayoutData data)
         {
             return base_dir_.GetString(data);
+        }
+    }
+
+    class LayoutElementAntiAlias : LayoutElement, ILayoutEffect
+    {
+        private StringVal anti_alias_val_;
+
+        public LayoutElementAntiAlias(LayoutLine line, int line_number)
+            : base(line_number)
+        {
+            anti_alias_val_ = new StringVal(line.GetData(1), line_number, 2);
+        }
+
+        public override void Draw(Graphics graphics, LayoutData data)
+        {
+            // Nothing
+        }
+
+        public override void CheckError(LayoutData data)
+        {
+            // Nothing
+        }
+
+        public void DoEffect(Graphics graphics, LayoutData data)
+        {
+            if (anti_alias_val_.GetString(data).ToLower() == "on")
+            {
+                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            }
+            else
+            {
+                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            }
         }
     }
 
@@ -1614,6 +1657,11 @@ namespace nicorank
     {
         void Open(LayoutData data, string base_dir1, string base_dir2);
         void Close();
+    }
+
+    interface ILayoutEffect
+    {
+        void DoEffect(Graphics graphics, LayoutData data);
     }
 
     public class LayoutFormatException : Exception
