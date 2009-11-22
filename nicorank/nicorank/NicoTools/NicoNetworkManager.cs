@@ -429,6 +429,32 @@ namespace NicoTools
             msgout_.Write("ファイルに書き込みました。\r\n情報の更新を終了します。\r\n");
         }
 
+        public string UpdateUserId(List<string> video_id_list, List<string> plist, string interval)
+        {
+            msgout_.Write("ユーザIDの取得を開始します。\r\n");
+            double interval_lower = 0.3, interval_upper = 0.5;
+            IJStringUtil.ParseDlInterval(interval, ref interval_lower, ref interval_upper);
+
+            System.Text.StringBuilder buff = new System.Text.StringBuilder();
+
+            for (int i = 0; i < video_id_list.Count; ++i)
+            {
+                Video video = NicoUtil.GetVideo(niconico_network_, video_id_list[i], cancel_object_, msgout_);
+                if (video.IsStatusOK())
+                {
+                    buff.Append(video_id_list[i]).Append("\t").Append(video.user_id).Append("\t").Append(plist[i]).Append("\r\n");
+                    msgout_.Write(video_id_list[i] + " の情報を取得しました。\r\n");
+                }
+                else
+                {
+                    msgout_.Write(video.GetErrorMessage(video_id_list[i]) + "\r\n");
+                }
+                cancel_object_.Wait((int)(interval_lower * 1000), (int)(interval_upper * 1000));
+            }
+            msgout_.Write("情報の更新を終了します。\r\n");
+            return buff.ToString();
+        }
+
         public void GetDetailInfo(List<string> video_id_list, InputOutputOption iooption, bool is_reading_input,
             RankingMethod ranking_method, string interval)
         {

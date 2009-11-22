@@ -93,6 +93,13 @@
             this.label58 = new System.Windows.Forms.Label();
             this.buttonFont = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox35 = new System.Windows.Forms.GroupBox();
+            this.radioButtonEncodingOutputShiftJIS = new System.Windows.Forms.RadioButton();
+            this.radioButtonEncodingOutputUTF8 = new System.Windows.Forms.RadioButton();
+            this.groupBox34 = new System.Windows.Forms.GroupBox();
+            this.radioButtonEncodingInputShiftJIS = new System.Windows.Forms.RadioButton();
+            this.radioButtonEncodingInputUTF8 = new System.Windows.Forms.RadioButton();
+            this.radioButtonEncodingInputAuto = new System.Windows.Forms.RadioButton();
             this.buttonCustomRankFileOutputDefault = new System.Windows.Forms.Button();
             this.buttonCustomRankFileInputDefault = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -116,6 +123,9 @@
             this.label23 = new System.Windows.Forms.Label();
             this.checkBoxIsOutputLog = new System.Windows.Forms.CheckBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.buttonSelectVideocutPath = new System.Windows.Forms.Button();
+            this.textBoxVideocutPath = new System.Windows.Forms.TextBox();
+            this.label44 = new System.Windows.Forms.Label();
             this.checkBoxConfirmFilter = new System.Windows.Forms.CheckBox();
             this.checkBoxConfirmOverWrite = new System.Windows.Forms.CheckBox();
             this.buttonLoadConfig = new System.Windows.Forms.Button();
@@ -216,6 +226,7 @@
             this.buttonSelectLayoutPath = new System.Windows.Forms.Button();
             this.buttonSelectRankPicDir = new System.Windows.Forms.Button();
             this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.buttonOpenVideoCutter = new System.Windows.Forms.Button();
             this.buttonTransShowingCand = new System.Windows.Forms.Button();
             this.labelTransAfter2 = new System.Windows.Forms.Label();
             this.buttonSelectTransBeforeFileOrDir = new System.Windows.Forms.Button();
@@ -451,10 +462,16 @@
             this.buttonDlRank = new System.Windows.Forms.Button();
             this.tabPageTagComment = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
-            this.buttonOpenVideoCutter = new System.Windows.Forms.Button();
-            this.buttonSelectVideocutPath = new System.Windows.Forms.Button();
-            this.textBoxVideocutPath = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonMakeUserId = new System.Windows.Forms.Button();
+            this.textBoxMakeUserIdOutput = new System.Windows.Forms.TextBox();
+            this.label49 = new System.Windows.Forms.Label();
+            this.numericUpDownMakeUserIdColumn = new System.Windows.Forms.NumericUpDown();
+            this.radioButtonMakeUserIdFromDir = new System.Windows.Forms.RadioButton();
+            this.radioButtonMakeUserIdFromFile = new System.Windows.Forms.RadioButton();
+            this.label45 = new System.Windows.Forms.Label();
+            this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
+            this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -465,6 +482,8 @@
             this.tabPageOther2.SuspendLayout();
             this.groupBox15.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox35.SuspendLayout();
+            this.groupBox34.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPageTimer.SuspendLayout();
@@ -521,6 +540,8 @@
             this.groupBox9.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.tabPageTagComment.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).BeginInit();
             this.SuspendLayout();
             // 
             // radioButtonInputFromTextBox
@@ -905,7 +926,7 @@
             // 
             // buttonChangeExtension
             // 
-            this.buttonChangeExtension.Location = new System.Drawing.Point(181, 36);
+            this.buttonChangeExtension.Location = new System.Drawing.Point(181, 32);
             this.buttonChangeExtension.Name = "buttonChangeExtension";
             this.buttonChangeExtension.Size = new System.Drawing.Size(75, 23);
             this.buttonChangeExtension.TabIndex = 33;
@@ -1173,6 +1194,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox35);
+            this.tabPage2.Controls.Add(this.groupBox34);
             this.tabPage2.Controls.Add(this.buttonCustomRankFileOutputDefault);
             this.tabPage2.Controls.Add(this.buttonCustomRankFileInputDefault);
             this.tabPage2.Controls.Add(this.groupBox2);
@@ -1199,6 +1222,85 @@
             this.tabPage2.TabIndex = 20;
             this.tabPage2.Text = "上級者向け";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox35
+            // 
+            this.groupBox35.Controls.Add(this.radioButtonEncodingOutputShiftJIS);
+            this.groupBox35.Controls.Add(this.radioButtonEncodingOutputUTF8);
+            this.groupBox35.Location = new System.Drawing.Point(414, 107);
+            this.groupBox35.Name = "groupBox35";
+            this.groupBox35.Size = new System.Drawing.Size(119, 74);
+            this.groupBox35.TabIndex = 39;
+            this.groupBox35.TabStop = false;
+            this.groupBox35.Text = "出力文字エンコード";
+            this.groupBox35.Visible = false;
+            // 
+            // radioButtonEncodingOutputShiftJIS
+            // 
+            this.radioButtonEncodingOutputShiftJIS.AutoSize = true;
+            this.radioButtonEncodingOutputShiftJIS.Checked = true;
+            this.radioButtonEncodingOutputShiftJIS.Location = new System.Drawing.Point(14, 35);
+            this.radioButtonEncodingOutputShiftJIS.Name = "radioButtonEncodingOutputShiftJIS";
+            this.radioButtonEncodingOutputShiftJIS.Size = new System.Drawing.Size(68, 16);
+            this.radioButtonEncodingOutputShiftJIS.TabIndex = 4;
+            this.radioButtonEncodingOutputShiftJIS.TabStop = true;
+            this.radioButtonEncodingOutputShiftJIS.Text = "Shift_JIS";
+            this.radioButtonEncodingOutputShiftJIS.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEncodingOutputUTF8
+            // 
+            this.radioButtonEncodingOutputUTF8.AutoSize = true;
+            this.radioButtonEncodingOutputUTF8.Location = new System.Drawing.Point(14, 17);
+            this.radioButtonEncodingOutputUTF8.Name = "radioButtonEncodingOutputUTF8";
+            this.radioButtonEncodingOutputUTF8.Size = new System.Drawing.Size(57, 16);
+            this.radioButtonEncodingOutputUTF8.TabIndex = 3;
+            this.radioButtonEncodingOutputUTF8.Text = "UTF-8";
+            this.radioButtonEncodingOutputUTF8.UseVisualStyleBackColor = true;
+            // 
+            // groupBox34
+            // 
+            this.groupBox34.Controls.Add(this.radioButtonEncodingInputShiftJIS);
+            this.groupBox34.Controls.Add(this.radioButtonEncodingInputUTF8);
+            this.groupBox34.Controls.Add(this.radioButtonEncodingInputAuto);
+            this.groupBox34.Location = new System.Drawing.Point(284, 107);
+            this.groupBox34.Name = "groupBox34";
+            this.groupBox34.Size = new System.Drawing.Size(119, 74);
+            this.groupBox34.TabIndex = 38;
+            this.groupBox34.TabStop = false;
+            this.groupBox34.Text = "入力文字エンコード";
+            this.groupBox34.Visible = false;
+            // 
+            // radioButtonEncodingInputShiftJIS
+            // 
+            this.radioButtonEncodingInputShiftJIS.AutoSize = true;
+            this.radioButtonEncodingInputShiftJIS.Checked = true;
+            this.radioButtonEncodingInputShiftJIS.Location = new System.Drawing.Point(12, 53);
+            this.radioButtonEncodingInputShiftJIS.Name = "radioButtonEncodingInputShiftJIS";
+            this.radioButtonEncodingInputShiftJIS.Size = new System.Drawing.Size(68, 16);
+            this.radioButtonEncodingInputShiftJIS.TabIndex = 2;
+            this.radioButtonEncodingInputShiftJIS.TabStop = true;
+            this.radioButtonEncodingInputShiftJIS.Text = "Shift_JIS";
+            this.radioButtonEncodingInputShiftJIS.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEncodingInputUTF8
+            // 
+            this.radioButtonEncodingInputUTF8.AutoSize = true;
+            this.radioButtonEncodingInputUTF8.Location = new System.Drawing.Point(12, 35);
+            this.radioButtonEncodingInputUTF8.Name = "radioButtonEncodingInputUTF8";
+            this.radioButtonEncodingInputUTF8.Size = new System.Drawing.Size(57, 16);
+            this.radioButtonEncodingInputUTF8.TabIndex = 1;
+            this.radioButtonEncodingInputUTF8.Text = "UTF-8";
+            this.radioButtonEncodingInputUTF8.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonEncodingInputAuto
+            // 
+            this.radioButtonEncodingInputAuto.AutoSize = true;
+            this.radioButtonEncodingInputAuto.Location = new System.Drawing.Point(12, 17);
+            this.radioButtonEncodingInputAuto.Name = "radioButtonEncodingInputAuto";
+            this.radioButtonEncodingInputAuto.Size = new System.Drawing.Size(71, 16);
+            this.radioButtonEncodingInputAuto.TabIndex = 0;
+            this.radioButtonEncodingInputAuto.Text = "自動判別";
+            this.radioButtonEncodingInputAuto.UseVisualStyleBackColor = true;
             // 
             // buttonCustomRankFileOutputDefault
             // 
@@ -1229,7 +1331,7 @@
             this.groupBox2.Controls.Add(this.buttonChangeExtension);
             this.groupBox2.Location = new System.Drawing.Point(284, 42);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(262, 67);
+            this.groupBox2.Size = new System.Drawing.Size(262, 61);
             this.groupBox2.TabIndex = 35;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "動画拡張子一括変更";
@@ -1237,7 +1339,7 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(12, 23);
+            this.label24.Location = new System.Drawing.Point(12, 18);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(52, 12);
             this.label24.TabIndex = 35;
@@ -1245,7 +1347,7 @@
             // 
             // textBoxRenameDir
             // 
-            this.textBoxRenameDir.Location = new System.Drawing.Point(14, 38);
+            this.textBoxRenameDir.Location = new System.Drawing.Point(14, 34);
             this.textBoxRenameDir.Name = "textBoxRenameDir";
             this.textBoxRenameDir.Size = new System.Drawing.Size(161, 19);
             this.textBoxRenameDir.TabIndex = 34;
@@ -1438,6 +1540,38 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "設定";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // buttonSelectVideocutPath
+            // 
+            this.buttonSelectVideocutPath.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSelectVideocutPath.Location = new System.Drawing.Point(527, 84);
+            this.buttonSelectVideocutPath.Name = "buttonSelectVideocutPath";
+            this.buttonSelectVideocutPath.Size = new System.Drawing.Size(21, 21);
+            this.buttonSelectVideocutPath.TabIndex = 39;
+            this.buttonSelectVideocutPath.Tag = "";
+            this.buttonSelectVideocutPath.Text = "...";
+            this.buttonSelectVideocutPath.UseVisualStyleBackColor = true;
+            this.buttonSelectVideocutPath.Click += new System.EventHandler(this.buttonOpenDialog_Click);
+            // 
+            // textBoxVideocutPath
+            // 
+            this.textBoxVideocutPath.AllowDrop = true;
+            this.textBoxVideocutPath.Location = new System.Drawing.Point(100, 85);
+            this.textBoxVideocutPath.Name = "textBoxVideocutPath";
+            this.textBoxVideocutPath.Size = new System.Drawing.Size(421, 19);
+            this.textBoxVideocutPath.TabIndex = 38;
+            this.textBoxVideocutPath.Text = "bin\\videocut\\videocut.exe";
+            this.textBoxVideocutPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox_DragDrop);
+            this.textBoxVideocutPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox_DragEnter);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(14, 89);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(82, 12);
+            this.label44.TabIndex = 37;
+            this.label44.Text = "動画カッターパス";
             // 
             // checkBoxConfirmFilter
             // 
@@ -2543,6 +2677,16 @@
             this.tabPage14.TabIndex = 17;
             this.tabPage14.Text = "動画変換";
             this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // buttonOpenVideoCutter
+            // 
+            this.buttonOpenVideoCutter.Location = new System.Drawing.Point(233, 307);
+            this.buttonOpenVideoCutter.Name = "buttonOpenVideoCutter";
+            this.buttonOpenVideoCutter.Size = new System.Drawing.Size(75, 23);
+            this.buttonOpenVideoCutter.TabIndex = 82;
+            this.buttonOpenVideoCutter.Text = "動画カッター";
+            this.buttonOpenVideoCutter.UseVisualStyleBackColor = true;
+            this.buttonOpenVideoCutter.Click += new System.EventHandler(this.buttonOpenVideoCutter_Click);
             // 
             // buttonTransShowingCand
             // 
@@ -4760,6 +4904,7 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPageOther2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
@@ -5129,47 +5274,115 @@
             this.label29.TabIndex = 17;
             this.label29.Text = "このタブにあるボタンは各3回までしか押せません";
             // 
-            // buttonOpenVideoCutter
+            // tabPage3
             // 
-            this.buttonOpenVideoCutter.Location = new System.Drawing.Point(233, 307);
-            this.buttonOpenVideoCutter.Name = "buttonOpenVideoCutter";
-            this.buttonOpenVideoCutter.Size = new System.Drawing.Size(75, 23);
-            this.buttonOpenVideoCutter.TabIndex = 82;
-            this.buttonOpenVideoCutter.Text = "動画カッター";
-            this.buttonOpenVideoCutter.UseVisualStyleBackColor = true;
-            this.buttonOpenVideoCutter.Click += new System.EventHandler(this.buttonOpenVideoCutter_Click);
+            this.tabPage3.Controls.Add(this.buttonMakeUserId);
+            this.tabPage3.Controls.Add(this.textBoxMakeUserIdOutput);
+            this.tabPage3.Controls.Add(this.label49);
+            this.tabPage3.Controls.Add(this.numericUpDownMakeUserIdColumn);
+            this.tabPage3.Controls.Add(this.radioButtonMakeUserIdFromDir);
+            this.tabPage3.Controls.Add(this.radioButtonMakeUserIdFromFile);
+            this.tabPage3.Controls.Add(this.label45);
+            this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromFile);
+            this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromDir);
+            this.tabPage3.Location = new System.Drawing.Point(4, 38);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(552, 338);
+            this.tabPage3.TabIndex = 23;
+            this.tabPage3.Text = "おまけ2";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // buttonSelectVideocutPath
+            // buttonMakeUserId
             // 
-            this.buttonSelectVideocutPath.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonSelectVideocutPath.Location = new System.Drawing.Point(527, 84);
-            this.buttonSelectVideocutPath.Name = "buttonSelectVideocutPath";
-            this.buttonSelectVideocutPath.Size = new System.Drawing.Size(21, 21);
-            this.buttonSelectVideocutPath.TabIndex = 39;
-            this.buttonSelectVideocutPath.Tag = "";
-            this.buttonSelectVideocutPath.Text = "...";
-            this.buttonSelectVideocutPath.UseVisualStyleBackColor = true;
-            this.buttonSelectVideocutPath.Click += new System.EventHandler(this.buttonOpenDialog_Click);
+            this.buttonMakeUserId.Location = new System.Drawing.Point(130, 164);
+            this.buttonMakeUserId.Name = "buttonMakeUserId";
+            this.buttonMakeUserId.Size = new System.Drawing.Size(75, 23);
+            this.buttonMakeUserId.TabIndex = 10;
+            this.buttonMakeUserId.Text = "出力";
+            this.buttonMakeUserId.UseVisualStyleBackColor = true;
+            this.buttonMakeUserId.Click += new System.EventHandler(this.buttonMakeUserId_Click);
             // 
-            // textBoxVideocutPath
+            // textBoxMakeUserIdOutput
             // 
-            this.textBoxVideocutPath.AllowDrop = true;
-            this.textBoxVideocutPath.Location = new System.Drawing.Point(100, 85);
-            this.textBoxVideocutPath.Name = "textBoxVideocutPath";
-            this.textBoxVideocutPath.Size = new System.Drawing.Size(421, 19);
-            this.textBoxVideocutPath.TabIndex = 38;
-            this.textBoxVideocutPath.Text = "bin\\videocut\\videocut.exe";
-            this.textBoxVideocutPath.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBox_DragDrop);
-            this.textBoxVideocutPath.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBox_DragEnter);
+            this.textBoxMakeUserIdOutput.Location = new System.Drawing.Point(130, 193);
+            this.textBoxMakeUserIdOutput.Multiline = true;
+            this.textBoxMakeUserIdOutput.Name = "textBoxMakeUserIdOutput";
+            this.textBoxMakeUserIdOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxMakeUserIdOutput.Size = new System.Drawing.Size(415, 137);
+            this.textBoxMakeUserIdOutput.TabIndex = 9;
             // 
-            // label44
+            // label49
             // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(14, 89);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(82, 12);
-            this.label44.TabIndex = 37;
-            this.label44.Text = "動画カッターパス";
+            this.label49.AutoSize = true;
+            this.label49.Location = new System.Drawing.Point(19, 156);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(87, 12);
+            this.label49.TabIndex = 8;
+            this.label49.Text = "投稿者名の列数";
+            // 
+            // numericUpDownMakeUserIdColumn
+            // 
+            this.numericUpDownMakeUserIdColumn.Location = new System.Drawing.Point(34, 173);
+            this.numericUpDownMakeUserIdColumn.Name = "numericUpDownMakeUserIdColumn";
+            this.numericUpDownMakeUserIdColumn.Size = new System.Drawing.Size(50, 19);
+            this.numericUpDownMakeUserIdColumn.TabIndex = 7;
+            this.numericUpDownMakeUserIdColumn.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            // 
+            // radioButtonMakeUserIdFromDir
+            // 
+            this.radioButtonMakeUserIdFromDir.AutoSize = true;
+            this.radioButtonMakeUserIdFromDir.Location = new System.Drawing.Point(20, 99);
+            this.radioButtonMakeUserIdFromDir.Name = "radioButtonMakeUserIdFromDir";
+            this.radioButtonMakeUserIdFromDir.Size = new System.Drawing.Size(229, 16);
+            this.radioButtonMakeUserIdFromDir.TabIndex = 5;
+            this.radioButtonMakeUserIdFromDir.Text = "ランクファイルが含まれているフォルダから作成";
+            this.radioButtonMakeUserIdFromDir.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonMakeUserIdFromFile
+            // 
+            this.radioButtonMakeUserIdFromFile.AutoSize = true;
+            this.radioButtonMakeUserIdFromFile.Checked = true;
+            this.radioButtonMakeUserIdFromFile.Location = new System.Drawing.Point(20, 45);
+            this.radioButtonMakeUserIdFromFile.Name = "radioButtonMakeUserIdFromFile";
+            this.radioButtonMakeUserIdFromFile.Size = new System.Drawing.Size(124, 16);
+            this.radioButtonMakeUserIdFromFile.TabIndex = 4;
+            this.radioButtonMakeUserIdFromFile.TabStop = true;
+            this.radioButtonMakeUserIdFromFile.Text = "ランクファイルから作成";
+            this.radioButtonMakeUserIdFromFile.UseVisualStyleBackColor = true;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(18, 17);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(89, 12);
+            this.label45.TabIndex = 0;
+            this.label45.Text = "投稿者情報作成";
+            // 
+            // selectFileBoxMakeUserIdFromFile
+            // 
+            this.selectFileBoxMakeUserIdFromFile.FileDialog = this.openFileDialog1;
+            this.selectFileBoxMakeUserIdFromFile.FileName = "";
+            this.selectFileBoxMakeUserIdFromFile.FolderBrowserDialog = null;
+            this.selectFileBoxMakeUserIdFromFile.Location = new System.Drawing.Point(21, 67);
+            this.selectFileBoxMakeUserIdFromFile.Name = "selectFileBoxMakeUserIdFromFile";
+            this.selectFileBoxMakeUserIdFromFile.Size = new System.Drawing.Size(423, 23);
+            this.selectFileBoxMakeUserIdFromFile.TabIndex = 6;
+            // 
+            // selectFileBoxMakeUserIdFromDir
+            // 
+            this.selectFileBoxMakeUserIdFromDir.FileDialog = null;
+            this.selectFileBoxMakeUserIdFromDir.FileName = "";
+            this.selectFileBoxMakeUserIdFromDir.FolderBrowserDialog = this.folderBrowserDialog1;
+            this.selectFileBoxMakeUserIdFromDir.Location = new System.Drawing.Point(21, 121);
+            this.selectFileBoxMakeUserIdFromDir.Name = "selectFileBoxMakeUserIdFromDir";
+            this.selectFileBoxMakeUserIdFromDir.Size = new System.Drawing.Size(423, 23);
+            this.selectFileBoxMakeUserIdFromDir.TabIndex = 3;
             // 
             // FormMain
             // 
@@ -5200,6 +5413,10 @@
             this.groupBox15.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox35.ResumeLayout(false);
+            this.groupBox35.PerformLayout();
+            this.groupBox34.ResumeLayout(false);
+            this.groupBox34.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage7.ResumeLayout(false);
@@ -5303,6 +5520,9 @@
             this.groupBox17.PerformLayout();
             this.tabPageTagComment.ResumeLayout(false);
             this.tabPageTagComment.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -5735,6 +5955,23 @@
         private System.Windows.Forms.Button buttonSelectVideocutPath;
         private System.Windows.Forms.TextBox textBoxVideocutPath;
         private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.GroupBox groupBox34;
+        private System.Windows.Forms.GroupBox groupBox35;
+        private System.Windows.Forms.RadioButton radioButtonEncodingOutputShiftJIS;
+        private System.Windows.Forms.RadioButton radioButtonEncodingOutputUTF8;
+        private System.Windows.Forms.RadioButton radioButtonEncodingInputShiftJIS;
+        private System.Windows.Forms.RadioButton radioButtonEncodingInputUTF8;
+        private System.Windows.Forms.RadioButton radioButtonEncodingInputAuto;
+        private System.Windows.Forms.TabPage tabPage3;
+        private SelectFileBox selectFileBoxMakeUserIdFromFile;
+        private System.Windows.Forms.RadioButton radioButtonMakeUserIdFromDir;
+        private System.Windows.Forms.RadioButton radioButtonMakeUserIdFromFile;
+        private SelectFileBox selectFileBoxMakeUserIdFromDir;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.NumericUpDown numericUpDownMakeUserIdColumn;
+        private System.Windows.Forms.TextBox textBoxMakeUserIdOutput;
+        private System.Windows.Forms.Button buttonMakeUserId;
     }
 }
 

@@ -25,6 +25,7 @@ namespace NicoTools
         public string pname = "";
         public string length = "";
         public string last_res_body = "";
+        public string user_id = "";
         public TagSet tag_set = new TagSet();
 
         public enum Status { OK, DELETED, NOT_FOUND, OTHER };
@@ -181,6 +182,9 @@ namespace NicoTools
                             break;
                         case "last_res_body":
                             last_res_body = IJStringUtil.UnescapeHtml(node.InnerText);
+                            break;
+                        case "user_id":
+                            user_id = IJStringUtil.UnescapeHtml(node.InnerText);
                             break;
                         case "tags":
                             if (node.Attributes["domain"] != null && node.Attributes["domain"].Value == "jp")

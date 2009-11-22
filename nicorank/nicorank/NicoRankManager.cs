@@ -329,6 +329,12 @@ namespace nicorank
             nico_download_.UpdateDetailInfo((InputOutputOption)param_[0], (UpdateRankKind)param_[1], (RankingMethod)param_[2], (string)param_[3]);
         }
 
+        public void UpdateUserId()
+        {
+            string str = nico_download_.UpdateUserId((List<string>)param_[0], (List<string>)param_[1], (string)param_[2]);
+            msg_receiver_.SetMakeUserIdOutput(str);
+        }
+
         public void GetDetailInfo()
         {
             nico_download_.GetDetailInfo((List<string>)param_[0], (InputOutputOption)param_[1], (bool)param_[2], (RankingMethod)param_[3], (string)param_[4]);
@@ -409,5 +415,6 @@ namespace nicorank
         void UpdateSavedRankNicoChartDir(string saved_rank_dir);
         void UpdateMylistId(string id);
         void SetDownloadInfo(string info_text);
+        void SetMakeUserIdOutput(string str);
     }
 }

@@ -1426,5 +1426,45 @@ namespace nicorank
                 textBoxInfo.AppendText("動画カッターが存在しません。パスを正しく指定してください。\r\n");
             }
         }
+
+        private void buttonMakeUserId_Click(object sender, EventArgs e)
+        {
+            List<string> video_id_list = new List<string>();
+            List<string> plist = new List<string>();
+            int column = (int)numericUpDownMakeUserIdColumn.Value;
+
+            List<string> file_list = new List<string>();
+
+            if (radioButtonMakeUserIdFromDir.Checked)
+            {
+                file_list.AddRange(Directory.GetFiles(selectFileBoxMakeUserIdFromDir.FileName));
+            }
+            else
+            {
+                if (File.Exists(selectFileBoxMakeUserIdFromFile.FileName))
+                {
+                    file_list.Add(selectFileBoxMakeUserIdFromFile.FileName);
+                }
+            }
+
+            foreach (string file in file_list)
+            {
+                string[] lines = IJStringUtil.SplitWithCRLF(IJFile.Read(file));
+                for (int i = 0; i < lines.Length; ++i)
+                {
+                    string[] ar = lines[i].Split('\t');
+                    string video_id = NicoUtil.CutNicoVideoId(ar[0]);
+                    if (video_id != "" && video_id_list.IndexOf(video_id) < 0)
+                    {
+                        video_id_list.Add(video_id);
+                        plist.Add((column - 1 < ar.Length) ? ar[column - 1] : "");
+                    }
+                }
+            }
+            if (video_id_list.Count > 0)
+            {
+                StartThread(nicorank_mgr_.UpdateUserId, null, false, video_id_list, plist, textBoxGettingDetailInterval.Text);
+            }
+        }
     }
 }

@@ -107,6 +107,18 @@ namespace nicorank
             form_trans_option_ = null;
         }
 
+        public void SetMakeUserIdOutput(string str)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new StringDelegate(SetMakeUserIdOutput), new object[] { str });
+            }
+            else
+            {
+                textBoxMakeUserIdOutput.AppendText(str);
+            }
+        }
+
         ///////////// private method
 
         private void SetButtonDialog()
