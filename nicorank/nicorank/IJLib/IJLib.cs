@@ -370,7 +370,105 @@ namespace IJLib
 
     public class IJFile
     {
+        public enum EncodingPriority { Auto, UTF8, ShiftJIS }
         private static Random random = new Random();
+
+        // 将来的に Read と差し替える予定
+        public static string ReadVer2(string path, EncodingPriority priority)
+        {
+            byte[] data = File.ReadAllBytes(path);
+
+            if (priority == EncodingPriority.Auto)
+            {
+                byte[] head = new byte[Math.Min(4096, data.Length)]; // 先頭 4096 バイトから推定
+
+                Array.Copy(data, head, head.Length);
+                priority = (IsUTF8(head) ? EncodingPriority.UTF8 : EncodingPriority.ShiftJIS);
+            }
+            string ret_str = "";
+
+            if (priority == EncodingPriority.ShiftJIS) // Shift_JIS 優先
+            {
+                try
+                {
+                    // まず Shift_JIS として読み込んでみる
+                    ret_str = Encoding.GetEncoding(932).GetString(data);
+                }
+                catch (DecoderFallbackException)
+                {
+                    // 失敗したら UTF-8 として読み込む
+                    ret_str = Encoding.UTF8.GetString(data);
+                }
+            }
+            else
+            {
+                try
+                {
+                    // まず UTF-8 として読み込んでみる
+                    ret_str = Encoding.UTF8.GetString(data);
+                }
+                catch (DecoderFallbackException)
+                {
+                    // 失敗したら Shift_JIS として読み込む
+                    ret_str = Encoding.GetEncoding(932).GetString(data);
+                }
+            }
+            return ret_str;
+        }
+
+        // UTF-8 かどうかを判定する。
+        // ASCII になってる文字を除外して、それ以外の文字で UTF-8 の3バイト表現（[0xe0-0xef][0x80-0xbf][0x80-0xbf]）に
+        // なっているものを数える。割合が半数以上なら true を返す。
+        public static bool IsUTF8(byte[] data)
+        {
+            int utf8_count = 0;
+            int multibyte_count = 0;
+
+            for (int i = 0; i < data.Length; ++i)
+            {
+                if (0x00 <= data[i] && data[i] <= 0x7e) // ASCII 文字
+                {
+                    continue;
+                }
+                ++multibyte_count;
+                if (0xe0 <= data[i] && data[i] <= 0xef) // 3バイト表現になっているか
+                {
+                    if (i + 3 < data.Length && (0x80 <= data[i + 1] && data[i + 1] <= 0xbf)
+                        && (0x80 <= data[i + 2] && data[i + 2] <= 0xbf))
+                    {
+                        // さらに次の文字がASCIIか3バイト表現の先頭なら
+                        if ((0x20 <= data[i + 3] && data[i + 3] <= 0x7e) || (0xe0 <= data[i + 3] && data[i + 3] <= 0xef))
+                        {
+                            i += 2;
+                            multibyte_count += 2;
+                            utf8_count += 3;
+                        }
+                    }
+                }
+            }
+            // ascii以外の文字で、UTF8の3バイト表現になっているバイトが半分以上あるならUTF8とみなす
+            if (utf8_count >= multibyte_count / 2) 
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // 将来的に Write と差し替える予定
+        public static void WriteVer2(string filename, string contents, EncodingPriority priority)
+        {
+            if (priority == EncodingPriority.ShiftJIS)
+            {
+                File.WriteAllText(filename, contents, Encoding.GetEncoding(932));
+            }
+            else
+            {
+                File.WriteAllText(filename, contents, Encoding.UTF8);
+            }
+        }
 
         public static string Read(string filename)
         {
