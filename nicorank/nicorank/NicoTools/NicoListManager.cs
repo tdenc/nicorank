@@ -412,7 +412,10 @@ namespace NicoTools
 
                 video.point.getting_date = getting_dt;
                 string title = IJStringUtil.GetStringBetweenTag(ref index, "title", html);
-                video.title = title.Substring(title.IndexOf('：') + 1);
+                if (!is_mylist)
+                {
+                    video.title = title.Substring(title.IndexOf('：') + 1);
+                }
                 string link = IJStringUtil.GetStringBetweenTag(ref index, "link", html);
                 video.video_id = link.Substring(link.LastIndexOf('/') + 1);
                 IJStringUtil.GetStringBetweenTag(ref index, "p", html);
