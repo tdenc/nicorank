@@ -152,7 +152,7 @@ namespace videocut
             {
                 command_queue_.Add(new Command(Command.Kind.EndThread));
             }
-            thread_end_event_.WaitOne(3000);
+            thread_end_event_.WaitOne(3000, false);
 
             avcodec_manager_.Close();
 
