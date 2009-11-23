@@ -378,6 +378,11 @@ namespace IJLib
         {
             byte[] data = File.ReadAllBytes(path);
 
+            Encoding shift_jis = Encoding.GetEncoding(932, new EncoderExceptionFallback(), new DecoderExceptionFallback());
+            Encoding shift_jis_no_error = Encoding.GetEncoding(932);
+            Encoding utf8 = new UTF8Encoding(true, true);
+            Encoding utf8_no_error = new UTF8Encoding(true, false);
+
             if (priority == EncodingPriority.Auto)
             {
                 byte[] head = new byte[Math.Min(4096, data.Length)]; // 先頭 4096 バイトから推定
@@ -392,12 +397,19 @@ namespace IJLib
                 try
                 {
                     // まず Shift_JIS として読み込んでみる
-                    ret_str = Encoding.GetEncoding(932).GetString(data);
+                    ret_str = shift_jis.GetString(data);
                 }
                 catch (DecoderFallbackException)
                 {
                     // 失敗したら UTF-8 として読み込む
-                    ret_str = Encoding.UTF8.GetString(data);
+                    if (IsUTF8BomPresent(data))
+                    {
+                        ret_str = utf8_no_error.GetString(data, 3, data.Length - 3);
+                    }
+                    else
+                    {
+                        ret_str = utf8_no_error.GetString(data);
+                    }
                 }
             }
             else
@@ -405,24 +417,38 @@ namespace IJLib
                 try
                 {
                     // まず UTF-8 として読み込んでみる
-                    ret_str = Encoding.UTF8.GetString(data);
+                    if (IsUTF8BomPresent(data))
+                    {
+                        ret_str = utf8.GetString(data, 3, data.Length - 3);
+                    }
+                    else
+                    {
+                        ret_str = utf8.GetString(data);
+                    }
                 }
                 catch (DecoderFallbackException)
                 {
                     // 失敗したら Shift_JIS として読み込む
-                    ret_str = Encoding.GetEncoding(932).GetString(data);
+                    ret_str = shift_jis_no_error.GetString(data);
                 }
             }
             return ret_str;
         }
 
         // UTF-8 かどうかを判定する。
+        // UTF-8 の BOM が先頭にある場合は true を返す。
         // ASCII になってる文字を除外して、それ以外の文字で UTF-8 の3バイト表現（[0xe0-0xef][0x80-0xbf][0x80-0xbf]）に
         // なっているものを数える。割合が半数以上なら true を返す。
         public static bool IsUTF8(byte[] data)
         {
             int utf8_count = 0;
             int multibyte_count = 0;
+
+            // UTF8 の BOM がある場合は true を返却する
+            if (IsUTF8BomPresent(data))
+            {
+                return true;
+            }
 
             for (int i = 0; i < data.Length; ++i)
             {
@@ -457,6 +483,39 @@ namespace IJLib
             }
         }
 
+        /// <summary>
+        /// UTF-8のBOMが先頭についているかを判定する。
+        /// </summary>
+        /// <param name="data">ファイルのバイトデータ</param>
+        /// <returns>
+        /// データの先頭にUTF-8のバイトオーダーマークがついている場合はtrue、
+        /// その他の場合はfalse。
+        /// </returns>
+        private static bool IsUTF8BomPresent(byte[] data)
+        {
+            // 3バイト未満では判定不能
+            if (data.Length < 3)
+            {
+                return false;
+            }
+
+            // 先頭がEF BB BFかどうか判定
+            if (data[0] != 0xef)
+            {
+                return false;
+            }
+            if (data[1] != 0xbb)
+            {
+                return false;
+            }
+            if (data[2] != 0xbf)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         // 将来的に Write と差し替える予定
         public static void WriteVer2(string filename, string contents, EncodingPriority priority)
         {
@@ -466,7 +525,9 @@ namespace IJLib
             }
             else
             {
-                File.WriteAllText(filename, contents, Encoding.UTF8);
+                // UTF8 BOM付きで書き込む
+                Encoding utf8 = new UTF8Encoding(true, true);
+                File.WriteAllText(filename, contents, utf8);
             }
         }
 
