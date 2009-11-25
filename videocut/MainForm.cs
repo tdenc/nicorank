@@ -77,6 +77,18 @@ namespace videocut
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (is_playing_)
+            {
+                Stop();
+            }
+            if (swf_mode_)
+            {
+                timerForSwf.Enabled = false;
+            }
+            else
+            {
+                video_controller_.Close();
+            }
             if (bitmap_play_button_ != null)
             {
                 bitmap_play_button_.Dispose();
@@ -93,7 +105,7 @@ namespace videocut
         {
             if (is_playing_)
             {
-                pictureBoxPlayButton_MouseUp(null, null);
+                Stop();
             }
             EnableControl(false);
 
