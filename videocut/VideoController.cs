@@ -155,7 +155,11 @@ namespace videocut
 
             state_ = StateKind.Prepared;
 
-            DrawWhileGetting(0); // 最初のフレームを描画
+            user_.InvalidatePictureBox();
+            if (avcodec_manager_.HasVideo)
+            {
+                DrawWhileGetting(0); // 最初のフレームを描画
+            }
         }
 
         public void Close()
@@ -692,5 +696,6 @@ namespace videocut
         void InformChangingFrame(int frame);
         void InformStop();
         void DisplayLoad(bool is_display);
+        void InvalidatePictureBox();
     }
 }

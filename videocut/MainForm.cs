@@ -662,6 +662,11 @@ namespace videocut
             return textBoxMark2Sec.Text;
         }
 
+        public void InvalidatePictureBox()
+        {
+            pictureBoxMain.Invalidate();
+        }
+
         private void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
             MessageBox.Show(e.Exception.Message + ", " + e.Exception.StackTrace , "エラー");
