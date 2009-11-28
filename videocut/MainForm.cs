@@ -31,6 +31,8 @@ namespace videocut
         private CutListForm cut_list_form_ = null;
 
         private VideoCutConfig config_ = new VideoCutConfig();
+        private bool is_show_control_form_ = true; // config の保存時のみ使う
+        private bool is_show_cut_list_form_ = true; // 同上
 
         public MainForm()
         {
@@ -84,6 +86,21 @@ namespace videocut
             form_info.Left = cut_list_form_.Left + cut_list_form_.Width;
             form_info.Top = this.Top + 384;
 #endif
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hide(); // 高速に閉じたように見せるため隠す
+            if (control_form_ != null)
+            {
+                is_show_control_form_ = control_form_.Visible; // config 保存のため、状態を保存
+                control_form_.Hide();
+            }
+            if (cut_list_form_ != null)
+            {
+                is_show_cut_list_form_ = cut_list_form_.Visible; // config 保存のため、状態を保存
+                cut_list_form_.Hide();
+            }
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -698,11 +715,11 @@ namespace videocut
             config_.MainFormLocation = this.Location;
             config_.MainFormSize = this.Size;
 
-            config_.IsShowControlForm = control_form_.Visible;
+            config_.IsShowControlForm = is_show_control_form_;
             config_.ControlFormLocation = control_form_.Location;
             config_.ControlFormSize = control_form_.Size;
 
-            config_.IsShowCutListForm = cut_list_form_.Visible;
+            config_.IsShowCutListForm = is_show_cut_list_form_;
             config_.CutListFormLocation = cut_list_form_.Location;
             config_.CutListFormSize = cut_list_form_.Size;
 
