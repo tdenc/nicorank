@@ -472,6 +472,7 @@
             this.label45 = new System.Windows.Forms.Label();
             this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
             this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
+            this.linkLabelMakuUserId = new System.Windows.Forms.LinkLabel();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -5276,6 +5277,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.linkLabelMakuUserId);
             this.tabPage3.Controls.Add(this.buttonMakeUserId);
             this.tabPage3.Controls.Add(this.textBoxMakeUserIdOutput);
             this.tabPage3.Controls.Add(this.label49);
@@ -5383,6 +5385,17 @@
             this.selectFileBoxMakeUserIdFromDir.Name = "selectFileBoxMakeUserIdFromDir";
             this.selectFileBoxMakeUserIdFromDir.Size = new System.Drawing.Size(423, 23);
             this.selectFileBoxMakeUserIdFromDir.TabIndex = 3;
+            // 
+            // linkLabelMakuUserId
+            // 
+            this.linkLabelMakuUserId.AutoSize = true;
+            this.linkLabelMakuUserId.Location = new System.Drawing.Point(402, 17);
+            this.linkLabelMakuUserId.Name = "linkLabelMakuUserId";
+            this.linkLabelMakuUserId.Size = new System.Drawing.Size(130, 12);
+            this.linkLabelMakuUserId.TabIndex = 11;
+            this.linkLabelMakuUserId.TabStop = true;
+            this.linkLabelMakuUserId.Text = "詳しくはこちらをご覧ください";
+            this.linkLabelMakuUserId.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelMakuUserId_LinkClicked);
             // 
             // FormMain
             // 
@@ -5972,6 +5985,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownMakeUserIdColumn;
         private System.Windows.Forms.TextBox textBoxMakeUserIdOutput;
         private System.Windows.Forms.Button buttonMakeUserId;
+        private System.Windows.Forms.LinkLabel linkLabelMakuUserId;
     }
 }
 

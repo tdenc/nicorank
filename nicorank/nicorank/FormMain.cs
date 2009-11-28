@@ -1466,5 +1466,10 @@ namespace nicorank
                 StartThread(nicorank_mgr_.UpdateUserId, null, false, video_id_list, plist, textBoxGettingDetailInterval.Text);
             }
         }
+
+        private void linkLabelMakuUserId_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.daily-vocaran.info/nicorank/onegai.html");
+        }
     }
 }
