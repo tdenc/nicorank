@@ -28,6 +28,7 @@ namespace AVCodec
         bool IsOpen { get; }
 
         void Open(string filename);
+        void Open(string filename, int video_width, int video_height, int memory_size);
         void Close();
         void RequireSeeking(int frame);
 

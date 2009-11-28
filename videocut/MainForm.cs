@@ -177,7 +177,9 @@ namespace videocut
                 axShockwaveFlash1.Hide();
                 try
                 {
-                    video_controller_.OpenFiles(filename);
+                    video_controller_.OpenFile(filename, (config_.IsVideoSizeFixed ? config_.VideoSizeFixedWidth : -1),
+                        (config_.IsVideoSizeFixed ? config_.VideoSizeFixedHeight : -1),
+                        (config_.IsMemorySizeManual ? config_.MemorySize : -1));
                 }
                 catch (AVCodec.AVCodecCannotOpenFileException)
                 {
@@ -287,7 +289,7 @@ namespace videocut
                 
                 pictureBoxMain.Size = box_size;
                 this.Width = Math.Max(box_size.Width, 512) + 8;
-                this.Height += box_size.Height - old_height;
+                this.Height = box_size.Height + panelControl.Height + 40;
             }
         }
 
@@ -800,6 +802,21 @@ namespace videocut
         private void toolStripMenuItemCutListForm_Click(object sender, EventArgs e)
         {
             cut_list_form_.Visible = !toolStripMenuItemCutListForm.Checked;
+        }
+
+        private void toolStripMenuItemSetting_Click(object sender, EventArgs e)
+        {
+            SettingForm setting_form = new SettingForm();
+            setting_form.GetFromConfig(config_);
+            if (setting_form.ShowDialog(this) == DialogResult.OK)
+            {
+                setting_form.SetToConfig(config_);
+            }
+        }
+
+        private void buttonOpenContextMenu_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(Cursor.Position, ToolStripDropDownDirection.AboveLeft);
         }
     }
 }

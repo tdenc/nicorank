@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.pictureBoxMain = new System.Windows.Forms.PictureBox();
             this.textBoxCurrentTime = new System.Windows.Forms.TextBox();
             this.textBoxCurrentFrame = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,7 +58,6 @@
             this.buttonMark2 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBoxMark2Frame = new System.Windows.Forms.TextBox();
-            this.pictureBoxPlayButton = new System.Windows.Forms.PictureBox();
             this.panelControl = new System.Windows.Forms.Panel();
             this.buttonSeekFrame1 = new System.Windows.Forms.Button();
             this.buttonSeekFrame2 = new System.Windows.Forms.Button();
@@ -77,24 +75,19 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemControlForm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCutListForm = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBoxPlayButton = new System.Windows.Forms.PictureBox();
+            this.pictureBoxMain = new System.Windows.Forms.PictureBox();
+            this.toolStripMenuItemSetting = new System.Windows.Forms.ToolStripMenuItem();
             this.videoSlideControl1 = new videocut.VideoSlideControl();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).BeginInit();
+            this.buttonOpenContextMenu = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).BeginInit();
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBoxMain
-            // 
-            this.pictureBoxMain.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxMain.Name = "pictureBoxMain";
-            this.pictureBoxMain.Size = new System.Drawing.Size(512, 384);
-            this.pictureBoxMain.TabIndex = 5;
-            this.pictureBoxMain.TabStop = false;
-            this.pictureBoxMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxMain_Paint);
             // 
             // textBoxCurrentTime
             // 
@@ -397,18 +390,6 @@
             this.textBoxMark2Frame.TabIndex = 21;
             this.textBoxMark2Frame.TextChanged += new System.EventHandler(this.textBoxMark2Frame_TextChanged);
             // 
-            // pictureBoxPlayButton
-            // 
-            this.pictureBoxPlayButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxPlayButton.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPlayButton.Image")));
-            this.pictureBoxPlayButton.Location = new System.Drawing.Point(31, 59);
-            this.pictureBoxPlayButton.Name = "pictureBoxPlayButton";
-            this.pictureBoxPlayButton.Size = new System.Drawing.Size(37, 37);
-            this.pictureBoxPlayButton.TabIndex = 40;
-            this.pictureBoxPlayButton.TabStop = false;
-            this.pictureBoxPlayButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayButton_MouseUp);
-            // 
             // panelControl
             // 
             this.panelControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -578,9 +559,10 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemControlForm,
-            this.toolStripMenuItemCutListForm});
+            this.toolStripMenuItemCutListForm,
+            this.toolStripMenuItemSetting});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 70);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // toolStripMenuItemControlForm
@@ -596,6 +578,34 @@
             this.toolStripMenuItemCutListForm.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItemCutListForm.Text = "カットリストウィンドウ";
             this.toolStripMenuItemCutListForm.Click += new System.EventHandler(this.toolStripMenuItemCutListForm_Click);
+            // 
+            // pictureBoxPlayButton
+            // 
+            this.pictureBoxPlayButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxPlayButton.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPlayButton.Image")));
+            this.pictureBoxPlayButton.Location = new System.Drawing.Point(31, 59);
+            this.pictureBoxPlayButton.Name = "pictureBoxPlayButton";
+            this.pictureBoxPlayButton.Size = new System.Drawing.Size(37, 37);
+            this.pictureBoxPlayButton.TabIndex = 40;
+            this.pictureBoxPlayButton.TabStop = false;
+            this.pictureBoxPlayButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayButton_MouseUp);
+            // 
+            // pictureBoxMain
+            // 
+            this.pictureBoxMain.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxMain.Name = "pictureBoxMain";
+            this.pictureBoxMain.Size = new System.Drawing.Size(512, 384);
+            this.pictureBoxMain.TabIndex = 5;
+            this.pictureBoxMain.TabStop = false;
+            this.pictureBoxMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxMain_Paint);
+            // 
+            // toolStripMenuItemSetting
+            // 
+            this.toolStripMenuItemSetting.Name = "toolStripMenuItemSetting";
+            this.toolStripMenuItemSetting.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItemSetting.Text = "設定";
+            this.toolStripMenuItemSetting.Click += new System.EventHandler(this.toolStripMenuItemSetting_Click);
             // 
             // videoSlideControl1
             // 
@@ -614,6 +624,16 @@
             this.videoSlideControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseDown);
             this.videoSlideControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseUp);
             // 
+            // buttonOpenContextMenu
+            // 
+            this.buttonOpenContextMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonOpenContextMenu.Location = new System.Drawing.Point(480, 625);
+            this.buttonOpenContextMenu.Name = "buttonOpenContextMenu";
+            this.buttonOpenContextMenu.Size = new System.Drawing.Size(23, 23);
+            this.buttonOpenContextMenu.TabIndex = 45;
+            this.buttonOpenContextMenu.UseVisualStyleBackColor = true;
+            this.buttonOpenContextMenu.Click += new System.EventHandler(this.buttonOpenContextMenu_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -621,6 +641,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 656);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.buttonOpenContextMenu);
             this.Controls.Add(this.axShockwaveFlash1);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.pictureBoxMain);
@@ -633,16 +654,16 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).EndInit();
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -697,6 +718,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemControlForm;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCutListForm;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSetting;
+        private System.Windows.Forms.Button buttonOpenContextMenu;
     }
 }
 

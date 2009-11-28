@@ -102,7 +102,10 @@ namespace videocut
         /// ファイルを開く。NotOpened 状態以外の場合は Close() が呼び出された後にファイルを開く。
         /// </summary>
         /// <param name="filename">ファイルパス。存在確認はしない。</param>
-        public void OpenFiles(string filename)
+        /// <param name="width">動画サイズを固定する場合の幅（負の値を指定した場合は元の動画サイズになる）</param>
+        /// <param name="height">動画サイズを固定する場合の高さ（負の値を指定した場合は元の動画サイズになる）</param>
+        /// <param name="memory_size">使用するメモリサイズ（MB）（負の値を指定した場合は自動設定）</param>
+        public void OpenFile(string filename, int video_width, int video_height, int memory_size)
         {
             if (state_ != StateKind.NotOpened)
             {
@@ -110,7 +113,7 @@ namespace videocut
             }
             System.Diagnostics.Debug.Write("VideoController.OpenFiles");
 
-            avcodec_manager_.Open(filename);
+            avcodec_manager_.Open(filename, video_width, video_height, memory_size);
 
             bool is_open_waveout = false, is_open_drawing_thread = false;
 

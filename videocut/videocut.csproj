@@ -84,6 +84,12 @@
     <Compile Include="SelectFileBox.designer.cs">
       <DependentUpon>SelectFileBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="util\AVCodecAPI.cs" />
     <Compile Include="util\AVCodecManager.cs" />
     <Compile Include="ControlForm.cs">
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SelectFileBox.resx">
       <DependentUpon>SelectFileBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VideoSlideControl.resx">
       <DependentUpon>VideoSlideControl.cs</DependentUpon>

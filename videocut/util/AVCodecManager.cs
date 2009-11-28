@@ -52,6 +52,9 @@ namespace AVCodec
 
         private volatile List<Command> command_queue_; // コマンドキュー
 
+        private int fixed_video_width_;
+        private int fixed_video_height_;
+
         public AVCodecManager()
         {
             Clear();
@@ -65,7 +68,7 @@ namespace AVCodec
         public int VideoPictureBufferSize
         {
             get { return AVCodecAPI.avpicture_get_size((int)AVCodecAPI.AVPixelFormat.PIX_FMT_BGR24,
-                video_codec_context.width, video_codec_context.height); }
+                Width, Height); }
         }
 
         public int AudioChannel
@@ -110,12 +113,12 @@ namespace AVCodec
 
         public int Width
         {
-            get { return video_codec_context.width; }
+            get { return (fixed_video_width_ >= 0 ? fixed_video_width_ : video_codec_context.width); }
         }
 
         public int Height
         {
-            get { return video_codec_context.height; }
+            get { return (fixed_video_height_ >= 0 ? fixed_video_height_ : video_codec_context.height); }
         }
 
         public bool HasVideo
@@ -149,7 +152,22 @@ namespace AVCodec
         /// <param name="filename">ファイルパス</param>
         public void Open(string filename)
         {
+            Open(filename, -1, -1, -1);
+        }
+
+        /// <summary>
+        /// 動画ファイルを開く
+        /// </summary>
+        /// <param name="filename">ファイルパス</param>
+        /// <param name="width">動画サイズを固定する場合の幅（負の値を指定した場合は元の動画サイズになる）</param>
+        /// <param name="height">動画サイズを固定する場合の高さ（負の値を指定した場合は元の動画サイズになる）</param>
+        /// <param name="memory_size">使用するメモリサイズ（MB）（負の値を指定した場合は自動設定）</param>
+        public void Open(string filename, int video_width, int video_height, int memory_size)
+        {
             OpenCodec(filename);
+
+            fixed_video_width_ = video_width;
+            fixed_video_height_ = video_height;
 
             p_frame = AVCodecAPI.avcodec_alloc_frame();
             p_frame_rgb = AVCodecAPI.avcodec_alloc_frame();
@@ -182,7 +200,11 @@ namespace AVCodec
 
             if (HasVideo)
             {
-                video_buffer_manager_ = new VideoBufferManager(this, FrameLength);
+                if (memory_size <= 0)
+                {
+                    memory_size = Math.Min(Math.Max(BufferContainer.GetMemorySize() / (1024 * 1024) - 500, 100), 500); // 最小100MB、最大500MB
+                }
+                video_buffer_manager_ = new VideoBufferManager(this, FrameLength, memory_size * 1024 * 1024 / VideoPictureBufferSize);
             }
             if (HasAudio)
             {
@@ -415,6 +437,9 @@ namespace AVCodec
 
             thread_end_event_ = new ManualResetEvent(true);
             command_queue_ = new List<Command>();
+
+            fixed_video_width_ = -1;
+            fixed_video_height_ = -1;
         }
 
         // デコードスレッド
@@ -628,10 +653,10 @@ namespace AVCodec
                 double dummy_val = 0;
 
                 AVCodecAPI.avpicture_fill(p_frame_rgb, buffer.Buffer, (int)AVCodecAPI.AVPixelFormat.PIX_FMT_BGR24,
-                    video_codec_context.width, video_codec_context.height);
+                    Width, Height);
 
                 IntPtr sws_context = AVCodecAPI.sws_getContext(video_codec_context.width, video_codec_context.height,
-                    video_codec_context.pix_fmt, video_codec_context.width, video_codec_context.height,
+                    video_codec_context.pix_fmt, Width, Height,
                     (int)AVCodecAPI.AVPixelFormat.PIX_FMT_BGR24, 4, IntPtr.Zero, IntPtr.Zero, ref dummy_val);
                 try
                 {
@@ -701,15 +726,14 @@ namespace AVCodec
             private VideoBufferList video_buffer_list_;
             private Stack<BufferContainer> empty_buffer_stack_ = new Stack<BufferContainer>();
 
-            private const int default_buffering_frame_num_ = 1000;
-
-            public int buffering_frame_num_ = default_buffering_frame_num_;
+            public int buffering_frame_num_;
             private int current_using_frame_num_ = 0;
 
-            public VideoBufferManager(AVCodecManager parent, int frame_length)
+            public VideoBufferManager(AVCodecManager parent, int frame_length, int buffering_frame_num)
             {
                 parent_ = parent;
                 video_buffer_list_ = new VideoBufferList(frame_length);
+                buffering_frame_num_ = buffering_frame_num;
             }
 
             public bool[] FrameExistsList
@@ -748,7 +772,6 @@ namespace AVCodec
                 empty_buffer_stack_.Clear();
                 empty_buffer_stack_ = new Stack<BufferContainer>();
 
-                buffering_frame_num_ = default_buffering_frame_num_;
                 current_using_frame_num_ = 0;
                 parent_.last_requested_frame_ = 0;
             }
@@ -1061,16 +1084,10 @@ namespace AVCodec
 
         public BufferContainer(int size)
         {
-            MemoryStatus status = new MemoryStatus();
-            status.length = Marshal.SizeOf(status);
-
-            GlobalMemoryStatus(ref status);
-
-            //if (status.avail_virtual < 300 * 1024 * 1024)
+            //if (GetMemorySize() < 300 * 1024 * 1024)
             //{
             //    throw new OutOfMemoryException();
             //}
-
             buffer = Marshal.AllocHGlobal(size);
         }
 
@@ -1100,6 +1117,16 @@ namespace AVCodec
         public void SetBuffer(IntPtr buff)
         {
             buffer = buff;
+        }
+
+        public static int GetMemorySize()
+        {
+            MemoryStatus status = new MemoryStatus();
+            status.length = Marshal.SizeOf(status);
+
+            GlobalMemoryStatus(ref status);
+
+            return status.avail_virtual;
         }
     }
 
