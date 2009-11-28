@@ -145,5 +145,14 @@ namespace videocut
             checkBoxFixLength.Checked = config.IsFixLength;
             textBoxVideoLength.Text = config.VideoLength;
         }
+
+        private void CutListForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
     }
 }

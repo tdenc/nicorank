@@ -212,6 +212,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "カットリスト";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CutListForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

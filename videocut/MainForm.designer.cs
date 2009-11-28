@@ -68,19 +68,23 @@
             this.buttonSeekFrame4 = new System.Windows.Forms.Button();
             this.buttonSeekFrame7 = new System.Windows.Forms.Button();
             this.buttonSeekFrame5 = new System.Windows.Forms.Button();
-            this.videoSlideControl1 = new videocut.VideoSlideControl();
             this.buttonSeekFrame6 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.labelListWriteDone = new System.Windows.Forms.Label();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.axShockwaveFlash1 = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.timerForSwf = new System.Windows.Forms.Timer(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemControlForm = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCutListForm = new System.Windows.Forms.ToolStripMenuItem();
+            this.videoSlideControl1 = new videocut.VideoSlideControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).BeginInit();
             this.panelControl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBoxMain
@@ -520,23 +524,6 @@
             this.buttonSeekFrame5.UseVisualStyleBackColor = true;
             this.buttonSeekFrame5.Click += new System.EventHandler(this.buttonSeekFrame_Click);
             // 
-            // videoSlideControl1
-            // 
-            this.videoSlideControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.videoSlideControl1.EndPosition = 1;
-            this.videoSlideControl1.FrameExistsList = null;
-            this.videoSlideControl1.KeyFrameList = null;
-            this.videoSlideControl1.Length = 1;
-            this.videoSlideControl1.Location = new System.Drawing.Point(9, 2);
-            this.videoSlideControl1.Name = "videoSlideControl1";
-            this.videoSlideControl1.Position = 0;
-            this.videoSlideControl1.Size = new System.Drawing.Size(494, 53);
-            this.videoSlideControl1.StartPosition = 0;
-            this.videoSlideControl1.TabIndex = 49;
-            this.videoSlideControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseDown);
-            this.videoSlideControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseUp);
-            // 
             // buttonSeekFrame6
             // 
             this.buttonSeekFrame6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -587,12 +574,53 @@
             this.timerForSwf.Interval = 10;
             this.timerForSwf.Tick += new System.EventHandler(this.timerForSwf_Tick);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemControlForm,
+            this.toolStripMenuItemCutListForm});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 70);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // toolStripMenuItemControlForm
+            // 
+            this.toolStripMenuItemControlForm.Name = "toolStripMenuItemControlForm";
+            this.toolStripMenuItemControlForm.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItemControlForm.Text = "動画ファイルウィンドウ";
+            this.toolStripMenuItemControlForm.Click += new System.EventHandler(this.toolStripMenuItemControlForm_Click);
+            // 
+            // toolStripMenuItemCutListForm
+            // 
+            this.toolStripMenuItemCutListForm.Name = "toolStripMenuItemCutListForm";
+            this.toolStripMenuItemCutListForm.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItemCutListForm.Text = "カットリストウィンドウ";
+            this.toolStripMenuItemCutListForm.Click += new System.EventHandler(this.toolStripMenuItemCutListForm_Click);
+            // 
+            // videoSlideControl1
+            // 
+            this.videoSlideControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.videoSlideControl1.EndPosition = 1;
+            this.videoSlideControl1.FrameExistsList = null;
+            this.videoSlideControl1.KeyFrameList = null;
+            this.videoSlideControl1.Length = 1;
+            this.videoSlideControl1.Location = new System.Drawing.Point(9, 2);
+            this.videoSlideControl1.Name = "videoSlideControl1";
+            this.videoSlideControl1.Position = 0;
+            this.videoSlideControl1.Size = new System.Drawing.Size(494, 53);
+            this.videoSlideControl1.StartPosition = 0;
+            this.videoSlideControl1.TabIndex = 49;
+            this.videoSlideControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseDown);
+            this.videoSlideControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseUp);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 656);
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.axShockwaveFlash1);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.pictureBoxMain);
@@ -613,6 +641,7 @@
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -664,6 +693,9 @@
         private System.Windows.Forms.Button buttonSeekFrame5;
         private System.Windows.Forms.Button buttonSeekFrame6;
         private System.Windows.Forms.Button buttonSeekFrame1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemControlForm;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCutListForm;
     }
 }
 

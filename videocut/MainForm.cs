@@ -768,5 +768,21 @@ namespace videocut
             Exception ex = (Exception)e.ExceptionObject;
             MessageBox.Show(ex.Message + ", " + ex.StackTrace, "エラー");
         }
+
+        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            toolStripMenuItemControlForm.Checked = control_form_.Visible;
+            toolStripMenuItemCutListForm.Checked = cut_list_form_.Visible;
+        }
+
+        private void toolStripMenuItemControlForm_Click(object sender, EventArgs e)
+        {
+            control_form_.Visible = !toolStripMenuItemControlForm.Checked;
+        }
+
+        private void toolStripMenuItemCutListForm_Click(object sender, EventArgs e)
+        {
+            cut_list_form_.Visible = !toolStripMenuItemCutListForm.Checked;
+        }
     }
 }
