@@ -145,6 +145,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="VideoController.cs" />
+    <Compile Include="VideoCutConfig.cs" />
     <Compile Include="VideoSlideControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

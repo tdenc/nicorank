@@ -48,6 +48,7 @@ namespace videocut
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
+                Hide();
             }
         }
 
@@ -121,6 +122,22 @@ namespace videocut
                 }
                 listViewRankFile.Items.Add(new ListViewItem(new string[] { id, info }));
             }
+        }
+
+        public void SetToConfig(VideoCutConfig config)
+        {
+            config.VideoFileName = selectFileBoxVideoFile.FileName;
+            config.VideoDir = selectFileBoxVideoFolder.FileName;
+            config.RankFileName = selectFileBoxRankFile.FileName;
+            config.IsControlFormDetailOpen = (buttonShowDetail.Text == "-");
+        }
+
+        public void LoadFromConfig(VideoCutConfig config)
+        {
+            selectFileBoxVideoFile.FileName = config.VideoFileName;
+            selectFileBoxVideoFolder.FileName = config.VideoDir;
+            selectFileBoxRankFile.FileName = config.RankFileName;
+            buttonShowDetail.Text = (config.IsControlFormDetailOpen ? "-" : "+");
         }
     }
 }

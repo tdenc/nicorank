@@ -131,5 +131,19 @@ namespace videocut
 
             dataGridView.Rows.Add(row);
         }
+
+        public void SetToConfig(VideoCutConfig config)
+        {
+            config.CutListFileName = selectFileBoxCutListFile.FileName;
+            config.IsFixLength = checkBoxFixLength.Checked;
+            config.VideoLength = textBoxVideoLength.Text;
+        }
+
+        public void LoadFromConfig(VideoCutConfig config)
+        {
+            selectFileBoxCutListFile.FileName = config.CutListFileName;
+            checkBoxFixLength.Checked = config.IsFixLength;
+            textBoxVideoLength.Text = config.VideoLength;
+        }
     }
 }

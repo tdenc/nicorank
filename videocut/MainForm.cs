@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace videocut
 {
@@ -26,8 +27,10 @@ namespace videocut
 
         private bool swf_mode_ = false;
 
-        private ControlForm control_form_;
-        private CutListForm cut_list_form_;
+        private ControlForm control_form_ = null;
+        private CutListForm cut_list_form_ = null;
+
+        private VideoCutConfig config_ = new VideoCutConfig();
 
         public MainForm()
         {
@@ -42,27 +45,35 @@ namespace videocut
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            LoadConfig();
+
             video_controller_ = new VideoController(this);
             video_controller_.PictureBoxHandle = pictureBoxMain.Handle;
             
             bitmap_play_button_ = Properties.Resources.play;
             bitmap_stop_button_ = Properties.Resources.stop;
-            
+
             control_form_ = new ControlForm();
             control_form_.Owner = this;
             control_form_.SetForm(this);
 
-            control_form_.Show();
-            control_form_.Left = this.Left + this.Width;
-            control_form_.Top = this.Top;
+            if (config_.IsShowControlForm)
+            {
+                control_form_.Show();
+            }
 
             cut_list_form_ = new CutListForm();
             cut_list_form_.Owner = this;
             cut_list_form_.SetForm(this);
 
-            cut_list_form_.Show();
-            cut_list_form_.Left = this.Left + this.Width;
-            cut_list_form_.Top = control_form_.Top + control_form_.Height;
+            if (config_.IsShowCutListForm)
+            {
+                cut_list_form_.Show();
+            }
+
+            control_form_.LoadFromConfig(config_);
+            cut_list_form_.LoadFromConfig(config_);
+            SetFormSize();
 
 #if DEBUG
             DebugInfoForm form_info = new DebugInfoForm();
@@ -99,6 +110,7 @@ namespace videocut
                 bitmap_stop_button_.Dispose();
                 bitmap_stop_button_ = null;
             }
+            SaveConfig();
         }
 
         public void OpenVideo(string filename)
@@ -665,6 +677,84 @@ namespace videocut
         public void InvalidatePictureBox()
         {
             pictureBoxMain.Invalidate();
+        }
+
+        private void LoadConfig()
+        {
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "config_videocut.xml");
+            if (File.Exists(filename))
+            {
+                XmlSerializer serializer = null;
+                using (Stream stream = File.OpenRead(filename))
+                {
+                    serializer = new XmlSerializer(typeof(VideoCutConfig));
+                    config_ = (VideoCutConfig)serializer.Deserialize(stream);
+                }
+            }
+        }
+
+        private void SaveConfig()
+        {
+            config_.MainFormLocation = this.Location;
+            config_.MainFormSize = this.Size;
+
+            config_.IsShowControlForm = control_form_.Visible;
+            config_.ControlFormLocation = control_form_.Location;
+            config_.ControlFormSize = control_form_.Size;
+
+            config_.IsShowCutListForm = cut_list_form_.Visible;
+            config_.CutListFormLocation = cut_list_form_.Location;
+            config_.CutListFormSize = cut_list_form_.Size;
+
+            control_form_.SetToConfig(config_);
+            cut_list_form_.SetToConfig(config_);
+
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "config_videocut.xml");
+            XmlSerializer serializer = null;
+            using (Stream stream = File.Open(filename, FileMode.Create, FileAccess.Write))
+            {
+                serializer = new XmlSerializer(typeof(VideoCutConfig));
+                serializer.Serialize(stream, config_);
+            }
+        }
+
+        private void SetFormSize()
+        {
+            if (config_.MainFormLocation.X != int.MinValue)
+            {
+                this.Location = config_.MainFormLocation;
+            }
+            if (config_.MainFormSize.Width != int.MinValue)
+            {
+                this.Size = config_.MainFormSize;
+            }
+            if (config_.ControlFormLocation.X != int.MinValue)
+            {
+                control_form_.Location = config_.ControlFormLocation;
+            }
+            else
+            {
+                control_form_.Left = this.Left + this.Width;
+                control_form_.Top = this.Top;
+            }
+            if (config_.ControlFormSize.Width != int.MinValue)
+            {
+                control_form_.Size = config_.ControlFormSize;
+            }
+
+            if (config_.CutListFormLocation.X != int.MinValue)
+            {
+                cut_list_form_.Location = config_.CutListFormLocation;
+            }
+            else
+            {
+                cut_list_form_.Left = this.Left + this.Width;
+                cut_list_form_.Top = control_form_.Top + control_form_.Height;
+            }
+            if (config_.CutListFormSize.Width != int.MinValue)
+            {
+                cut_list_form_.Size = config_.CutListFormSize;
+            }
         }
 
         private void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

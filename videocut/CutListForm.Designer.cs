@@ -141,6 +141,7 @@
             // 
             // buttonAppend
             // 
+            this.buttonAppend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonAppend.Location = new System.Drawing.Point(281, 398);
             this.buttonAppend.Name = "buttonAppend";
             this.buttonAppend.Size = new System.Drawing.Size(75, 29);
@@ -151,6 +152,7 @@
             // 
             // checkBoxFixLength
             // 
+            this.checkBoxFixLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxFixLength.AutoSize = true;
             this.checkBoxFixLength.Location = new System.Drawing.Point(28, 405);
             this.checkBoxFixLength.Name = "checkBoxFixLength";
@@ -162,6 +164,7 @@
             // 
             // textBoxVideoLength
             // 
+            this.textBoxVideoLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.textBoxVideoLength.Enabled = false;
             this.textBoxVideoLength.Location = new System.Drawing.Point(126, 403);
             this.textBoxVideoLength.Name = "textBoxVideoLength";
@@ -171,6 +174,7 @@
             // 
             // labelVideoLength
             // 
+            this.labelVideoLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelVideoLength.AutoSize = true;
             this.labelVideoLength.Enabled = false;
             this.labelVideoLength.Location = new System.Drawing.Point(159, 406);

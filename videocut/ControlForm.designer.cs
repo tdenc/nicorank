@@ -47,7 +47,7 @@
             // 
             // buttonOpenVideo
             // 
-            this.buttonOpenVideo.Location = new System.Drawing.Point(313, 16);
+            this.buttonOpenVideo.Location = new System.Drawing.Point(316, 16);
             this.buttonOpenVideo.Name = "buttonOpenVideo";
             this.buttonOpenVideo.Size = new System.Drawing.Size(43, 31);
             this.buttonOpenVideo.TabIndex = 43;
@@ -104,7 +104,7 @@
             // 
             // buttonOpenRankFile
             // 
-            this.buttonOpenRankFile.Location = new System.Drawing.Point(313, 135);
+            this.buttonOpenRankFile.Location = new System.Drawing.Point(316, 135);
             this.buttonOpenRankFile.Name = "buttonOpenRankFile";
             this.buttonOpenRankFile.Size = new System.Drawing.Size(43, 23);
             this.buttonOpenRankFile.TabIndex = 56;
@@ -123,7 +123,7 @@
             this.listViewRankFile.FullRowSelect = true;
             this.listViewRankFile.Location = new System.Drawing.Point(10, 164);
             this.listViewRankFile.Name = "listViewRankFile";
-            this.listViewRankFile.Size = new System.Drawing.Size(343, 280);
+            this.listViewRankFile.Size = new System.Drawing.Size(350, 280);
             this.listViewRankFile.TabIndex = 57;
             this.listViewRankFile.UseCompatibleStateImageBehavior = false;
             this.listViewRankFile.View = System.Windows.Forms.View.Details;
@@ -150,7 +150,7 @@
             this.selectFileBoxRankFile.FolderBrowserDialog = null;
             this.selectFileBoxRankFile.Location = new System.Drawing.Point(7, 135);
             this.selectFileBoxRankFile.Name = "selectFileBoxRankFile";
-            this.selectFileBoxRankFile.Size = new System.Drawing.Size(302, 23);
+            this.selectFileBoxRankFile.Size = new System.Drawing.Size(303, 23);
             this.selectFileBoxRankFile.TabIndex = 55;
             // 
             // selectFileBoxVideoFolder
@@ -160,7 +160,7 @@
             this.selectFileBoxVideoFolder.FolderBrowserDialog = this.folderBrowserDialog1;
             this.selectFileBoxVideoFolder.Location = new System.Drawing.Point(8, 95);
             this.selectFileBoxVideoFolder.Name = "selectFileBoxVideoFolder";
-            this.selectFileBoxVideoFolder.Size = new System.Drawing.Size(301, 23);
+            this.selectFileBoxVideoFolder.Size = new System.Drawing.Size(302, 23);
             this.selectFileBoxVideoFolder.TabIndex = 54;
             // 
             // selectFileBoxVideoFile
@@ -170,14 +170,14 @@
             this.selectFileBoxVideoFile.FolderBrowserDialog = null;
             this.selectFileBoxVideoFile.Location = new System.Drawing.Point(8, 24);
             this.selectFileBoxVideoFile.Name = "selectFileBoxVideoFile";
-            this.selectFileBoxVideoFile.Size = new System.Drawing.Size(301, 23);
+            this.selectFileBoxVideoFile.Size = new System.Drawing.Size(302, 23);
             this.selectFileBoxVideoFile.TabIndex = 48;
             // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(362, 456);
+            this.ClientSize = new System.Drawing.Size(367, 456);
             this.Controls.Add(this.listViewRankFile);
             this.Controls.Add(this.buttonOpenRankFile);
             this.Controls.Add(this.selectFileBoxRankFile);
