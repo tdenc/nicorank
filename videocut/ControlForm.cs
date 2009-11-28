@@ -86,17 +86,23 @@ namespace videocut
                 }
                 else
                 {
-                    MessageBox.Show("動画ファイルが存在しません");
+                    MessageBox.Show(this, "動画ファイルが存在しません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
             else
             {
-                MessageBox.Show("動画フォルダが存在しません");
+                MessageBox.Show(this, "動画フォルダが存在しません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
         private void buttonOpenRankFile_Click(object sender, EventArgs e)
         {
+            if (!File.Exists(selectFileBoxRankFile.FileName))
+            {
+                MessageBox.Show(this, "ファイルが存在しません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             string[] lines = File.ReadAllLines(selectFileBoxRankFile.FileName, Encoding.GetEncoding(932));
             foreach (string s in lines)
             {

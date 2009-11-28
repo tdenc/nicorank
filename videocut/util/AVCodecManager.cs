@@ -317,7 +317,7 @@ namespace AVCodec
             int error_code = AVCodecAPI.av_open_input_file(out p_avformat_context, filename, IntPtr.Zero, 0, IntPtr.Zero);
             if (error_code != 0)
             {
-                throw new AVCodecException();
+                throw new AVCodecCannotOpenFileException();
             }
             error_code = AVCodecAPI.av_find_stream_info(p_avformat_context);
             if (error_code < 0)
@@ -1282,6 +1282,20 @@ namespace AVCodec
         }
 
         public AVCodecException(string message)
+            : base(message)
+        {
+
+        }
+    }
+
+    public class AVCodecCannotOpenFileException : AVCodecException
+    {
+        public AVCodecCannotOpenFileException()
+        {
+
+        }
+
+        public AVCodecCannotOpenFileException(string message)
             : base(message)
         {
 

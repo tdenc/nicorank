@@ -24,7 +24,7 @@ namespace videocut
         private bool is_pausing_;
         private double frame_per_sec_ = 24.0;
 
-        private bool swf_mode_ = true;
+        private bool swf_mode_ = false;
 
         private ControlForm control_form_;
         private CutListForm cut_list_form_;
@@ -109,26 +109,22 @@ namespace videocut
             }
             EnableControl(false);
 
-            if (filename != "" && !File.Exists(filename))
+            if (!File.Exists(filename))
             {
-                MessageBox.Show("ファイルが存在しません。");
+                MessageBox.Show(this, "ファイルが存在しません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            try
+            if (swf_mode_)
             {
-                if (swf_mode_)
-                {
-                    timerForSwf.Enabled = false;
-                }
-                else
+                timerForSwf.Enabled = false;
+            }
+            else
+            {
+                if (video_controller_.State != VideoController.StateKind.NotOpened)
                 {
                     video_controller_.Close();
-                    Clear();
                 }
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(this, err.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                Clear();
             }
 
             swf_mode_ = JudgeSwf(filename);
@@ -149,21 +145,28 @@ namespace videocut
             }
             else
             {
+                axShockwaveFlash1.Hide();
                 try
                 {
-                    axShockwaveFlash1.Hide();
                     video_controller_.OpenFiles(filename);
-                    videoSlideControl1.Position = 0;
-                    videoSlideControl1.Length = video_controller_.FrameLength;
-                    videoSlideControl1.KeyFrameList = video_controller_.KeyFrameList;
-                    videoSlideControl1.FrameExistsList = video_controller_.FrameExistsList;
-                    frame_per_sec_ = video_controller_.FramePerSec;
-                    textBoxMark2Frame.Text = video_controller_.FrameLength.ToString();
                 }
-                catch (Exception err)
+                catch (AVCodec.AVCodecCannotOpenFileException)
                 {
-                    MessageBox.Show(this, err.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(this, "ファイルを開くことができませんでした。\r\n"
+                        + "動画ファイルや音声ファイルでない可能性があります。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
+                catch (AVCodec.AVCodecException)
+                {
+                    MessageBox.Show(this, "ファイルを開くことができませんでした。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+                videoSlideControl1.Position = 0;
+                videoSlideControl1.Length = video_controller_.FrameLength;
+                videoSlideControl1.KeyFrameList = video_controller_.KeyFrameList;
+                videoSlideControl1.FrameExistsList = video_controller_.FrameExistsList;
+                frame_per_sec_ = video_controller_.FramePerSec;
+                textBoxMark2Frame.Text = video_controller_.FrameLength.ToString();
             }
             textBoxFramePerSec.Text = frame_per_sec_.ToString("0.000");
             EnableControl(true);

@@ -38,6 +38,12 @@ namespace videocut
                 }
             }
 
+            if (!File.Exists(selectFileBoxCutListFile.FileName))
+            {
+                MessageBox.Show(this, "ファイルが存在しません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             string[] lines = File.ReadAllLines(selectFileBoxCutListFile.FileName, Encoding.GetEncoding(932));
 
             dataGridView.Rows.Clear();

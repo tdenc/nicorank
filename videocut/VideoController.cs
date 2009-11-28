@@ -39,7 +39,7 @@ namespace videocut
 
         private VideoControllerUser user_;
 
-        private ManualResetEvent thread_event_ = new ManualResetEvent(true);
+        private Thread main_thread_ = null;
         private ManualResetEvent thread_end_event_ = new ManualResetEvent(false);
 
         private DrawingThread drawing_thread_ = null;
@@ -98,6 +98,10 @@ namespace videocut
             get { return avcodec_manager_.FrameExistsList; }
         }
 
+        /// <summary>
+        /// ファイルを開く。NotOpened 状態以外の場合は Close() が呼び出された後にファイルを開く。
+        /// </summary>
+        /// <param name="filename">ファイルパス。存在確認はしない。</param>
         public void OpenFiles(string filename)
         {
             if (state_ != StateKind.NotOpened)
@@ -108,56 +112,78 @@ namespace videocut
 
             avcodec_manager_.Open(filename);
 
-            if (avcodec_manager_.HasAudio)
-            {
-                waveout_.AudioCallback = AudioCallback;
-                waveout_.TimeOut = TimeOutCallback;
-                waveout_.Stopped = StoppedCallback;
-                waveout_.Open(avcodec_manager_.AudioSampleRate, avcodec_manager_.AudioChannel,
-                    avcodec_manager_.AudioBytesPerSample * 8);
-            }
+            bool is_open_waveout = false, is_open_drawing_thread = false;
 
-            frame_per_sec_ = (double)avcodec_manager_.Rate / avcodec_manager_.Scale;
-            end_frame_ = avcodec_manager_.FrameLength;
-            user_.InformChangingFrame(0);
-            if (avcodec_manager_.HasVideo)
+            try
             {
-                drawing_thread_ = new DrawingThread(avcodec_manager_.Width, avcodec_manager_.Height, picture_box_handle);
-                drawing_thread_.Start();
-                user_.SetPictureBoxSize(new Size(avcodec_manager_.Width, avcodec_manager_.Height));
-            }
+                if (avcodec_manager_.HasAudio)
+                {
+                    waveout_.AudioCallback = AudioCallback;
+                    waveout_.TimeOut = TimeOutCallback;
+                    waveout_.Stopped = StoppedCallback;
+                    waveout_.Open(avcodec_manager_.AudioSampleRate, avcodec_manager_.AudioChannel,
+                        avcodec_manager_.AudioBytesPerSample * 8);
+                    is_open_waveout = true;
+                }
 
-            Thread t = new Thread(new ThreadStart(Run));
-            t.IsBackground = true;
-            t.Start();
+                frame_per_sec_ = (double)avcodec_manager_.Rate / avcodec_manager_.Scale;
+                end_frame_ = avcodec_manager_.FrameLength;
+                user_.InformChangingFrame(0);
+                if (avcodec_manager_.HasVideo)
+                {
+                    drawing_thread_ = new DrawingThread(avcodec_manager_.Width, avcodec_manager_.Height, picture_box_handle);
+                    drawing_thread_.Start();
+                    is_open_drawing_thread = true;
+                    user_.SetPictureBoxSize(new Size(avcodec_manager_.Width, avcodec_manager_.Height));
+                }
+                main_thread_ = new Thread(new ThreadStart(Run));
+                main_thread_.IsBackground = true;
+                main_thread_.Start();
+            }
+            catch
+            {
+                if (avcodec_manager_.HasAudio && is_open_waveout)
+                {
+                    waveout_.Close();
+                }
+                if (avcodec_manager_.HasVideo && is_open_drawing_thread)
+                {
+                    drawing_thread_.Close();
+                }
+                throw;
+            }
 
             state_ = StateKind.Prepared;
 
-            thread_event_.Set();
             DrawWhileGetting(0); // 最初のフレームを描画
         }
 
         public void Close()
         {
-            if (avcodec_manager_.HasVideo)
+            if (state_ != StateKind.NotOpened)
             {
-                drawing_thread_.Close();
-            }
-            if (avcodec_manager_.HasAudio)
-            {
-                waveout_.Close();
-            }
-            thread_end_event_.Reset();
-            lock (command_queue_)
-            {
-                command_queue_.Add(new Command(Command.Kind.EndThread));
-            }
-            thread_end_event_.WaitOne(3000, false);
+                if (avcodec_manager_.HasVideo)
+                {
+                    drawing_thread_.Close();
+                }
+                if (avcodec_manager_.HasAudio)
+                {
+                    waveout_.Close();
+                }
+                thread_end_event_.Reset();
+                lock (command_queue_)
+                {
+                    command_queue_.Add(new Command(Command.Kind.EndThread));
+                }
+                if (!thread_end_event_.WaitOne(3000, false)) // 3秒待って終了しなければ
+                {
+                    main_thread_.Abort(); // 強制終了
+                }
 
-            avcodec_manager_.Close();
+                avcodec_manager_.Close();
 
-            Clear();
-
+                Clear();
+            }
             state_ = StateKind.NotOpened;
         }
 
@@ -426,7 +452,8 @@ namespace videocut
             is_wave_playing_ = false;
 
             current_wave_pos_ = 0;
-            thread_event_.Set();
+
+            main_thread_ = null;
             thread_end_event_.Reset();
 
             stopping_point_list_.Clear();
