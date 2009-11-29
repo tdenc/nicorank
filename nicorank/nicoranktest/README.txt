@@ -33,11 +33,19 @@ testdata.txt を以下のように書き換える。
    同様に、video_title、video_description、video_submit_date、
    video_length に投稿した動画の情報を入力する。
 
+   テスト内で、video_id に設定した動画には以下のことが行われる
+   ・タグの追加、削除
+   ・コメントの投稿
+
 3) video_id に入力した動画をあらかじめ何らかの方法でダウンロードしてお
    き、そのファイルパスを video_local に入力する。
+   ファイルパスは絶対パスまたはテストを実行するプログラムのカレンドデ
+   ィレクトリ(bin/Release、bin/Debug)からの相対パスを設定。
 
 4) video_id に入力した動画のサムネイルをあらかじめダウンロードしておき、
    そのファイルパスを thumbnail_local に入力する。
+   ファイルパスは絶対パスまたはテストを実行するプログラムのカレンドデ
+   ィレクトリ(bin/Release、bin/Debug)からの相対パスを設定。
 
 5) ok_mail に入力したアカウントであらかじめマイリストを作成し、そのマ
    イリストIDを mylist_id に入力する。
@@ -68,16 +76,20 @@ testdata.txt を以下のように書き換える。
 8) nm6876660、nm6877305、so5558738 の動画をダウンロードし、そのファイ
    ルパスをそれぞれ video_local_nm、video_local_swf、video_local_so に
    入力する。
+   ファイルパスは絶対パスまたはテストを実行するプログラムのカレンドデ
+   ィレクトリ(bin/Release、bin/Debug)からの相対パスを設定。
 
 
 ■ テスト実行
 
 ・NUnit から実行
+testdata.txt を bin/Release にコピーする。
 NUnit をインストールし、nunit.exe を実行して、nicoranktest.nunit プロ
 ジェクトを開く。
 Run をクリックして実行する。
 
 ・Visual C# から実行
+testdata.txt を bin/Debug にコピーする。
 nicoranktest プロジェクトはコンソールアプリケーションになっているので、
 Visual C# 内で実行することができる。
 ただし、デフォルトではメソッドに TestAttribute が付いていても、自動で
