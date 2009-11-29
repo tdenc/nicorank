@@ -34,12 +34,15 @@ namespace AVCodec
         private VideoBufferManager video_buffer_manager_;
         private AudioBufferManager audio_buffer_manager_;
 
+        private int video_rate_;
+        private int video_scale_;
+
         // なぜかこうすると落ちる
         // private const int audio_temp_buffer_size_ = 192000; // from avcodec.h 
         private const int audio_temp_buffer_size_ = 600000; // ←この数字は適当
 
         private List<int> key_frame_list_; // キーフレームの場所をフレーム数単位で表す
-        private List<int> key_dts_list_;   // キーフレームの場所をdts単位で表す
+        private List<long> key_dts_list_;   // キーフレームの場所をdts単位で表す
 
         private int current_frame_;        // 現在デコードしているフレーム
 
@@ -98,12 +101,12 @@ namespace AVCodec
 
         public int Rate
         {
-            get { return HasVideo ? video_stream.r_frame_rate.num : 24; }
+            get { return HasVideo ? video_rate_ : 24; }
         }
 
         public int Scale
         {
-            get { return HasVideo ? video_stream.r_frame_rate.den : 1; }
+            get { return HasVideo ? video_scale_ : 1; }
         }
 
         public int FrameLength
@@ -169,28 +172,40 @@ namespace AVCodec
             fixed_video_width_ = video_width;
             fixed_video_height_ = video_height;
 
+            video_rate_ = video_stream.r_frame_rate.num;
+            video_scale_ = video_stream.r_frame_rate.den;
+
             p_frame = AVCodecAPI.avcodec_alloc_frame();
             p_frame_rgb = AVCodecAPI.avcodec_alloc_frame();
 
             p_packet = AVCodecAPI.av_malloc(Marshal.SizeOf(new AVPacket()));
 
-            int last_dts = 0;
+            long last_dts = 0;
             int c = 0;
 
-            key_dts_list_.Add(0);
-            key_frame_list_.Add(0);
+            bool is_first = true;
+            int start_frame = 0;
+
             while (c >= 0)
             {
-                AVCodecAPI.av_seek_frame(p_avformat_context, 0, last_dts + 1, 0);
+                if (!is_first)
+                {
+                    AVCodecAPI.av_seek_frame(p_avformat_context, 0, last_dts + 1, 0);
+                }
 
                 while ((c = AVCodecAPI.av_read_frame(p_avformat_context, p_packet)) >= 0)
                 {
                     PacketContainer container = new PacketContainer(p_packet);
                     if (container.packet.stream_index == video_stream_index)
                     {
-                        last_dts = (int)container.packet.dts;
+                        last_dts = container.packet.dts;
                         key_dts_list_.Add(last_dts);
                         key_frame_list_.Add(DtsToVideoFrame(last_dts));
+                        if (is_first)
+                        {
+                            is_first = false;
+                            start_frame = key_frame_list_[key_frame_list_.Count - 1];
+                        }
                         break;
                     }
                     container.Destruct();
@@ -198,13 +213,27 @@ namespace AVCodec
             }
             AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
 
+            if (IsTimeScaleFour())
+            {
+                video_scale_ *= 4;
+                for (int i = 0; i < key_frame_list_.Count; ++i)
+                {
+                    key_frame_list_[i] /= 4;
+                }
+            }
+
+            if (video_rate_ / video_scale_ > 60)
+            {
+                FixIllegalFrameRate();
+            }
+
             if (HasVideo)
             {
                 if (memory_size <= 0)
                 {
                     memory_size = Math.Min(Math.Max(BufferContainer.GetMemorySize() / (1024 * 1024) - 500, 100), 500); // 最小100MB、最大500MB
                 }
-                video_buffer_manager_ = new VideoBufferManager(this, FrameLength, memory_size * 1024 * 1024 / VideoPictureBufferSize);
+                video_buffer_manager_ = new VideoBufferManager(this, FrameLength, memory_size * 1024 * 1024 / VideoPictureBufferSize, start_frame);
             }
             if (HasAudio)
             {
@@ -396,6 +425,85 @@ namespace AVCodec
             }
         }
 
+        // H.264 動画で TimeScale が4倍精度になってるか調べる
+        public bool IsTimeScaleFour()
+        {
+            int c;
+            int count = 0;
+            long[] dts = new long[4];
+
+            if (video_codec_context.codec_id != 28) // H.264 でないので関係ない
+            {
+                return false;
+            }
+
+            while ((c = AVCodecAPI.av_read_frame(p_avformat_context, p_packet)) >= 0)
+            {
+                PacketContainer container = new PacketContainer(p_packet);
+                if (container.packet.stream_index == video_stream_index)
+                {
+                    dts[count] = container.packet.dts;
+                    ++count;
+                }
+                container.Destruct();
+                if (count >= dts.Length)
+                {
+                    break;
+                }
+            }
+            AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+
+            return dts[1] - dts[0] == 1001 && dts[2] - dts[1] == 1001 && dts[3] - dts[2] == 2002;
+        }
+
+        public void FixIllegalFrameRate()
+        {
+            int c;
+            int count = 0;
+            long[] dts = new long[50];
+
+            while ((c = AVCodecAPI.av_read_frame(p_avformat_context, p_packet)) >= 0)
+            {
+                PacketContainer container = new PacketContainer(p_packet);
+                if (container.packet.stream_index == video_stream_index)
+                {
+                    dts[count] = container.packet.dts;
+                    ++count;
+                }
+                container.Destruct();
+                if (count >= dts.Length)
+                {
+                    break;
+                }
+            }
+            double average_dts = 0.0;
+            for (int i = 5; i < count - 1; ++i) // 最初の5フレームは捨てる
+            {
+                average_dts += dts[i + 1] - dts[i];
+            }
+            average_dts /= (double)(count - 1 - 5);
+
+            if (average_dts > 0)
+            {
+                double new_frame_rate_d = (double)video_stream.time_base.den / video_stream.time_base.num / average_dts;
+                int new_frame_rate = (int)(new_frame_rate_d * 1000);
+                int new_frame_scale = 1000;
+
+                new_frame_rate = 30;
+                new_frame_scale = 1;
+
+                for (int i = 0; i < key_frame_list_.Count; ++i)
+                {
+                    key_frame_list_[i] = (int)((double)key_frame_list_[i] * new_frame_rate * video_scale_
+                        / ((double)new_frame_scale * video_rate_));
+                }
+                video_rate_ = new_frame_rate;
+                video_scale_ = new_frame_scale;
+            }
+
+            AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+        }
+
         private void Clear()
         {
             format_context = null;
@@ -425,8 +533,11 @@ namespace AVCodec
             video_buffer_manager_ = null;
             audio_buffer_manager_ = null;
 
+            video_rate_ = 24;
+            video_scale_ = 1;
+
             key_frame_list_ = new List<int>();
-            key_dts_list_ = new List<int>();
+            key_dts_list_ = new List<long>();
 
             current_frame_ = 0;
 
@@ -467,7 +578,7 @@ namespace AVCodec
                 }
 
                 if (HasVideo && current_frame_ >= last_requested_frame_
-                                    + video_buffer_manager_.buffering_frame_num_ / 2)
+                                    + video_buffer_manager_.BufferingFrameNum / 2)
                 {
                     Thread.Sleep(1); // デコードしないで寝る
                 }
@@ -540,16 +651,16 @@ namespace AVCodec
             return key_frame_list_.Count - 1;
         }
 
-        private int VideoFrameToDts(int frame)
+        private long VideoFrameToDts(int frame)
         {
-            return (int)((double)frame * video_stream.r_frame_rate.den * video_stream.time_base.den
-                / ((double)video_stream.r_frame_rate.num * video_stream.time_base.num) + 0.5);
+            return (long)((double)frame * video_scale_ * video_stream.time_base.den
+                / ((double)video_rate_ * video_stream.time_base.num) + 0.5);
         }
 
-        private int DtsToVideoFrame(int dts)
+        private int DtsToVideoFrame(long dts)
         {
-            return (int)((double)dts * video_stream.r_frame_rate.num * video_stream.time_base.num
-                / ((double)video_stream.r_frame_rate.den * video_stream.time_base.den) + 0.5);
+            return (int)((double)dts * video_rate_ * video_stream.time_base.num
+                / ((double)video_scale_ * video_stream.time_base.den) + 0.5);
         }
 
         private int AudioByteToDts(int byte_size)
@@ -559,7 +670,7 @@ namespace AVCodec
                 * audio_stream.time_base.num) + 0.5);
         }
 
-        private int DtsToAudioByte(int dts)
+        private int DtsToAudioByte(long dts)
         {
             return (int)((double)dts
                 * ((double)audio_codec_context.sample_rate * audio_codec_context.channels
@@ -705,7 +816,7 @@ namespace AVCodec
 
             if (frame_block_number > 0)
             {
-                int dts = key_dts_list_[frame_block_number - 1];
+                long dts = key_dts_list_[frame_block_number - 1];
                 AVCodecAPI.av_seek_frame(p_avformat_context, 0, dts + 1, 0);
                 current_frame_ = DtsToVideoFrame(key_dts_list_[frame_block_number]);
             }
@@ -726,14 +837,16 @@ namespace AVCodec
             private VideoBufferList video_buffer_list_;
             private Stack<BufferContainer> empty_buffer_stack_ = new Stack<BufferContainer>();
 
-            public int buffering_frame_num_;
+            private int buffering_frame_limit_;
             private int current_using_frame_num_ = 0;
+            private int start_frame_;
 
-            public VideoBufferManager(AVCodecManager parent, int frame_length, int buffering_frame_num)
+            public VideoBufferManager(AVCodecManager parent, int frame_length, int buffering_frame_limit, int start_frame)
             {
                 parent_ = parent;
                 video_buffer_list_ = new VideoBufferList(frame_length);
-                buffering_frame_num_ = buffering_frame_num;
+                buffering_frame_limit_ = buffering_frame_limit;
+                start_frame_ = start_frame;
             }
 
             public bool[] FrameExistsList
@@ -742,6 +855,11 @@ namespace AVCodec
                 {
                     return video_buffer_list_.FrameExistsList;
                 }
+            }
+
+            public int BufferingFrameNum
+            {
+                get { return buffering_frame_limit_; }
             }
 
             public bool IsExists(int frame)
@@ -778,7 +896,7 @@ namespace AVCodec
 
             public BufferContainer GetEmptyBufferContainer(int frame)
             {
-                if (current_using_frame_num_ < buffering_frame_num_)
+                if (current_using_frame_num_ < buffering_frame_limit_)
                 {
                     BufferContainer buffer = null;
                     try
@@ -787,7 +905,7 @@ namespace AVCodec
                     }
                     catch (OutOfMemoryException)
                     {
-                        buffering_frame_num_ = current_using_frame_num_; // ここで打ち止め
+                        buffering_frame_limit_ = current_using_frame_num_; // ここで打ち止め
                     }
                     if (buffer != null)
                     {
@@ -811,29 +929,29 @@ namespace AVCodec
 
             private int GetEmptyIndex(int frame)
             {
-                for (int i = video_buffer_list_.Length - 1; i >= parent_.last_requested_frame_ + buffering_frame_num_; --i)
+                for (int i = video_buffer_list_.Length - 1; i >= parent_.last_requested_frame_ + buffering_frame_limit_; --i)
                 {
                     if (video_buffer_list_[i] != null)
                     {
                         return i;
                     }
                 }
-                for (int i = 0; i < parent_.last_requested_frame_ - buffering_frame_num_ / 2; ++i)
+                for (int i = 0; i < parent_.last_requested_frame_ - buffering_frame_limit_ / 2; ++i)
                 {
                     if (video_buffer_list_[i] != null)
                     {
                         return i;
                     }
                 }
-                for (int i = Math.Min(parent_.last_requested_frame_ + buffering_frame_num_, parent_.FrameLength - 1);
-                    i >= parent_.last_requested_frame_ + buffering_frame_num_ / 2; --i)
+                for (int i = Math.Min(parent_.last_requested_frame_ + buffering_frame_limit_, parent_.FrameLength - 1);
+                    i >= parent_.last_requested_frame_ + buffering_frame_limit_ / 2; --i)
                 {
                     if (video_buffer_list_[i] != null)
                     {
                         return i;
                     }
                 }
-                for (int i = Math.Max(frame - buffering_frame_num_ / 2, 0); i < frame + buffering_frame_num_ / 2; ++i)
+                for (int i = Math.Max(frame - buffering_frame_limit_ / 2, 0); i < frame + buffering_frame_limit_ / 2; ++i)
                 {
                     if (video_buffer_list_[i] != null)
                     {
@@ -865,6 +983,10 @@ namespace AVCodec
                 {
                     frame = parent_.FrameLength - 1;
                 }
+                if (frame < start_frame_)
+                {
+                    frame = start_frame_;
+                }
 
                 return video_buffer_list_[frame];
             }
@@ -874,6 +996,10 @@ namespace AVCodec
                 if (frame >= parent_.FrameLength)
                 {
                     frame = parent_.FrameLength - 1;
+                }
+                if (frame < start_frame_)
+                {
+                    frame = start_frame_;
                 }
 
                 if (video_buffer_list_[frame] != null)
