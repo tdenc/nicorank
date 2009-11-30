@@ -568,14 +568,14 @@ namespace nicoranktest
         }
 
         [Test]
-        public void GetMylistPageFromMyPage()
+        public void GetMylistPageFromMyPageTest()
         {
             string mylist_id = TestUtility.TestData[TestUtility.KEY_MYLIST_ID];
 
             TestUtility.EnsureLogin(network_);
 
             string html = network_.GetMylistPageFromMyPage();
-            Assert.That(html, Text.Contains(mylist_id), "GetMylistPageFromMyPage1");
+            Assert.That(html, Text.Contains(mylist_id), "GetMylistPageFromMyPageTest1");
         }
 
         [Test]
@@ -986,7 +986,7 @@ namespace nicoranktest
 
             TestUtility.Message("CommentTest - Getting comments.");
             result = network_.GetComment(video_id, -10);
-            TestUtility.Message(result);
+            Assert.That(result, Text.Contains(comment), "CommentTest1");
         }
     }
 }
