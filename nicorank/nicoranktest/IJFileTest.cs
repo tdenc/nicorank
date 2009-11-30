@@ -24,6 +24,18 @@ namespace nicoranktest
             utf8n_ = new UTF8Encoding(false, true);
         }
 
+        private static string WriteAndReadText(string file_path, string original_text, Encoding file_encoding, IJFile.EncodingPriority read_encoding)
+        {
+            string text;
+            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (TextWriter writer = new StreamWriter(output, file_encoding))
+            {
+                writer.Write(original_text);
+            }
+            text = IJFile.ReadVer2(file_path, read_encoding);
+            return text;
+        }
+
         [Test]
         public void ReadVer2Test1()
         {
@@ -40,30 +52,15 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test1-2");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test1-3");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test1-4");
         }
 
@@ -83,30 +80,15 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test2-2");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test2-3");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test2-4");
         }
 
@@ -126,30 +108,15 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test3-2");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test3-3");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test3-4");
         }
 
@@ -169,48 +136,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test4-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test4-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test4-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test4-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test4-6");
         }
 
@@ -230,48 +172,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test5-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test5-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test5-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test5-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test5-6");
         }
 
@@ -291,48 +208,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test6-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test6-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test6-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test6-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test6-6");
         }
 
@@ -352,48 +244,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test7-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test7-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test7-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test7-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test7-6");
         }
 
@@ -413,48 +280,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test8-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test8-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test8-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test8-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test8-6");
         }
 
@@ -474,48 +316,23 @@ namespace nicoranktest
             string original_text;
 
             original_text = test_text_1;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test9-2");
 
             original_text = test_text_2;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test9-3");
 
             original_text = test_text_3;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test9-4");
 
             original_text = test_text_4;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test9-5");
 
             original_text = test_text_5;
-            using (Stream output = File.Open(file_path, FileMode.Create, FileAccess.Write, FileShare.None))
-            using (TextWriter writer = new StreamWriter(output, file_encoding))
-            {
-                writer.Write(original_text);
-            }
-            text = IJFile.ReadVer2(file_path, read_encoding);
+            text = WriteAndReadText(file_path, original_text, file_encoding, read_encoding);
             Assert.That(text, Is.EqualTo(original_text), "ReadVer2Test9-6");
         }
     }
