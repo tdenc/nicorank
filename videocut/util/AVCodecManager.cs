@@ -190,7 +190,7 @@ namespace AVCodec
             {
                 if (!is_first)
                 {
-                    AVCodecAPI.av_seek_frame(p_avformat_context, 0, last_dts + 1, 0);
+                    AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, last_dts + 1, 0);
                 }
 
                 while ((c = AVCodecAPI.av_read_frame(p_avformat_context, p_packet)) >= 0)
@@ -211,7 +211,7 @@ namespace AVCodec
                     container.Destruct();
                 }
             }
-            AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+            AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, 0, 0);
 
             if (IsTimeScaleFour())
             {
@@ -451,7 +451,7 @@ namespace AVCodec
                     break;
                 }
             }
-            AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+            AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, 0, 0);
 
             return dts[1] - dts[0] == 1001 && dts[2] - dts[1] == 1001 && dts[3] - dts[2] == 2002;
         }
@@ -501,7 +501,7 @@ namespace AVCodec
                 video_scale_ = new_frame_scale;
             }
 
-            AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+            AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, 0, 0);
         }
 
         private void Clear()
@@ -817,12 +817,12 @@ namespace AVCodec
             if (frame_block_number > 0)
             {
                 long dts = key_dts_list_[frame_block_number - 1];
-                AVCodecAPI.av_seek_frame(p_avformat_context, 0, dts + 1, 0);
+                AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, dts + 1, 0);
                 current_frame_ = DtsToVideoFrame(key_dts_list_[frame_block_number]);
             }
             else
             {
-                AVCodecAPI.av_seek_frame(p_avformat_context, 0, 0, 0);
+                AVCodecAPI.av_seek_frame(p_avformat_context, video_stream_index, 0, 0);
                 current_frame_ = 0;
             }
             av_packet_queue_.Clear(); // パケットをフラッシュする
