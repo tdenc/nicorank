@@ -393,6 +393,11 @@ namespace nicorank
             nico_mylist_.PreviewMylistDescription((string)param_[0], path_mgr_.GetInputRankFilePath());
         }
 
+        public void GetMyMylistList()
+        {
+            msg_receiver_.Write(nico_mylist_.GetMyMylistList());
+        }
+
         public void AddTags()
         {
             tag_manager_.AddTags((List<string>)param_[0], (List<bool>)param_[1], (string)param_[2]);

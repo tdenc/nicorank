@@ -463,6 +463,7 @@
             this.tabPageTagComment = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.linkLabelMakuUserId = new System.Windows.Forms.LinkLabel();
             this.buttonMakeUserId = new System.Windows.Forms.Button();
             this.textBoxMakeUserIdOutput = new System.Windows.Forms.TextBox();
             this.label49 = new System.Windows.Forms.Label();
@@ -470,9 +471,9 @@
             this.radioButtonMakeUserIdFromDir = new System.Windows.Forms.RadioButton();
             this.radioButtonMakeUserIdFromFile = new System.Windows.Forms.RadioButton();
             this.label45 = new System.Windows.Forms.Label();
+            this.buttonGetMyMylistList = new System.Windows.Forms.Button();
             this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
             this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
-            this.linkLabelMakuUserId = new System.Windows.Forms.LinkLabel();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -1035,6 +1036,7 @@
             // 
             // tabPageOther2
             // 
+            this.tabPageOther2.Controls.Add(this.buttonGetMyMylistList);
             this.tabPageOther2.Controls.Add(this.labelCopyRight);
             this.tabPageOther2.Controls.Add(this.label26);
             this.tabPageOther2.Controls.Add(this.label15);
@@ -5295,6 +5297,17 @@
             this.tabPage3.Text = "おまけ2";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // linkLabelMakuUserId
+            // 
+            this.linkLabelMakuUserId.AutoSize = true;
+            this.linkLabelMakuUserId.Location = new System.Drawing.Point(402, 17);
+            this.linkLabelMakuUserId.Name = "linkLabelMakuUserId";
+            this.linkLabelMakuUserId.Size = new System.Drawing.Size(130, 12);
+            this.linkLabelMakuUserId.TabIndex = 11;
+            this.linkLabelMakuUserId.TabStop = true;
+            this.linkLabelMakuUserId.Text = "詳しくはこちらをご覧ください";
+            this.linkLabelMakuUserId.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelMakuUserId_LinkClicked);
+            // 
             // buttonMakeUserId
             // 
             this.buttonMakeUserId.Location = new System.Drawing.Point(130, 164);
@@ -5366,6 +5379,16 @@
             this.label45.TabIndex = 0;
             this.label45.Text = "投稿者情報作成";
             // 
+            // buttonGetMyMylistList
+            // 
+            this.buttonGetMyMylistList.Location = new System.Drawing.Point(308, 226);
+            this.buttonGetMyMylistList.Name = "buttonGetMyMylistList";
+            this.buttonGetMyMylistList.Size = new System.Drawing.Size(146, 23);
+            this.buttonGetMyMylistList.TabIndex = 9;
+            this.buttonGetMyMylistList.Text = "自分のマイリスト番号取得";
+            this.buttonGetMyMylistList.UseVisualStyleBackColor = true;
+            this.buttonGetMyMylistList.Click += new System.EventHandler(this.buttonGetMyMylistList_Click);
+            // 
             // selectFileBoxMakeUserIdFromFile
             // 
             this.selectFileBoxMakeUserIdFromFile.FileDialog = this.openFileDialog1;
@@ -5385,17 +5408,6 @@
             this.selectFileBoxMakeUserIdFromDir.Name = "selectFileBoxMakeUserIdFromDir";
             this.selectFileBoxMakeUserIdFromDir.Size = new System.Drawing.Size(423, 23);
             this.selectFileBoxMakeUserIdFromDir.TabIndex = 3;
-            // 
-            // linkLabelMakuUserId
-            // 
-            this.linkLabelMakuUserId.AutoSize = true;
-            this.linkLabelMakuUserId.Location = new System.Drawing.Point(402, 17);
-            this.linkLabelMakuUserId.Name = "linkLabelMakuUserId";
-            this.linkLabelMakuUserId.Size = new System.Drawing.Size(130, 12);
-            this.linkLabelMakuUserId.TabIndex = 11;
-            this.linkLabelMakuUserId.TabStop = true;
-            this.linkLabelMakuUserId.Text = "詳しくはこちらをご覧ください";
-            this.linkLabelMakuUserId.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelMakuUserId_LinkClicked);
             // 
             // FormMain
             // 
@@ -5986,6 +5998,7 @@
         private System.Windows.Forms.TextBox textBoxMakeUserIdOutput;
         private System.Windows.Forms.Button buttonMakeUserId;
         private System.Windows.Forms.LinkLabel linkLabelMakuUserId;
+        private System.Windows.Forms.Button buttonGetMyMylistList;
     }
 }
 

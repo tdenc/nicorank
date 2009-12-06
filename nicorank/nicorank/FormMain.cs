@@ -1471,5 +1471,10 @@ namespace nicorank
         {
             System.Diagnostics.Process.Start("http://www.daily-vocaran.info/nicorank/onegai.html");
         }
+
+        private void buttonGetMyMylistList_Click(object sender, EventArgs e)
+        {
+            StartThread(nicorank_mgr_.GetMyMylistList, null, false);
+        }
     }
 }

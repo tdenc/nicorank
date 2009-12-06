@@ -444,6 +444,27 @@ namespace NicoTools
             }
             msgout_.Write(buff.ToString());
         }
+
+        public string GetMyMylistList()
+        {
+            List<MylistInfo> mylist_info_list = niconico_network_.GetMylistInfoListFromMypage();
+            StringBuilder buff = new StringBuilder();
+
+            for (int i = 0; i < mylist_info_list.Count; ++i)
+            {
+                buff.Append(mylist_info_list[i].mylist_id).Append("\t");
+                if (mylist_info_list[i].is_public)
+                {
+                    buff.Append("公開\t");
+                }
+                else
+                {
+                    buff.Append("非公開\t");
+                }
+                buff.Append(mylist_info_list[i].title).Append("\t").Append(mylist_info_list[i].description).Append("\r\n");
+            }
+            return buff.ToString();
+        }
     }
 
     public class NicoTagManager
