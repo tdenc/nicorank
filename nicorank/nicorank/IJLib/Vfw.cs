@@ -246,7 +246,7 @@ namespace IJLib.Vfw
                 int hr = VfwApi.AVIStreamGetFrameClose(pgf_);
                 if (hr != 0)
                 {
-                    throw new VfwException("AVIStreamGetFrameClose", 0);
+                    throw new VfwException("AVIStreamGetFrameClose", hr);
                 }
                 pgf_ = IntPtr.Zero;
             }
