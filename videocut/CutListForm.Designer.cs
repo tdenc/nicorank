@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.buttonOpen = new System.Windows.Forms.Button();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -37,34 +35,20 @@
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonSave = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonAppend = new System.Windows.Forms.Button();
             this.checkBoxFixLength = new System.Windows.Forms.CheckBox();
             this.textBoxVideoLength = new System.Windows.Forms.TextBox();
             this.labelVideoLength = new System.Windows.Forms.Label();
-            this.selectFileBoxCutListFile = new videocut.SelectFileBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSplitButtonOpenFile = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripSplitButtonSaveFile = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 12);
-            this.label1.TabIndex = 52;
-            this.label1.Text = "カットリストファイル名";
-            // 
-            // buttonOpen
-            // 
-            this.buttonOpen.Location = new System.Drawing.Point(12, 50);
-            this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(76, 26);
-            this.buttonOpen.TabIndex = 50;
-            this.buttonOpen.Text = "開く";
-            this.buttonOpen.UseVisualStyleBackColor = true;
-            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
             // dataGridView
             // 
@@ -79,11 +63,13 @@
             this.Column4,
             this.Column5,
             this.Column6});
-            this.dataGridView.Location = new System.Drawing.Point(12, 87);
+            this.dataGridView.Location = new System.Drawing.Point(0, 25);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 21;
-            this.dataGridView.Size = new System.Drawing.Size(346, 306);
+            this.dataGridView.Size = new System.Drawing.Size(367, 367);
             this.dataGridView.TabIndex = 53;
+            this.dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_CellValueChanged);
+            this.dataGridView.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView_UserDeletedRow);
             // 
             // Column1
             // 
@@ -124,20 +110,6 @@
             // 
             this.Column6.HeaderText = "その他";
             this.Column6.Name = "Column6";
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(135, 50);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(76, 26);
-            this.buttonSave.TabIndex = 54;
-            this.buttonSave.Text = "保存";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // buttonAppend
             // 
@@ -183,37 +155,75 @@
             this.labelVideoLength.TabIndex = 58;
             this.labelVideoLength.Text = "秒";
             // 
-            // selectFileBoxCutListFile
+            // toolStrip1
             // 
-            this.selectFileBoxCutListFile.FileDialog = this.openFileDialog1;
-            this.selectFileBoxCutListFile.FileName = "";
-            this.selectFileBoxCutListFile.FolderBrowserDialog = null;
-            this.selectFileBoxCutListFile.Location = new System.Drawing.Point(10, 22);
-            this.selectFileBoxCutListFile.Name = "selectFileBoxCutListFile";
-            this.selectFileBoxCutListFile.Size = new System.Drawing.Size(348, 23);
-            this.selectFileBoxCutListFile.TabIndex = 51;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSplitButtonOpenFile,
+            this.toolStripSplitButtonSaveFile});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(367, 25);
+            this.toolStrip1.TabIndex = 59;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSplitButtonOpenFile
+            // 
+            this.toolStripSplitButtonOpenFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButtonOpenFile.Image = global::videocut.Properties.Resources.folder;
+            this.toolStripSplitButtonOpenFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonOpenFile.Name = "toolStripSplitButtonOpenFile";
+            this.toolStripSplitButtonOpenFile.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButtonOpenFile.Text = "開く";
+            this.toolStripSplitButtonOpenFile.ButtonClick += new System.EventHandler(this.toolStripSplitButtonOpenFile_ButtonClick);
+            this.toolStripSplitButtonOpenFile.DropDownOpening += new System.EventHandler(this.toolStripSplitButtonOpenFile_DropDownOpening);
+            // 
+            // toolStripSplitButtonSaveFile
+            // 
+            this.toolStripSplitButtonSaveFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButtonSaveFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemSave,
+            this.toolStripMenuItemSaveAs});
+            this.toolStripSplitButtonSaveFile.Image = global::videocut.Properties.Resources.action_save;
+            this.toolStripSplitButtonSaveFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonSaveFile.Name = "toolStripSplitButtonSaveFile";
+            this.toolStripSplitButtonSaveFile.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButtonSaveFile.Text = "保存";
+            this.toolStripSplitButtonSaveFile.ButtonClick += new System.EventHandler(this.toolStripSplitButtonSaveFile_ButtonClick);
+            // 
+            // toolStripMenuItemSave
+            // 
+            this.toolStripMenuItemSave.Name = "toolStripMenuItemSave";
+            this.toolStripMenuItemSave.Size = new System.Drawing.Size(161, 22);
+            this.toolStripMenuItemSave.Text = "保存";
+            this.toolStripMenuItemSave.Click += new System.EventHandler(this.toolStripMenuItemSave_Click);
+            // 
+            // toolStripMenuItemSaveAs
+            // 
+            this.toolStripMenuItemSaveAs.Name = "toolStripMenuItemSaveAs";
+            this.toolStripMenuItemSaveAs.Size = new System.Drawing.Size(161, 22);
+            this.toolStripMenuItemSaveAs.Text = "名前をつけて保存...";
+            this.toolStripMenuItemSaveAs.Click += new System.EventHandler(this.toolStripMenuItemSaveAs_Click);
             // 
             // CutListForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(367, 434);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.labelVideoLength);
             this.Controls.Add(this.textBoxVideoLength);
             this.Controls.Add(this.checkBoxFixLength);
             this.Controls.Add(this.buttonAppend);
-            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.dataGridView);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.selectFileBoxCutListFile);
-            this.Controls.Add(this.buttonOpen);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "CutListForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "カットリスト";
+            this.Text = "カットリスト - (無題)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CutListForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,21 +231,23 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private SelectFileBox selectFileBoxCutListFile;
-        private System.Windows.Forms.Button buttonOpen;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.Button buttonAppend;
         private System.Windows.Forms.CheckBox checkBoxFixLength;
         private System.Windows.Forms.TextBox textBoxVideoLength;
         private System.Windows.Forms.Label labelVideoLength;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonOpenFile;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonSaveFile;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSave;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSaveAs;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

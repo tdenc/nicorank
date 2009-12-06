@@ -40,6 +40,7 @@
             this.radioButtonMemorySizeManual = new System.Windows.Forms.RadioButton();
             this.radioButtonMemorySizeAuto = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxIsAddingSave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -165,6 +166,16 @@
             this.label1.TabIndex = 7;
             this.label1.Text = "一部オプションは動画を開き直すと有効になります";
             // 
+            // checkBoxIsAddingSave
+            // 
+            this.checkBoxIsAddingSave.AutoSize = true;
+            this.checkBoxIsAddingSave.Location = new System.Drawing.Point(12, 168);
+            this.checkBoxIsAddingSave.Name = "checkBoxIsAddingSave";
+            this.checkBoxIsAddingSave.Size = new System.Drawing.Size(213, 16);
+            this.checkBoxIsAddingSave.TabIndex = 8;
+            this.checkBoxIsAddingSave.Text = "「追加」ボタン押下時にカットリストを保存";
+            this.checkBoxIsAddingSave.UseVisualStyleBackColor = true;
+            // 
             // SettingForm
             // 
             this.AcceptButton = this.buttonOK;
@@ -172,6 +183,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(366, 272);
+            this.Controls.Add(this.checkBoxIsAddingSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBoxVideoSizeFixedHeight);
@@ -206,5 +218,6 @@
         private System.Windows.Forms.RadioButton radioButtonMemorySizeAuto;
         private System.Windows.Forms.Label labelMemorySize;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBoxIsAddingSave;
     }
 }

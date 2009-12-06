@@ -77,6 +77,8 @@ namespace videocut
             cut_list_form_.LoadFromConfig(config_);
             SetFormSize();
 
+            cut_list_form_.IsModifyingDataGridView = false;
+
 #if DEBUG
             DebugInfoForm form_info = new DebugInfoForm();
             form_info.Owner = this;
@@ -811,6 +813,7 @@ namespace videocut
             if (setting_form.ShowDialog(this) == DialogResult.OK)
             {
                 setting_form.SetToConfig(config_);
+                cut_list_form_.IsAddingSave = config_.IsAddingSave;
             }
         }
 

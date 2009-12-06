@@ -17,10 +17,31 @@ namespace videocut
     public partial class CutListForm : Form
     {
         private MainForm main_form_;
+        private bool is_adding_save_ = false;
+        private bool is_modifying_ = false;
+        private string cut_list_path_ = "";
+        private List<string> history_filename_list_ = new List<string>();
+
+        private const string title_prefix_ = "カットリスト";
+        private const string modifying_text_ = "(更新)";
+        private const string opening_text_ = "開く...";
+        private const int max_history_num_ = 10;
 
         public CutListForm()
         {
             InitializeComponent();
+        }
+
+        public bool IsAddingSave
+        {
+            get { return is_adding_save_; }
+            set { is_adding_save_ = value; }
+        }
+
+        public bool IsModifyingDataGridView
+        {
+            get { return is_modifying_; }
+            set { is_modifying_ = value; }
         }
 
         public void SetForm(MainForm form)
@@ -28,23 +49,167 @@ namespace videocut
             main_form_ = form;
         }
 
-        private void buttonOpen_Click(object sender, EventArgs e)
+        private void checkBoxFixLength_CheckedChanged(object sender, EventArgs e)
         {
-            if (dataGridView.Rows.Count > 1)
+            textBoxVideoLength.Enabled = checkBoxFixLength.Checked;
+            labelVideoLength.Enabled = checkBoxFixLength.Checked;
+        }
+
+        private void buttonAppend_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow row = new DataGridViewRow();
+            row.CreateCells(dataGridView);
+
+            row.Cells[0].Value = Path.GetFileNameWithoutExtension(main_form_.GetFileName());
+            row.Cells[1].Value = main_form_.GetStartPoint();
+            row.Cells[2].Value = (checkBoxFixLength.Checked ? "" : main_form_.GetEndPoint());
+            row.Cells[3].Value = (checkBoxFixLength.Checked ? textBoxVideoLength.Text : "");
+            row.Cells[4].Value = "";
+            row.Cells[5].Value = "";
+
+            dataGridView.Rows.Add(row);
+            if (is_adding_save_ && cut_list_path_ != "")
             {
-                if (MessageBox.Show(this, "ファイルを読み込みますか？", "確認", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                SaveFile(cut_list_path_);
+            }
+            else
+            {
+                SetModifying();
+            }
+        }
+
+        public void SetToConfig(VideoCutConfig config)
+        {
+            config.IsFixLength = checkBoxFixLength.Checked;
+            config.VideoLength = textBoxVideoLength.Text;
+            config.CutListHistoryFileNameList.Clear();
+            config.CutListHistoryFileNameList.AddRange(history_filename_list_);
+        }
+
+        public void LoadFromConfig(VideoCutConfig config)
+        {
+            checkBoxFixLength.Checked = config.IsFixLength;
+            textBoxVideoLength.Text = config.VideoLength;
+            history_filename_list_.Clear();
+            history_filename_list_.AddRange(config.CutListHistoryFileNameList);
+
+            is_adding_save_ = config.IsAddingSave; // ロードのみ
+        }
+
+        private void CutListForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (is_modifying_)
+            {
+                if (!ConfirmSave())
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                Hide();
+            }
+        }
+
+        private void toolStripSplitButtonOpenFile_ButtonClick(object sender, EventArgs e)
+        {
+            OpenWithConfirming("");
+        }
+
+        private void toolStripSplitButtonOpenFile_DropDownOpening(object sender, EventArgs e)
+        {
+            toolStripSplitButtonOpenFile.DropDown.Items.Clear();
+
+            for (int i = history_filename_list_.Count - 1; i >= 0; --i)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(history_filename_list_[i]);
+                item.Click += new EventHandler(delegate(object sender2, EventArgs e2)
+                {
+                    OpenWithConfirming(((ToolStripMenuItem)sender2).Text);
+                });
+                toolStripSplitButtonOpenFile.DropDown.Items.Add(item);
+            }
+            toolStripSplitButtonOpenFile.DropDown.Items.Add(new ToolStripSeparator());
+            ToolStripMenuItem item_open = new ToolStripMenuItem(opening_text_);
+            item_open.Click += new EventHandler(delegate
+            {
+                OpenWithConfirming("");
+            });
+            toolStripSplitButtonOpenFile.DropDown.Items.Add(item_open);
+        }
+
+        private void toolStripSplitButtonSaveFile_ButtonClick(object sender, EventArgs e)
+        {
+            SaveWithDialog(false);
+        }
+
+        private void toolStripMenuItemSave_Click(object sender, EventArgs e)
+        {
+            SaveWithDialog(false);
+        }
+
+        private void toolStripMenuItemSaveAs_Click(object sender, EventArgs e)
+        {
+            SaveWithDialog(true);
+        }
+
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            SetModifying();
+        }
+
+        private void dataGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            SetModifying();
+        }
+
+        private void SetModifying()
+        {
+            if (!is_modifying_)
+            {
+                this.Text += modifying_text_;
+                is_modifying_ = true;
+            }
+        }
+
+        private void OpenWithConfirming(string filename)
+        {
+            if (is_modifying_)
+            {
+                if (!ConfirmSave())
                 {
                     return;
                 }
             }
 
-            if (!File.Exists(selectFileBoxCutListFile.FileName))
+            if (filename == "")
+            {
+                string old_path = Directory.GetCurrentDirectory();
+                if (openFileDialog1.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                Directory.SetCurrentDirectory(old_path);
+                OpenFile(openFileDialog1.FileName);
+            }
+            else
+            {
+                OpenFile(filename);
+            }
+        }
+
+        private void OpenFile(string filename)
+        {
+            if (!File.Exists(filename))
             {
                 MessageBox.Show(this, "ファイルが存在しません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            string[] lines = File.ReadAllLines(selectFileBoxCutListFile.FileName, Encoding.GetEncoding(932));
+            string[] lines = File.ReadAllLines(filename, Encoding.GetEncoding(932));
 
             dataGridView.Rows.Clear();
 
@@ -72,20 +237,68 @@ namespace videocut
 
                 dataGridView.Rows.Add(row);
             }
+            AddToHistory(filename);
+            is_modifying_ = false;
+            cut_list_path_ = filename;
+
+            this.Text = title_prefix_ + " - " + Path.GetFileName(filename);
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void AddToHistory(string filename)
         {
-            string filename = selectFileBoxCutListFile.FileName;
-
-            if (File.Exists(filename))
+            if (history_filename_list_.Contains(filename))
             {
-                if (MessageBox.Show(this, "ファイルを上書きしますか？", "確認", MessageBoxButtons.YesNo) != DialogResult.Yes)
-                {
-                    return;
-                }
+                // 要素を先頭へ
+                history_filename_list_.Remove(filename);
             }
+            history_filename_list_.Add(filename);
+            if (history_filename_list_.Count > max_history_num_)
+            {
+                history_filename_list_.RemoveRange(0, history_filename_list_.Count - max_history_num_);
+            }
+        }
 
+        private bool ConfirmSave()
+        {
+            DialogResult result = MessageBox.Show(this, "カットリストの変更を保存しますか？", "確認",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+            if (result == DialogResult.Yes)
+            {
+                if (!SaveWithDialog(false))
+                {
+                    return false;
+                }
+                MessageBox.Show(this, "保存しました。", "確認", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (result == DialogResult.Cancel)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        // is_show_dialog が true で、かつ cut_list_path_ が空なら保存ダイアログを出さない。それ以外の場合は出す
+        private bool SaveWithDialog(bool is_show_dialog)
+        {
+            if (is_show_dialog || cut_list_path_ == "")
+            {
+                string old_path = Directory.GetCurrentDirectory();
+                if (saveFileDialog1.ShowDialog() != DialogResult.OK)
+                {
+                    return false;
+                }
+                Directory.SetCurrentDirectory(old_path);
+                SaveFile(saveFileDialog1.FileName);
+            }
+            else
+            {
+                SaveFile(cut_list_path_);
+            }
+            return true;
+        }
+
+        private void SaveFile(string filename)
+        {
             StringBuilder buff = new StringBuilder();
 
             for (int i = 0; i < dataGridView.Rows.Count - 1; ++i) // 最後の空行は飛ばす
@@ -106,53 +319,14 @@ namespace videocut
                 }
                 buff.Append("\r\n");
             }
-            File.WriteAllText(filename, buff.ToString());
+            System.Diagnostics.Debug.WriteLine("Save: " + filename);
+            File.WriteAllText(filename, buff.ToString(), Encoding.GetEncoding(932));
 
-            MessageBox.Show(this, "保存しました");
-        }
+            AddToHistory(filename);
 
-        private void checkBoxFixLength_CheckedChanged(object sender, EventArgs e)
-        {
-            textBoxVideoLength.Enabled = checkBoxFixLength.Checked;
-            labelVideoLength.Enabled = checkBoxFixLength.Checked;
-        }
-
-        private void buttonAppend_Click(object sender, EventArgs e)
-        {
-            DataGridViewRow row = new DataGridViewRow();
-            row.CreateCells(dataGridView);
-
-            row.Cells[0].Value = Path.GetFileNameWithoutExtension(main_form_.GetFileName());
-            row.Cells[1].Value = main_form_.GetStartPoint();
-            row.Cells[2].Value = (checkBoxFixLength.Checked ? "" : main_form_.GetEndPoint());
-            row.Cells[3].Value = (checkBoxFixLength.Checked ? textBoxVideoLength.Text : "");
-            row.Cells[4].Value = "";
-            row.Cells[5].Value = "";
-
-            dataGridView.Rows.Add(row);
-        }
-
-        public void SetToConfig(VideoCutConfig config)
-        {
-            config.CutListFileName = selectFileBoxCutListFile.FileName;
-            config.IsFixLength = checkBoxFixLength.Checked;
-            config.VideoLength = textBoxVideoLength.Text;
-        }
-
-        public void LoadFromConfig(VideoCutConfig config)
-        {
-            selectFileBoxCutListFile.FileName = config.CutListFileName;
-            checkBoxFixLength.Checked = config.IsFixLength;
-            textBoxVideoLength.Text = config.VideoLength;
-        }
-
-        private void CutListForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                Hide();
-            }
+            is_modifying_ = false;
+            cut_list_path_ = filename;
+            this.Text = title_prefix_ + " - " + Path.GetFileName(filename);
         }
     }
 }

@@ -32,6 +32,9 @@ namespace videocut
         private Point cut_list_form_location = new Point(int.MinValue, int.MinValue);
         private Size cut_list_form_size = new Size(int.MinValue, int.MinValue);
 
+        private List<string> cut_list_history_filename_list = new List<string>();
+        private bool is_adding_save = false;
+
         public string VideoFileName
         {
             get { return video_file_name; }
@@ -150,6 +153,18 @@ namespace videocut
         {
             get { return memory_size; }
             set { memory_size = value; }
+        }
+
+        public List<string> CutListHistoryFileNameList
+        {
+            get { return cut_list_history_filename_list; }
+            set { cut_list_history_filename_list = value; }
+        }
+
+        public bool IsAddingSave
+        {
+            get { return is_adding_save; }
+            set { is_adding_save = value; }
         }
     }
 }

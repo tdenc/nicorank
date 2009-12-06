@@ -47,6 +47,7 @@ namespace videocut
             {
                 config.MemorySize = -1;
             }
+            config.IsAddingSave = checkBoxIsAddingSave.Checked;
         }
 
         public void GetFromConfig(VideoCutConfig config)
@@ -65,6 +66,7 @@ namespace videocut
             {
                 textBoxMemorySize.Text = config.MemorySize.ToString();
             }
+            checkBoxIsAddingSave.Checked = config.IsAddingSave;
         }
 
         private void checkBoxVideoSizeFixed_CheckedChanged(object sender, EventArgs e)

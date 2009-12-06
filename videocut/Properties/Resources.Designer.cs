@@ -60,6 +60,20 @@ namespace videocut.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap action_save {
+            get {
+                object obj = ResourceManager.GetObject("action_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap play {
             get {
                 object obj = ResourceManager.GetObject("play", resourceCulture);
