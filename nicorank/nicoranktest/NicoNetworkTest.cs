@@ -765,6 +765,31 @@ namespace nicoranktest
                     TestUtility.Message(e.ToString());
                 }
 
+                TestUtility.Wait(5);
+
+                TestUtility.Message("Running MylistTest - Fetch my mylist information.");
+                List<MylistInfo> mylist_info_list = network_.GetMylistInfoListFromMypage();
+                // mylist1, mylist2, mylist3, mylist_id
+                Assert.That(mylist_info_list.Count, Is.GreaterThanOrEqualTo(4), "MylistTest10-1");
+                MylistInfo mylist_info1 = mylist_info_list.Find(delegate(MylistInfo mi) { return mi.mylist_id == mylist_id1; });
+                Assert.That(mylist_info1, Is.Not.Null, "MylistTest10-2");
+                Assert.That(mylist_info1.description, Is.EqualTo(mylist_description1), "MylistTest10-3");
+                Assert.That(mylist_info1.is_public, Is.EqualTo(mylist_visibility1), "MylistTest10-4");
+                //TODO Assert.That(mylist_info1.number_of_item, Is.EqualTo(2), "MylistTest10-5");
+                Assert.That(mylist_info1.title, Is.EqualTo(mylist_title1), "MylistTest10-6");
+                MylistInfo mylist_info2 = mylist_info_list.Find(delegate(MylistInfo mi) { return mi.mylist_id == mylist_id2; });
+                Assert.That(mylist_info2, Is.Not.Null, "MylistTest10-2");
+                Assert.That(mylist_info2.description, Is.EqualTo(mylist_description2), "MylistTest10-7");
+                Assert.That(mylist_info2.is_public, Is.EqualTo(mylist_visibility2), "MylistTest10-8");
+                //TODO Assert.That(mylist_info2.number_of_item, Is.EqualTo(0), "MylistTest10-9");
+                Assert.That(mylist_info2.title, Is.EqualTo(mylist_title2), "MylistTest10-10");
+                MylistInfo mylist_info3 = mylist_info_list.Find(delegate(MylistInfo mi) { return mi.mylist_id == mylist_id3; });
+                Assert.That(mylist_info3, Is.Not.Null, "MylistTest10-11");
+                Assert.That(mylist_info3.description, Is.EqualTo(mylist_description3), "MylistTest10-12");
+                Assert.That(mylist_info3.is_public, Is.EqualTo(mylist_visibility3), "MylistTest10-13");
+                //TODO Assert.That(mylist_info3.number_of_item, Is.EqualTo(0), "MylistTest10-14");
+                Assert.That(mylist_info3.title, Is.EqualTo(mylist_title3), "MylistTest10-15");
+
 
                 // TODO Move video.
                 // (*mylist1(**video1,**video2) *mylist2() *mylist3())
