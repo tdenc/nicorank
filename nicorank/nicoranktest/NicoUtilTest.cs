@@ -32,7 +32,6 @@ namespace nicoranktest
         }
 
         [Test]
-        [RunUnitTest]
         public void GetVideoTest1()
         {
             TestUtility.Message("Running GetVideoTest1");
