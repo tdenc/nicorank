@@ -1321,5 +1321,14 @@ namespace NicoTools
 
             return true;
         }
+
+        public static int RemoveAll(List<Video> list, Video video)
+        {
+            Predicate<Video> match = delegate(Video v)
+            {
+                return Video.IdEquals(video, v);
+            };
+            return list.RemoveAll(match);
+        }
     }
 }

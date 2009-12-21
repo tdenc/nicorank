@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IJFileTest.Text.cs" />
+    <Compile Include="RankFileTest.cs" />
     <None Include="nicoranktest.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -116,5 +116,40 @@ namespace nicoranktest
             html_count = Directory.GetFiles(temp_directory_path, "*.xml", SearchOption.AllDirectories).Length;
             Assert.That(html_count, Is.EqualTo(9), "DownloadRankingTest4-2");
         }
+
+        [Test]
+        public void GetDetailInfoTest1()
+        {
+            string temp_directory_path = TestUtility.TestData[TestUtility.KEY_TEMP_DIRECTORY];
+            string video_id = TestUtility.TestData[TestUtility.KEY_VIDEO_ID];
+            string video_title = TestUtility.TestData[TestUtility.KEY_VIDEO_TITLE];
+
+            TestUtility.EnsureLogin(network_);
+
+            DirectoryInfo temp_directory = new DirectoryInfo(temp_directory_path);
+            Assert.That(TestUtility.InitDirectory(temp_directory), Is.True, "GetDetailInfoTest1-1");
+
+            string rank_file_path = Path.Combine(temp_directory_path, "rank.txt");
+            string rank_file_text = string.Format("{0}\r\n{1}\r\n", "sm9", video_id);
+            IJFile.WriteVer2(rank_file_path, rank_file_text, IJFile.EncodingPriority.UTF8);
+
+            RankFileCustomFormat custom_format = new RankFileCustomFormat();
+            InputOutputOption iooption = new InputOutputOption(rank_file_path, rank_file_path, custom_format);
+
+            RankingMethod ranking_method = new RankingMethod(HoseiKind.Nothing, SortKind.Nothing, 0);
+
+            List<string> id_list = new List<string>(new string[] {
+                video_id,
+                "sm1097445"
+            });
+
+            network_manager_.GetDetailInfo(id_list, iooption, true, ranking_method, "1");
+
+            RankFile rank_file = new RankFile(rank_file_path, custom_format);
+            List<Video> video_list = rank_file.GetVideoList();
+
+            Assert.That(video_list.Count, Is.EqualTo(3), "GetDetailInfoTest1-2");
+            Assert.That(video_list[1].title, Is.EqualTo(video_title), "GetDetailInfoTest1-3");
+        }
     }
 }

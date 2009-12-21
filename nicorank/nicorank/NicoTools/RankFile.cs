@@ -161,6 +161,25 @@ namespace NicoTools
             video_list_.Add(video);
         }
 
+        /// <summary>
+        /// ランクファイルに video を追加または上書きする。
+        /// </summary>
+        /// <remarks>
+        /// ランクファイルに、引数の video と同じ ID を持つ動画がない場合には、リストに video を追加し、
+        /// ある場合は、その動画の情報を引数の video で上書きする。
+        /// </remarks>
+        /// <param name="video">追加または上書きする動画。</param>
+        /// <returns>
+        /// 引数の video と同じ ID の動画がランクファイルにすでに含まれ、上書きされた場合は true、
+        /// その他の場合は false。
+        /// </returns>
+        public bool AddOrOverwrite(Video video)
+        {
+            int removed_count = VideoListUtil.RemoveAll(video_list_, video);
+            video_list_.Add(video);
+            return (removed_count != 0);
+        }
+
         public void Sort(RankingMethod ranking_method)
         {
             if (ranking_method.sort_kind != SortKind.Nothing)

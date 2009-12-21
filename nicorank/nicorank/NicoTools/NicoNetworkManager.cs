@@ -480,7 +480,8 @@ namespace NicoTools
                 {
                     int dummy;
                     video.pname = TagSet.GetPname(video.tag_set, out dummy);
-                    rank_file.Add(video);
+                    // すでに動画がリストに含まれている場合は取得した情報で上書きする。
+                    rank_file.AddOrOverwrite(video);
                     msgout_.Write(video_id_list[i] + " の情報を取得しました。\r\n");
                 }
                 else
