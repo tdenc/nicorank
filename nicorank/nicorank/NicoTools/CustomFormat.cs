@@ -485,13 +485,20 @@ namespace NicoTools
                     video.title = str;
                     break;
                 case Kind.Date:
-                    if (text_ != "") // 日時用の書式が存在するなら
+                    if (!string.IsNullOrEmpty(str))
                     {
-                        video.submit_date = DateTime.ParseExact(str, text_, null);
+                        if (text_ != "") // 日時用の書式が存在するなら
+                        {
+                            video.submit_date = DateTime.ParseExact(str, text_, null);
+                        }
+                        else
+                        {
+                            video.submit_date = NicoUtil.StringToDate(str);
+                        }
                     }
-                    else
+                    else // 空文字列の場合
                     {
-                        video.submit_date = NicoUtil.StringToDate(str);
+                        video.submit_date = new DateTime();
                     }
                     break;
                 case Kind.Description:
