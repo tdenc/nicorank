@@ -741,41 +741,67 @@ namespace videocut
 
         private void SetFormSize()
         {
+            Rectangle screen = Screen.PrimaryScreen.Bounds;
+
             if (config_.MainFormLocation.X != int.MinValue)
             {
-                this.Location = config_.MainFormLocation;
+                this.Location = AdjustLocation(config_.MainFormLocation, screen);
             }
-            if (config_.MainFormSize.Width != int.MinValue)
+            if (config_.MainFormSize.Width > 0 && config_.MainFormSize.Height > 0)
             {
                 this.Size = config_.MainFormSize;
             }
             if (config_.ControlFormLocation.X != int.MinValue)
             {
-                control_form_.Location = config_.ControlFormLocation;
+                control_form_.Location = AdjustLocation(config_.ControlFormLocation, screen);
             }
             else
             {
                 control_form_.Left = this.Left + this.Width;
                 control_form_.Top = this.Top;
             }
-            if (config_.ControlFormSize.Width != int.MinValue)
+            if (config_.ControlFormSize.Width > 0 && config_.ControlFormSize.Height > 0)
             {
                 control_form_.Size = config_.ControlFormSize;
             }
 
             if (config_.CutListFormLocation.X != int.MinValue)
             {
-                cut_list_form_.Location = config_.CutListFormLocation;
+                cut_list_form_.Location = AdjustLocation(config_.CutListFormLocation, screen);
             }
             else
             {
                 cut_list_form_.Left = this.Left + this.Width;
                 cut_list_form_.Top = control_form_.Top + control_form_.Height;
             }
-            if (config_.CutListFormSize.Width != int.MinValue)
+            if (config_.CutListFormSize.Width > 0 && config_.CutListFormSize.Height > 0)
             {
                 cut_list_form_.Size = config_.CutListFormSize;
             }
+        }
+
+        private Point AdjustLocation(Point location, Rectangle screen)
+        {
+            int x = location.X;
+            int y = location.Y;
+
+            if (x < 0)
+            {
+                x = 0;
+            }
+            else if (x > screen.Width)
+            {
+                x = screen.Width;
+            }
+            if (y < 0)
+            {
+                y = 0;
+            }
+            else if (y > screen.Height)
+            {
+                y = screen.Height;
+            }
+            return new Point(x, y);
         }
 
         private void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
