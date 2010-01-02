@@ -683,7 +683,14 @@ namespace NicoTools
 
             if (!match.Success)
             {
-                throw new NiconicoAddingMylistFailedException("マイリストの追加に失敗しました。html の解析ができませんでした。");
+                if (html.IndexOf("このアイテムはマイリストに登録できません。") >= 0)
+                {
+                    throw new NiconicoAddingMylistFailedException("マイリストの追加に失敗しました。このアイテムはマイリストに登録できません。");
+                }
+                else
+                {
+                    throw new NiconicoAddingMylistFailedException("マイリストの追加に失敗しました。html の解析ができませんでした。");
+                }
             }
 
             string item_id = match.Groups[1].Value;
