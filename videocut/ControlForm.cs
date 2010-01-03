@@ -30,7 +30,55 @@ namespace videocut
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            main_form_.OpenVideo(selectFileBoxVideoFile.FileName);
+            string filename = selectFileBoxVideoFile.FileName;
+            try
+            {
+                if (!File.Exists(filename)) 
+                {
+                    // ファイルが存在しない場合は拡張子だけが異なるファイルが存在するか調べる
+                    if (!ChangeExtension(ref filename))
+                    {
+                        // それでも存在しないならパスを動画フォルダ＋動画ファイルにして存在するか調べる
+                        string f2 = Path.Combine(selectFileBoxVideoFolder.FileName,
+                            selectFileBoxVideoFile.FileName);
+                        if (File.Exists(f2))
+                        {
+                            filename = f2;
+                        }
+                        else
+                        {
+                            // それでも存在しないなら拡張子だけが異なるファイルが存在するか調べる
+                            if (ChangeExtension(ref f2))
+                            {
+                                filename = f2;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            main_form_.OpenVideo(filename);
+        }
+
+        // 拡張子だけが異なるファイルが存在するか調べる。
+        // 存在するならtrueを返し、引数のfilenameを見つかったファイル名にする。
+        // 存在しないならfalseを返す。
+        private bool ChangeExtension(ref string filename)
+        {
+            try
+            {
+                string dir_name = (filename.IndexOf(Path.DirectorySeparatorChar) >= 0 ?
+                    Path.GetDirectoryName(filename) : ".\\");
+                string[] files = Directory.GetFiles(dir_name,
+                            Path.GetFileNameWithoutExtension(filename) + ".*");
+                if (files.Length > 0)
+                {
+                    filename = files[0];
+                    return true;
+                }
+            }
+            catch { }
+            return false;
         }
 
         public string GetFileName()
