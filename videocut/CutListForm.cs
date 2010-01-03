@@ -30,6 +30,10 @@ namespace videocut
         public CutListForm()
         {
             InitializeComponent();
+            foreach (DataGridViewColumn column in dataGridView.Columns) // ソート禁止
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         public bool IsAddingSave
@@ -76,6 +80,8 @@ namespace videocut
             {
                 SetModifying();
             }
+            // 一番下までスクロール
+            dataGridView.FirstDisplayedScrollingRowIndex = dataGridView.Rows.Count - 1;
         }
 
         public void SetToConfig(VideoCutConfig config)
@@ -327,6 +333,40 @@ namespace videocut
             is_modifying_ = false;
             cut_list_path_ = filename;
             this.Text = title_prefix_ + " - " + Path.GetFileName(filename);
+        }
+
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+        }
+
+        private void toolStripMenuItemDeleteRow_Click(object sender, EventArgs e)
+        {
+            HashSet<int> deleting_row_set = new HashSet<int>();
+
+            foreach (DataGridViewCell cell in dataGridView.SelectedCells)
+            {
+                deleting_row_set.Add(cell.RowIndex);
+            }
+
+            List<int> deleting_row_list = new List<int>(deleting_row_set);
+            deleting_row_list.Sort();
+
+            for (int i = deleting_row_list.Count - 1; i >= 0; --i)
+            {
+                if (!dataGridView.Rows[deleting_row_list[i]].IsNewRow)
+                {
+                    dataGridView.Rows.RemoveAt(deleting_row_list[i]);
+                }
+            }
+        }
+
+        private void toolStripMenuItemDeleteCell_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell cell in dataGridView.SelectedCells)
+            {
+                cell.Value = "";
+            }
         }
     }
 }
