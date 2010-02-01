@@ -923,6 +923,60 @@ namespace NicoTools
             }
         }
 
+        public void SetCategoryTag(string tag_name, string video_id)
+        {
+            CheckCookie();
+            network_.AddCustomHeader("X-Requested-With: XMLHttpRequest");
+            network_.AddCustomHeader("X-Prototype-Version: 1.5.1.1");
+            network_.SetReferer(nicovideo_uri_ + "/watch/" + video_id);
+            try
+            {
+                string html = network_.PostAndReadFromWebUTF8(nicovideo_uri_ + "/tag_edit/" + video_id,
+                            "");
+                string id = GetTagId(html, tag_name);
+                if (id != "")
+                {
+                    string post_data = IJNetwork.ConstructPostData(
+                        "cmd", "set_category",
+                        "tag", tag_name,
+                        "id", id,
+                        "tag_unlock", "カテゴリに設定");
+                    network_.PostAndReadFromWebUTF8(nicovideo_uri_ + "/tag_edit/" + video_id, post_data);
+                }
+            }
+            finally
+            {
+                network_.Reset();
+            }
+        }
+
+        public void UnsetCategoryTag(string tag_name, string video_id)
+        {
+            CheckCookie();
+            network_.AddCustomHeader("X-Requested-With: XMLHttpRequest");
+            network_.AddCustomHeader("X-Prototype-Version: 1.5.1.1");
+            network_.SetReferer(nicovideo_uri_ + "/watch/" + video_id);
+            try
+            {
+                string html = network_.PostAndReadFromWebUTF8(nicovideo_uri_ + "/tag_edit/" + video_id,
+                            "");
+                string id = GetTagId(html, tag_name);
+                if (id != "")
+                {
+                    string post_data = IJNetwork.ConstructPostData(
+                        "cmd", "unset_category",
+                        "tag", tag_name,
+                        "id", id,
+                        "tag_unlock", "カテゴリを解除");
+                    network_.PostAndReadFromWebUTF8(nicovideo_uri_ + "/tag_edit/" + video_id, post_data);
+                }
+            }
+            finally
+            {
+                network_.Reset();
+            }
+        }
+
         public void RemoveTag(string tag_name, string video_id)
         {
             CheckCookie();
