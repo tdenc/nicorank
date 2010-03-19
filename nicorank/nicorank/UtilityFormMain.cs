@@ -768,14 +768,20 @@ namespace nicorank
 
             if (check_output)
             {
+                string output_filename = checkBoxIsSameToInput.Checked ?
+                                             textBoxInputRankFilePath.Text : textBoxOutputRankFilePath.Text;
+                if (output_filename == "")
+                {
+                    MessageBox.Show(this, "ファイル名が入力されていません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 if (checkBoxConfirmFilter.Checked && checkBoxFilter.Checked) // フィルター使用確認
                 {
                     using (MessageBoxWithCheckBox msgbox = new MessageBoxWithCheckBox())
                     {
                         if (checkBoxIsOutputFilteredVideo.Checked)
                         {
-                            string output_filename = checkBoxIsSameToInput.Checked ?
-                                                        textBoxInputRankFilePath.Text : textBoxOutputRankFilePath.Text;
                             string filter_filename = Path.GetDirectoryName(output_filename);
                             if (filter_filename != "" && !filter_filename.EndsWith("\\"))
                             {
