@@ -774,13 +774,15 @@ namespace nicorank
                     {
                         if (checkBoxIsOutputFilteredVideo.Checked)
                         {
-                            string filter_filename = Path.GetDirectoryName(textBoxOutputRankFilePath.Text);
+                            string output_filename = checkBoxIsSameToInput.Checked ?
+                                                        textBoxInputRankFilePath.Text : textBoxOutputRankFilePath.Text;
+                            string filter_filename = Path.GetDirectoryName(output_filename);
                             if (filter_filename != "" && !filter_filename.EndsWith("\\"))
                             {
                                 filter_filename += "\\";
                             }
-                            filter_filename += Path.GetFileNameWithoutExtension(textBoxOutputRankFilePath.Text) +
-                                "_filter" + Path.GetExtension(textBoxOutputRankFilePath.Text);
+                            filter_filename += Path.GetFileNameWithoutExtension(output_filename) +
+                                "_filter" + Path.GetExtension(output_filename);
                             msgbox.SetText("フィルターがオンになっています。\r\nフィルターによって除去された動画情報は " +
                                 filter_filename +
                                 " に保存されます。よろしいですか？", "確認", "今後確認しない");
