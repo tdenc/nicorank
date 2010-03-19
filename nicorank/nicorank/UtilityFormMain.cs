@@ -770,7 +770,8 @@ namespace nicorank
             {
                 string output_filename = checkBoxIsSameToInput.Checked ?
                                              textBoxInputRankFilePath.Text : textBoxOutputRankFilePath.Text;
-                if (output_filename == "")
+                if ((radioButtonOutputToRankFile.Checked || checkBoxIsSameToInput.Checked) &&
+                    output_filename == "")
                 {
                     MessageBox.Show(this, "ファイル名が入力されていません", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -780,7 +781,7 @@ namespace nicorank
                 {
                     using (MessageBoxWithCheckBox msgbox = new MessageBoxWithCheckBox())
                     {
-                        if (checkBoxIsOutputFilteredVideo.Checked)
+                        if (checkBoxIsOutputFilteredVideo.Checked && !radioButtonOutputToTextBox.Checked)
                         {
                             string filter_filename = Path.GetDirectoryName(output_filename);
                             if (filter_filename != "" && !filter_filename.EndsWith("\\"))
@@ -813,12 +814,18 @@ namespace nicorank
 
                 // ランクファイル上書き確認
                 if (checkBoxConfirmOverWrite.Checked &&
-                    (radioButtonOutputToRankFile.Checked || checkBoxIsSameToInput.Checked) &&
-                    File.Exists(textBoxOutputRankFilePath.Text))
+                    ((radioButtonOutputToRankFile.Checked && File.Exists(output_filename)) || checkBoxIsSameToInput.Checked))
                 {
                     using (MessageBoxWithCheckBox msgbox = new MessageBoxWithCheckBox())
                     {
-                        msgbox.SetText(textBoxOutputRankFilePath.Text + " は既に存在します。\r\n上書きしますか？", "確認", "今後確認しない");
+                        if (checkBoxIsSameToInput.Checked)
+                        {
+                            msgbox.SetText(output_filename + " を上書きしますか？", "確認", "今後確認しない");
+                        }
+                        else
+                        {
+                            msgbox.SetText(output_filename + " は既に存在します。\r\n上書きしますか？", "確認", "今後確認しない");
+                        }
                         DialogResult result = msgbox.ShowDialog(this);
                         if (result == DialogResult.Cancel || result == DialogResult.No)
                         {
