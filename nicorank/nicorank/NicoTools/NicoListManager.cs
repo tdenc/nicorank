@@ -686,7 +686,7 @@ namespace NicoTools
 
             int index = 0;
 
-            while ((index = html.IndexOf("<p style=\"margin:0 0 2px;\">", index)) >= 0)
+            while ((index = html.IndexOf("<p class=\"menu_box\">", index)) >= 0)
             {
                 Video video = new Video();
                 string date_str = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
