@@ -66,26 +66,27 @@
             this.buttonSeekFrame4 = new System.Windows.Forms.Button();
             this.buttonSeekFrame7 = new System.Windows.Forms.Button();
             this.buttonSeekFrame5 = new System.Windows.Forms.Button();
+            this.videoSlideControl1 = new videocut.VideoSlideControl();
             this.buttonSeekFrame6 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.labelListWriteDone = new System.Windows.Forms.Label();
+            this.pictureBoxPlayButton = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.axShockwaveFlash1 = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.timerForSwf = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemControlForm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemCutListForm = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBoxPlayButton = new System.Windows.Forms.PictureBox();
-            this.pictureBoxMain = new System.Windows.Forms.PictureBox();
             this.toolStripMenuItemSetting = new System.Windows.Forms.ToolStripMenuItem();
-            this.videoSlideControl1 = new videocut.VideoSlideControl();
+            this.pictureBoxMain = new System.Windows.Forms.PictureBox();
             this.buttonOpenContextMenu = new System.Windows.Forms.Button();
+            this.toolStripMenuItemSwfRecForm = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.panelControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).BeginInit();
             this.SuspendLayout();
             // 
@@ -505,6 +506,23 @@
             this.buttonSeekFrame5.UseVisualStyleBackColor = true;
             this.buttonSeekFrame5.Click += new System.EventHandler(this.buttonSeekFrame_Click);
             // 
+            // videoSlideControl1
+            // 
+            this.videoSlideControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.videoSlideControl1.EndPosition = 1;
+            this.videoSlideControl1.FrameExistsList = null;
+            this.videoSlideControl1.KeyFrameList = null;
+            this.videoSlideControl1.Length = 1;
+            this.videoSlideControl1.Location = new System.Drawing.Point(9, 2);
+            this.videoSlideControl1.Name = "videoSlideControl1";
+            this.videoSlideControl1.Position = 0;
+            this.videoSlideControl1.Size = new System.Drawing.Size(494, 53);
+            this.videoSlideControl1.StartPosition = 0;
+            this.videoSlideControl1.TabIndex = 49;
+            this.videoSlideControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseDown);
+            this.videoSlideControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseUp);
+            // 
             // buttonSeekFrame6
             // 
             this.buttonSeekFrame6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -536,6 +554,18 @@
             this.labelListWriteDone.Size = new System.Drawing.Size(0, 12);
             this.labelListWriteDone.TabIndex = 42;
             // 
+            // pictureBoxPlayButton
+            // 
+            this.pictureBoxPlayButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBoxPlayButton.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPlayButton.Image")));
+            this.pictureBoxPlayButton.Location = new System.Drawing.Point(31, 59);
+            this.pictureBoxPlayButton.Name = "pictureBoxPlayButton";
+            this.pictureBoxPlayButton.Size = new System.Drawing.Size(37, 37);
+            this.pictureBoxPlayButton.TabIndex = 40;
+            this.pictureBoxPlayButton.TabStop = false;
+            this.pictureBoxPlayButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayButton_MouseUp);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -560,36 +590,32 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemControlForm,
             this.toolStripMenuItemCutListForm,
+            this.toolStripMenuItemSwfRecForm,
             this.toolStripMenuItemSetting});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(172, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(209, 114);
             this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // toolStripMenuItemControlForm
             // 
             this.toolStripMenuItemControlForm.Name = "toolStripMenuItemControlForm";
-            this.toolStripMenuItemControlForm.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItemControlForm.Size = new System.Drawing.Size(208, 22);
             this.toolStripMenuItemControlForm.Text = "動画ファイルウィンドウ";
             this.toolStripMenuItemControlForm.Click += new System.EventHandler(this.toolStripMenuItemControlForm_Click);
             // 
             // toolStripMenuItemCutListForm
             // 
             this.toolStripMenuItemCutListForm.Name = "toolStripMenuItemCutListForm";
-            this.toolStripMenuItemCutListForm.Size = new System.Drawing.Size(171, 22);
+            this.toolStripMenuItemCutListForm.Size = new System.Drawing.Size(208, 22);
             this.toolStripMenuItemCutListForm.Text = "カットリストウィンドウ";
             this.toolStripMenuItemCutListForm.Click += new System.EventHandler(this.toolStripMenuItemCutListForm_Click);
             // 
-            // pictureBoxPlayButton
+            // toolStripMenuItemSetting
             // 
-            this.pictureBoxPlayButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBoxPlayButton.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxPlayButton.Image")));
-            this.pictureBoxPlayButton.Location = new System.Drawing.Point(31, 59);
-            this.pictureBoxPlayButton.Name = "pictureBoxPlayButton";
-            this.pictureBoxPlayButton.Size = new System.Drawing.Size(37, 37);
-            this.pictureBoxPlayButton.TabIndex = 40;
-            this.pictureBoxPlayButton.TabStop = false;
-            this.pictureBoxPlayButton.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPlayButton_MouseUp);
+            this.toolStripMenuItemSetting.Name = "toolStripMenuItemSetting";
+            this.toolStripMenuItemSetting.Size = new System.Drawing.Size(208, 22);
+            this.toolStripMenuItemSetting.Text = "設定";
+            this.toolStripMenuItemSetting.Click += new System.EventHandler(this.toolStripMenuItemSetting_Click);
             // 
             // pictureBoxMain
             // 
@@ -600,30 +626,6 @@
             this.pictureBoxMain.TabStop = false;
             this.pictureBoxMain.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxMain_Paint);
             // 
-            // toolStripMenuItemSetting
-            // 
-            this.toolStripMenuItemSetting.Name = "toolStripMenuItemSetting";
-            this.toolStripMenuItemSetting.Size = new System.Drawing.Size(171, 22);
-            this.toolStripMenuItemSetting.Text = "設定";
-            this.toolStripMenuItemSetting.Click += new System.EventHandler(this.toolStripMenuItemSetting_Click);
-            // 
-            // videoSlideControl1
-            // 
-            this.videoSlideControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.videoSlideControl1.EndPosition = 1;
-            this.videoSlideControl1.FrameExistsList = null;
-            this.videoSlideControl1.KeyFrameList = null;
-            this.videoSlideControl1.Length = 1;
-            this.videoSlideControl1.Location = new System.Drawing.Point(9, 2);
-            this.videoSlideControl1.Name = "videoSlideControl1";
-            this.videoSlideControl1.Position = 0;
-            this.videoSlideControl1.Size = new System.Drawing.Size(494, 53);
-            this.videoSlideControl1.StartPosition = 0;
-            this.videoSlideControl1.TabIndex = 49;
-            this.videoSlideControl1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseDown);
-            this.videoSlideControl1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.videoSlideControl1_MouseUp);
-            // 
             // buttonOpenContextMenu
             // 
             this.buttonOpenContextMenu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -633,6 +635,13 @@
             this.buttonOpenContextMenu.TabIndex = 45;
             this.buttonOpenContextMenu.UseVisualStyleBackColor = true;
             this.buttonOpenContextMenu.Click += new System.EventHandler(this.buttonOpenContextMenu_Click);
+            // 
+            // toolStripMenuItemSwfRecForm
+            // 
+            this.toolStripMenuItemSwfRecForm.Name = "toolStripMenuItemSwfRecForm";
+            this.toolStripMenuItemSwfRecForm.Size = new System.Drawing.Size(208, 22);
+            this.toolStripMenuItemSwfRecForm.Text = "SWF録画ウィンドウ";
+            this.toolStripMenuItemSwfRecForm.Click += new System.EventHandler(this.toolStripMenuItemSwfRec_Click);
             // 
             // MainForm
             // 
@@ -648,11 +657,11 @@
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "動画カッター";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -660,9 +669,9 @@
             this.groupBox2.PerformLayout();
             this.panelControl.ResumeLayout(false);
             this.panelControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.axShockwaveFlash1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlayButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMain)).EndInit();
             this.ResumeLayout(false);
 
@@ -720,6 +729,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCutListForm;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSetting;
         private System.Windows.Forms.Button buttonOpenContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSwfRecForm;
     }
 }
 

@@ -21,6 +21,12 @@ namespace videocut
         private bool is_memory_size_manual = false;
         private int memory_size = -1;
 
+        private string output_avi_filename = "";
+        private Size output_avi_size = new Size(512, 384);
+        private double frame_per_sec = 12.0;
+        private double start_sec = 2.0;
+        private double duration = 20.0;
+
         private Point main_form_location = new Point(int.MinValue, int.MinValue);
         private Size main_form_size = new Size(int.MinValue, int.MinValue);
 
@@ -31,6 +37,10 @@ namespace videocut
         private bool is_show_cut_list_form = true;
         private Point cut_list_form_location = new Point(int.MinValue, int.MinValue);
         private Size cut_list_form_size = new Size(int.MinValue, int.MinValue);
+
+        private bool is_show_swf_rec_form = false;
+        private Point swf_rec_form_location = new Point(int.MinValue, int.MinValue);
+        private Size swf_rec_form_size = new Size(int.MinValue, int.MinValue);
 
         private List<string> cut_list_history_filename_list = new List<string>();
         private bool is_adding_save = false;
@@ -125,6 +135,24 @@ namespace videocut
             set { cut_list_form_size = value; }
         }
 
+        public bool IsShowSwfRecForm
+        {
+            get { return is_show_swf_rec_form; }
+            set { is_show_swf_rec_form = value; }
+        }
+
+        public Point SwfRecFormLocation
+        {
+            get { return swf_rec_form_location; }
+            set { swf_rec_form_location = value; }
+        }
+
+        public Size SwfRecFormSize
+        {
+            get { return swf_rec_form_size; }
+            set { swf_rec_form_size = value; }
+        }
+
         public bool IsVideoSizeFixed
         {
             get { return is_video_size_fixed; }
@@ -165,6 +193,36 @@ namespace videocut
         {
             get { return is_adding_save; }
             set { is_adding_save = value; }
+        }
+
+        public string OutputAviFileName
+        {
+            get { return output_avi_filename; }
+            set { output_avi_filename = value; }
+        }
+
+        public Size OutputAviSize
+        {
+            get { return output_avi_size; }
+            set { output_avi_size = value; }
+        }
+
+        public double FramePerSec
+        {
+            get { return frame_per_sec; }
+            set { frame_per_sec = value; }
+        }
+
+        public double StartSec
+        {
+            get { return start_sec; }
+            set { start_sec = value; }
+        }
+
+        public double Duration
+        {
+            get { return duration; }
+            set { duration = value; }
         }
     }
 }

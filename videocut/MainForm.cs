@@ -29,10 +29,12 @@ namespace videocut
 
         private ControlForm control_form_ = null;
         private CutListForm cut_list_form_ = null;
+        private SwfRecForm swf_rec_form_ = null;
 
         private VideoCutConfig config_ = new VideoCutConfig();
         private bool is_show_control_form_ = true; // config の保存時のみ使う
         private bool is_show_cut_list_form_ = true; // 同上
+        private bool is_show_swf_rec_form_ = false; // 同上
 
         public MainForm()
         {
@@ -73,8 +75,18 @@ namespace videocut
                 cut_list_form_.Show();
             }
 
+            swf_rec_form_ = new SwfRecForm();
+            swf_rec_form_.Owner = this;
+            swf_rec_form_.SetForm(this);
+
+            if (config_.IsShowSwfRecForm)
+            {
+                swf_rec_form_.Show();
+            }
+
             control_form_.LoadFromConfig(config_);
             cut_list_form_.LoadFromConfig(config_);
+            swf_rec_form_.LoadFromConfig(config_);
             SetFormSize();
 
             cut_list_form_.IsModifyingDataGridView = false;
@@ -102,6 +114,11 @@ namespace videocut
             {
                 is_show_cut_list_form_ = cut_list_form_.Visible; // config 保存のため、状態を保存
                 cut_list_form_.Hide();
+            }
+            if (swf_rec_form_ != null)
+            {
+                is_show_swf_rec_form_ = swf_rec_form_.Visible; // config 保存のため、状態を保存
+                swf_rec_form_.Hide();
             }
         }
 
@@ -322,7 +339,7 @@ namespace videocut
             }
         }
 
-        private void Play()
+        public void Play()
         {
             if (swf_mode_)
             {
@@ -341,7 +358,7 @@ namespace videocut
             }
         }
 
-        private void Stop()
+        public void Stop()
         {
             pictureBoxPlayButton.Image = bitmap_play_button_;
             if (swf_mode_)
@@ -727,8 +744,13 @@ namespace videocut
             config_.CutListFormLocation = cut_list_form_.Location;
             config_.CutListFormSize = cut_list_form_.Size;
 
+            config_.IsShowSwfRecForm = is_show_swf_rec_form_;
+            config_.SwfRecFormLocation = swf_rec_form_.Location;
+            config_.SwfRecFormSize = swf_rec_form_.Size;
+
             control_form_.SetToConfig(config_);
             cut_list_form_.SetToConfig(config_);
+            swf_rec_form_.SetToConfig(config_);
 
             string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "config_videocut.xml");
             XmlSerializer serializer = null;
@@ -778,6 +800,20 @@ namespace videocut
             {
                 cut_list_form_.Size = config_.CutListFormSize;
             }
+
+            if (config_.SwfRecFormLocation.X != int.MinValue)
+            {
+                swf_rec_form_.Location = AdjustLocation(config_.SwfRecFormLocation, screen);
+            }
+            else
+            {
+                swf_rec_form_.Left = this.Left + this.Width;
+                swf_rec_form_.Top = this.Top;
+            }
+            if (config_.SwfRecFormSize.Width > 0 && config_.SwfRecFormSize.Height > 0)
+            {
+                swf_rec_form_.Size = config_.SwfRecFormSize;
+            }
         }
 
         private Point AdjustLocation(Point location, Rectangle screen)
@@ -820,6 +856,7 @@ namespace videocut
         {
             toolStripMenuItemControlForm.Checked = control_form_.Visible;
             toolStripMenuItemCutListForm.Checked = cut_list_form_.Visible;
+            toolStripMenuItemSwfRecForm.Checked = swf_rec_form_.Visible;
         }
 
         private void toolStripMenuItemControlForm_Click(object sender, EventArgs e)
@@ -830,6 +867,11 @@ namespace videocut
         private void toolStripMenuItemCutListForm_Click(object sender, EventArgs e)
         {
             cut_list_form_.Visible = !toolStripMenuItemCutListForm.Checked;
+        }
+
+        private void toolStripMenuItemSwfRec_Click(object sender, EventArgs e)
+        {
+            swf_rec_form_.Visible = !toolStripMenuItemSwfRecForm.Checked;
         }
 
         private void toolStripMenuItemSetting_Click(object sender, EventArgs e)
@@ -846,6 +888,43 @@ namespace videocut
         private void buttonOpenContextMenu_Click(object sender, EventArgs e)
         {
             contextMenuStrip1.Show(Cursor.Position, ToolStripDropDownDirection.AboveLeft);
+        }
+
+        public string GetTitle()
+        {
+            return this.Text;
+        }
+
+        public void SetTitle(string title)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string>(SetTitle), new object[] { title });
+            }
+            else
+            {
+                this.Text = title;
+            }
+        }
+
+        public Point GetSwfLeftPoint()
+        {
+            return axShockwaveFlash1.PointToScreen(new Point(0, 0));
+        }
+
+        public int GetSwfTotalFrames()
+        {
+            return axShockwaveFlash1.TotalFrames;
+        }
+
+        public int GetSwfWidth()
+        {
+            return axShockwaveFlash1.Width;
+        }
+
+        public int GetSwfHeight()
+        {
+            return axShockwaveFlash1.Height;
         }
     }
 }
