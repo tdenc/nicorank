@@ -111,13 +111,29 @@ namespace IJLib
                         if (tok2.IsLeftBlacket()) // 関数だった場合
                         {
                             queue.Dequeue();
-                            Tuple t = ParseExpression(queue);
-                            Token tok3 = queue.Dequeue();
-                            if (!tok3.IsRightBlacket())
+                            List<Tuple> tuple_list = new List<Tuple>();
+                            if (!queue.Peek().IsRightBlacket())
                             {
-                                throw new FormatException("括弧の対応がとれていません。");
+                                tuple_list.Add(ParseExpression(queue));
+
+                                while (queue.Count > 0)
+                                {
+                                    Token tok3 = queue.Dequeue();
+                                    if (tok3.IsComma())
+                                    {
+                                        tuple_list.Add(ParseExpression(queue));
+                                    }
+                                    else if (!tok3.IsRightBlacket())
+                                    {
+                                        throw new FormatException("括弧の対応がとれていません。");
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
                             }
-                            return new Tuple(new Token(Token.Kind.Function), new Tuple(tok), t);
+                            return new Tuple(new Token(Token.Kind.Function), new Tuple(tok), null, tuple_list);
                         }
                     }
                     return new Tuple(tok);
@@ -292,6 +308,30 @@ namespace IJLib
                 }
                 return v;
             }
+
+            public static bool operator < (Value v1, Value v2)
+            {
+                if (v1.kind == Kind.IntValue && v2.kind == Kind.IntValue)
+                {
+                    return v1.int_value < v2.int_value;
+                }
+                else
+                {
+                    return v1.GetDouble() < v2.GetDouble();
+                }
+            }
+
+            public static bool operator >(Value v1, Value v2)
+            {
+                if (v1.kind == Kind.IntValue && v2.kind == Kind.IntValue)
+                {
+                    return v1.int_value > v2.int_value;
+                }
+                else
+                {
+                    return v1.GetDouble() > v2.GetDouble();
+                }
+            }
         }
 
         public class Tuple
@@ -299,6 +339,7 @@ namespace IJLib
             public Token op_token;
             public Tuple tuple1;
             public Tuple tuple2;
+            public List<Tuple> tuple_list; // Token が list のときにしか使わない
 
             public Tuple(Token tok)
             {
@@ -310,6 +351,14 @@ namespace IJLib
                 op_token = op;
                 tuple1 = t1;
                 tuple2 = t2;
+            }
+
+            public Tuple(Token op, Tuple t1, Tuple t2, List<Tuple> t_list)
+            {
+                op_token = op;
+                tuple1 = t1;
+                tuple2 = t2;
+                tuple_list = t_list;
             }
 
             public Value Evaluate()
@@ -362,10 +411,10 @@ namespace IJLib
                     {
                         case "int":
                             Value v = new Value(Value.Kind.IntValue);
-                            v.int_value = tuple2.Evaluate().GetInt();
+                            v.int_value = tuple_list[0].Evaluate().GetInt();
                             return v;
                         case "abs":
-                            Value v2 = tuple2.Evaluate();
+                            Value v2 = tuple_list[0].Evaluate();
                             if (v2.GetDouble() < 0)
                             {
                                 if (v2.kind == Value.Kind.IntValue)
@@ -378,6 +427,28 @@ namespace IJLib
                                 }
                             }
                             return v2;
+                        case "max":
+                            Value max_value = tuple_list[0].Evaluate();
+                            for (int i = 1; i < tuple_list.Count; ++i)
+                            {
+                                Value va = tuple_list[i].Evaluate();
+                                if (max_value < va)
+                                {
+                                    max_value = va;
+                                }
+                            }
+                            return max_value;
+                        case "min":
+                            Value min_value = tuple_list[0].Evaluate();
+                            for (int i = 1; i < tuple_list.Count; ++i)
+                            {
+                                Value va = tuple_list[i].Evaluate();
+                                if (va < min_value)
+                                {
+                                    min_value = va;
+                                }
+                            }
+                            return min_value;
                         default:
                             throw new FormatException("関数 '" + tuple1.op_token.str + "' は存在しません。");
                     }
@@ -391,7 +462,7 @@ namespace IJLib
 
         public class Token
         {
-            public enum Kind { Value, Identifier, Symbol, Function };
+            public enum Kind { Value, Identifier, Symbol, Function, List };
 
             public Kind kind;
 
@@ -423,6 +494,11 @@ namespace IJLib
                         break;
                 }
                 return ret;
+            }
+
+            public bool IsComma()
+            {
+                return kind == Kind.Symbol && str == ",";
             }
 
             public bool IsPlus()
@@ -557,7 +633,7 @@ namespace IJLib
 
             private static bool IsSymbol(char c)
             {
-                char[] sym = { '+', '-', '*', '/', '%', '(', ')' };
+                char[] sym = { '+', '-', '*', '/', '%', '(', ')', ',' };
 
                 for (int i = 0; i < sym.Length; ++i)
                 {
