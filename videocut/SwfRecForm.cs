@@ -29,6 +29,7 @@ namespace videocut
         private Point flash_left_top_;
         private int end_frame_;
         private string old_title_;
+        private bool is_rec_ = false;
 
         public SwfRecForm()
         {
@@ -42,48 +43,58 @@ namespace videocut
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            output_avi_filename_ = selectFileBoxOutputFileName.FileName;
-            if (output_avi_filename_ == "")
+            if (is_rec_)
             {
-                MessageBox.Show(this, "ファイル名が空です。",
-                    "videocut", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else if (Path.GetExtension(output_avi_filename_).ToLower() != ".avi")
-            {
-                MessageBox.Show(this, "ファイル名の拡張子は .avi にする必要があります。",
-                    "videocut", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                is_stopping_ = true;
             }
             else
             {
-                try
+                output_avi_filename_ = selectFileBoxOutputFileName.FileName;
+                if (output_avi_filename_ == "")
                 {
-
-                    frame_rate_ = double.Parse(textBoxFramePerSec.Text);
-                    start_sec_ = double.Parse(textBoxStartSec.Text);
-                    duration_ = double.Parse(textBoxDurationSec.Text);
-                    end_frame_ = main_form_.GetSwfTotalFrames();
-                    swf_width_ = main_form_.GetSwfWidth();
-                    swf_height_ = main_form_.GetSwfHeight();
-                    output_width_ = int.Parse(textBoxOutputWidth.Text);
-                    output_height_ = int.Parse(textBoxOutputHeight.Text);
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show(this, "入力された値が不正です。",
+                    MessageBox.Show(this, "ファイル名が空です。",
                         "videocut", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
                 }
-                flash_left_top_ = main_form_.GetSwfLeftPoint();
-                bmp_list_.Clear();
-                is_stopping_ = false;
+                else if (Path.GetExtension(output_avi_filename_).ToLower() != ".avi")
+                {
+                    MessageBox.Show(this, "ファイル名の拡張子は .avi にする必要があります。",
+                        "videocut", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    try
+                    {
 
-                old_title_ = main_form_.GetTitle();
-                main_form_.SetTitle("録画中です。ウィンドウを動かさないでください。");
-                main_form_.Play();
+                        frame_rate_ = double.Parse(textBoxFramePerSec.Text);
+                        start_sec_ = double.Parse(textBoxStartSec.Text);
+                        duration_ = double.Parse(textBoxDurationSec.Text);
+                        end_frame_ = main_form_.GetSwfTotalFrames();
+                        swf_width_ = main_form_.GetSwfWidth();
+                        swf_height_ = main_form_.GetSwfHeight();
+                        output_width_ = int.Parse(textBoxOutputWidth.Text);
+                        output_height_ = int.Parse(textBoxOutputHeight.Text);
+                    }
+                    catch (FormatException)
+                    {
+                        MessageBox.Show(this, "入力された値が不正です。",
+                            "videocut", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        return;
+                    }
+                    is_rec_ = true;
+                    buttonStart.Text = "録画中止";
 
-                Thread t = new Thread(new ThreadStart(RecThread));
-                t.IsBackground = true;
-                t.Start();
+                    flash_left_top_ = main_form_.GetSwfLeftPoint();
+                    bmp_list_.Clear();
+                    is_stopping_ = false;
+
+                    old_title_ = main_form_.GetTitle();
+                    main_form_.SetTitle("録画中です。ウィンドウを動かさないでください。");
+                    main_form_.Play();
+
+                    Thread t = new Thread(new ThreadStart(RecThread));
+                    t.IsBackground = true;
+                    t.Start();
+                }
             }
         }
 
@@ -118,6 +129,18 @@ namespace videocut
             }
         }
 
+        public void SetStartButtonText(string text)
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke(new Action<string>(SetStartButtonText), new object[] { text });
+            }
+            else
+            {
+                buttonStart.Text = text;
+            }
+        }
+
         private void RecThread()
         {
             bool is_first_time = true;
@@ -129,8 +152,17 @@ namespace videocut
             using (Bitmap temp_bmp = new Bitmap(swf_width_, swf_height_))
             using (Graphics temp_graphics = Graphics.FromImage(temp_bmp))
             {
-                while (!is_stopping_)
+                while (true)
                 {
+                    if (is_stopping_)
+                    {
+                        AppendInfo("録画を中止しました\r\n");
+                        SetStartButtonText("スタート");
+                        main_form_.SetTitle(old_title_);
+                        is_rec_ = false;
+                        is_stopping_ = false;
+                        return;
+                    }
                     int time = Environment.TickCount - start;
                     if (is_first_time) // start_sec_ 秒だけ飛ばす
                     {
@@ -207,6 +239,8 @@ namespace videocut
             main_form_.SetTitle(old_title_);
             AppendInfo("保存しました\r\n");
             AppendInfo("終了しました\r\n");
+            SetStartButtonText("スタート");
+            is_rec_ = false;
         }
 
         private void SwfRecForm_FormClosing(object sender, FormClosingEventArgs e)
