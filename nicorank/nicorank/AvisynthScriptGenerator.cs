@@ -119,6 +119,15 @@ namespace nicorank
                     }
                     continue;
                 }
+                if (lines[i].StartsWith("LayerLevel", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    string[] array = lines[i].Split('\t');
+                    if (array.Length >= 2)
+                    {
+                        setting.layer_level = array[1];
+                    }
+                    continue;
+                }
                 Element element;
 
                 if (lines[i].StartsWith("繰り返し\t"))
@@ -342,6 +351,7 @@ namespace nicorank
             public string imcolorspace = "RGB32";
             public string colorspace = "RGB24";
             public int zone = -1;
+            public string layer_level = "256";
         }
 
         private class Element
@@ -651,15 +661,21 @@ namespace nicorank
                 return line;
             }
 
-            protected static string GetLayer(int group_num, int video_num, int x, int y, string suffix)
+            protected static string GetLayer(int group_num, int video_num, int x, int y, string suffix, Setting setting)
             {
-                return "Layer(frame" + group_num + "_" + video_num +
-                    ", video" + group_num + "_" + video_num + ", \"add\", x=" + x + ", y=" + y + ")" + suffix;
+                string line = "Layer(frame" + group_num + "_" + video_num +
+                    ", video" + group_num + "_" + video_num + ", \"add\", x=" + x + ", y=" + y;
+                if (setting.layer_level.ToLowerInvariant() != "none")
+                {
+                    line += ", level=" + setting.layer_level;
+                }
+                line += ")" + suffix;
+                return line;
             }
 
             protected static string GetLayedLine(int group_num, int video_num, Setting setting, string suffix)
             {
-                return "video" + group_num + "_" + video_num + " = " + GetLayer(group_num, video_num, 0, 0, suffix) + "\r\n";
+                return "video" + group_num + "_" + video_num + " = " + GetLayer(group_num, video_num, 0, 0, suffix, setting) + "\r\n";
             }
 
             protected static string GetGroupingVideo(int group_num, int video_max_num, int audio_max_num, Setting setting, string length, string suffix)
