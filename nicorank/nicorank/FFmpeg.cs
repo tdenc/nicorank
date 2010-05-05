@@ -1592,6 +1592,40 @@ namespace nicorank
             adjustment_str_ = adjustment_str;
         }
 
+        // base_cut_info の各項目について、空欄でなければその要素を、
+        // 空欄ならば default_cut_info の要素をコピーした新しい CutInfo を作成する。
+        public CutInfo(CutInfo base_cut_info, CutInfo default_cut_info)
+        {
+            filename_ = base_cut_info.filename_;
+
+            if (base_cut_info.ExistsStartTime())
+            {
+                start_time_str_ = base_cut_info.start_time_str_;
+            }
+            else
+            {
+                start_time_str_ = default_cut_info.start_time_str_;
+            }
+            if (base_cut_info.ExistsDuration())
+            {
+                duration_str_ = base_cut_info.duration_str_;
+                end_time_str_ = base_cut_info.end_time_str_;
+            }
+            else
+            {
+                duration_str_ = default_cut_info.duration_str_;
+                end_time_str_ = default_cut_info.end_time_str_;
+            }
+            if (base_cut_info.adjustment_str_ != "")
+            {
+                adjustment_str_ = base_cut_info.adjustment_str_;
+            }
+            else
+            {
+                adjustment_str_ = default_cut_info.adjustment_str_;
+            }
+        }
+
         public string GetFilename()
         {
             return filename_;
@@ -1599,18 +1633,18 @@ namespace nicorank
 
         public double GetStartTime()
         {
-            return double.Parse(start_time_str_);
+            return ParseTimeStr(start_time_str_);
         }
 
         public double GetDuration()
         {
             if (end_time_str_ != "")
             {
-                return double.Parse(end_time_str_) - double.Parse(start_time_str_);
+                return ParseTimeStr(end_time_str_) - ParseTimeStr(start_time_str_);
             }
             else
             {
-                return double.Parse(duration_str_);
+                return ParseTimeStr(duration_str_);
             }
         }
 
@@ -1640,6 +1674,16 @@ namespace nicorank
             }
         }
 
+        public bool ExistsStartTime()
+        {
+            return start_time_str_ != "";
+        }
+
+        public bool ExistsDuration()
+        {
+            return !(duration_str_ == "" && end_time_str_ == "");
+        }
+
         public bool IsAdjust()
         {
             return adjustment_str_.ToLower() == "on";
@@ -1652,7 +1696,7 @@ namespace nicorank
 
         public bool IsCut()
         {
-            return double.Parse(start_time_str_) >= 0.0;
+            return GetStartTime() >= 0.0;
         }
 
         public void SetDefaultValue(CutInfo default_info)
@@ -1675,6 +1719,34 @@ namespace nicorank
         public override string ToString()
         {
             return filename_ + "\t" + start_time_str_ + "\t" + end_time_str_ + "\t" + duration_str_ + "\t" + adjustment_str_;
+        }
+
+        private static double ParseTimeStr(string str)
+        {
+            int index = str.IndexOf(':');
+            double sec = 0;
+            if (index >= 0)
+            {
+                int first = int.Parse(str.Substring(0, index));
+                int next = index + 1;
+                index = str.IndexOf(':', next);
+                if (index >= 0)
+                {
+                    int second = int.Parse(str.Substring(next, index - next));
+                    sec = (first * 60.0 + second) * 60.0;
+                    next = index + 1;
+                }
+                else
+                {
+                    sec = first * 60.0;
+                }
+                sec += double.Parse(str.Substring(next));
+                return sec;
+            }
+            else
+            {
+                return double.Parse(str);
+            }
         }
     }
 
@@ -1741,7 +1813,7 @@ namespace nicorank
             {
                 if (cut_info_list_[i].GetFilename() == filename)
                 {
-                    return cut_info_list_[i];
+                    return new CutInfo(cut_info_list_[i], default_info_);
                 }
             }
             // 次にファイル名一致検索
@@ -1750,7 +1822,7 @@ namespace nicorank
             {
                 if (cut_info_list_[i].GetFilename() == removing_dir_filename)
                 {
-                    return cut_info_list_[i];
+                    return new CutInfo(cut_info_list_[i], default_info_);
                 }
             }
             // 最後に拡張子を抜いたファイル名一致検索
@@ -1759,7 +1831,7 @@ namespace nicorank
             {
                 if (cut_info_list_[i].GetFilename() == removing_extension_filename)
                 {
-                    return cut_info_list_[i];
+                    return new CutInfo(cut_info_list_[i], default_info_);
                 }
             }
             // それでも見つからなければデフォルトを返す
