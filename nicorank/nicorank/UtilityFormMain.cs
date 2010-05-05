@@ -892,6 +892,24 @@ namespace nicorank
             if (File.Exists(filename))
             {
                 str = IJFile.ReadUTF8(filename);
+
+                if (!str.StartsWith("version")) // 昔のバージョンの category.txt なら
+                {
+                    if (str != Properties.Resources.category204) // ユーザによって改変されているなら
+                    {
+                        File.Move(filename,
+                            Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
+                                "category_old1.txt")); // 念のためバックアップを取る
+                        MessageBox.Show(this, "category.txt を category_old1.txt にリネームしました。",
+                            "ニコニコランキングメーカー", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        File.Delete(filename);
+                    }
+                    str = Properties.Resources.category;
+                    IJFile.WriteUTF8(filename, str);
+                }
             }
             else
             {
@@ -901,7 +919,7 @@ namespace nicorank
 
             string[] lines = IJStringUtil.SplitWithCRLF(str);
 
-            for (int i = 0; i < lines.Length; ++i)
+            for (int i = 1; i < lines.Length; ++i)
             {
                 string[] ar = lines[i].Split('\t');
                 CategoryItem item = new CategoryItem();
