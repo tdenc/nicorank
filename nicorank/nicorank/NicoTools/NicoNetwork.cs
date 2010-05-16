@@ -44,6 +44,8 @@ namespace NicoTools
         private const string nicovideo_uri_ = "http://www.nicovideo.jp"; // ニコニコ動画URL
         private const string nicovideo_ext_uri_ = "http://ext.nicovideo.jp";
 
+        private const string nicovideo_cookie_domain_ = ".nicovideo.jp"; // ニコニコ動画クッキードメイン
+
         /// <summary>
         /// HTTP通信でキャッシュをしないように HttpWebRequest に強制させるか
         /// </summary>
@@ -166,7 +168,8 @@ namespace NicoTools
         public void ResetUserSession(string user_session)
         {
             network_.ClearCookie();
-            network_.SetCookie(nicovideo_uri_, "user_session=" + user_session);
+            string cookie_string = string.Format("user_session={0}; domain={1}; path=/", user_session, nicovideo_cookie_domain_);
+            network_.SetCookie(nicovideo_uri_, cookie_string);
             is_loaded_cookie_ = true;
         }
 
