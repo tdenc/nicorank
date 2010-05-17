@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -342,11 +341,14 @@ namespace videocut
 
         private void toolStripMenuItemDeleteRow_Click(object sender, EventArgs e)
         {
-            HashSet<int> deleting_row_set = new HashSet<int>();
+            List<int> deleting_row_set = new List<int>();
 
             foreach (DataGridViewCell cell in dataGridView.SelectedCells)
             {
-                deleting_row_set.Add(cell.RowIndex);
+                if (deleting_row_set.IndexOf(cell.RowIndex) < 0)
+                {
+                    deleting_row_set.Add(cell.RowIndex);
+                }
             }
 
             List<int> deleting_row_list = new List<int>(deleting_row_set);
