@@ -784,21 +784,19 @@ namespace NicoTools
             List<Video> list = new List<Video>();
             int count = 0;
 
-            while ((index = html.IndexOf("class=\"thumb_frm\"", index + 1)) >= 0)
+            while ((index = html.IndexOf("class=\"thumb_vinfo\"", index + 1)) >= 0)
             {
                 Video video = new Video();
-
-                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
-                video.submit_date = DateTime.ParseExact(dateStr, "yy/MM/dd HH:mm", null);
-                
                 int start = html.IndexOf("watch/", index) + 6;
                 int end = html.IndexOf('"', start);
                 video.video_id = html.Substring(start, end - start);
-
+                
                 video.length = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
 
-                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "span", html));
+                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "nobr", html));
 
+                
+                
                 string viewStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
                 video.point.view = IJStringUtil.ToIntFromCommaValue(viewStr);
                 string resStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
@@ -806,9 +804,17 @@ namespace NicoTools
                 string mylistStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
                 video.point.mylist = IJStringUtil.ToIntFromCommaValue(mylistStr);
 
+                
+
                 // 宣伝ポイント。将来実装するときのため
                 //string comStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
                 //video.com = IJStringUtil.ToIntFromCommaValue(comStr);
+
+                index = html.IndexOf("vinfo_posted", index) - 15;
+
+                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                video.submit_date = DateTime.ParseExact(dateStr, "yy/MM/dd HH:mm", null);
+
                 ++count;
                 if (count >= start_num)
                 {
