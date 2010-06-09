@@ -150,5 +150,21 @@ namespace nicoranktest
             Assert.That(video_list.Count, Is.EqualTo(3), "GetDetailInfoTest1-2");
             Assert.That(video_list[1].title, Is.EqualTo(video_title), "GetDetailInfoTest1-3");
         }
+
+        [Test]
+        public void ParseSearchTest()
+        {
+            string video_id = TestUtility.TestData[TestUtility.KEY_VIDEO_ID];
+            string video_title = TestUtility.TestData[TestUtility.KEY_VIDEO_TITLE];
+            string search_tag = TestUtility.TestData[TestUtility.KEY_SEARCH_TAG];
+
+            TestUtility.EnsureLogin(network_);
+
+            string html = network_.GetSearchTag(search_tag, 1, NicoNetwork.SearchSortMethod.Mylist, NicoNetwork.SearchOrder.Asc);
+
+            List<Video> video_list = NicoNetworkManager.ParseSearch(html, -1);
+
+            Assert.That(video_list.Exists(delegate(Video v) { return v.video_id == video_id; }), Is.True, "ParseSearchTest1");
+        }
     }
 }
