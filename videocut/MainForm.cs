@@ -104,21 +104,24 @@ namespace videocut
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Hide(); // 高速に閉じたように見せるため隠す
-            if (control_form_ != null)
+            if (!e.Cancel)
             {
-                is_show_control_form_ = control_form_.Visible; // config 保存のため、状態を保存
-                control_form_.Hide();
-            }
-            if (cut_list_form_ != null)
-            {
-                is_show_cut_list_form_ = cut_list_form_.Visible; // config 保存のため、状態を保存
-                cut_list_form_.Hide();
-            }
-            if (swf_rec_form_ != null)
-            {
-                is_show_swf_rec_form_ = swf_rec_form_.Visible; // config 保存のため、状態を保存
-                swf_rec_form_.Hide();
+                Hide(); // 高速に閉じたように見せるため隠す
+                if (control_form_ != null)
+                {
+                    is_show_control_form_ = control_form_.Visible; // config 保存のため、状態を保存
+                    control_form_.Hide();
+                }
+                if (cut_list_form_ != null)
+                {
+                    is_show_cut_list_form_ = cut_list_form_.Visible; // config 保存のため、状態を保存
+                    cut_list_form_.Hide();
+                }
+                if (swf_rec_form_ != null)
+                {
+                    is_show_swf_rec_form_ = swf_rec_form_.Visible; // config 保存のため、状態を保存
+                    swf_rec_form_.Hide();
+                }
             }
         }
 
@@ -735,6 +738,12 @@ namespace videocut
         {
             config_.MainFormLocation = this.Location;
             config_.MainFormSize = this.Size;
+
+            if (config_.MainFormLocation.X < 0 || config_.MainFormLocation.Y < 0)
+            {
+                config_.MainFormLocation = new Point(int.MinValue, int.MinValue);
+                config_.MainFormSize = new Size(0, 0);
+            }
 
             config_.IsShowControlForm = is_show_control_form_;
             config_.ControlFormLocation = control_form_.Location;
