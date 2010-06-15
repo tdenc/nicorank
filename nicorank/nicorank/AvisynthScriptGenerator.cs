@@ -589,7 +589,7 @@ namespace nicorank
                     buff.Append(", zone=" + setting.zone.ToString());
                 }
                 buff.Append(")");
-                if (length != "")
+                if (length != "" && length != "audio")
                 {
                     buff.Append(".Trim(0, " + ((int)(double.Parse(length) * setting.frame_number)).ToString() + ")");
                 }
@@ -710,7 +710,14 @@ namespace nicorank
 
                 if (length != "")
                 {
-                    buff.Append(".Trim(0, " + ((int)(double.Parse(length) * setting.frame_number)).ToString() + ")");
+                    if (length == "audio")
+                    {
+                        buff.Append(".Trim(0, " + GetAudioLength(setting.frame_number, "audio" + group_num + "_" + audio_max_num) + ")");
+                    }
+                    else
+                    {
+                        buff.Append(".Trim(0, " + ((int)(double.Parse(length) * setting.frame_number)).ToString() + ")");
+                    }
                 }
                 buff.Append(suffix);
                 buff.Append("\r\n");
