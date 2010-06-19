@@ -1354,10 +1354,7 @@ namespace NicoTools
             switch (sort_method)
             {
                 case SearchSortMethod.SubmitDate:
-                    if (is_tag) // キーワード検索のときはオプションをつけない
-                    {
-                        option += ((option != "" ? "&" : "?") + "sort=f");
-                    }
+                    option += ((option != "" ? "&" : "?") + "sort=f");
                     break;
                 case SearchSortMethod.View:
                     option += ((option != "" ? "&" : "?") + "sort=v");
@@ -1381,6 +1378,13 @@ namespace NicoTools
             if (order == SearchOrder.Asc)
             {
                 option += ((option != "" ? "&" : "?") + "order=a");
+            }
+            else
+            {
+                if (!is_tag) // キーワード検索のときだけつける
+                {
+                    option += ((option != "" ? "&" : "?") + "order=d");
+                }
             }
             return option;
         }
