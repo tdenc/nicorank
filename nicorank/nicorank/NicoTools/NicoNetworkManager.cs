@@ -784,22 +784,15 @@ namespace NicoTools
             List<Video> list = new List<Video>();
             int count = 0;
 
-            while ((index = html.IndexOf("style=\"width:540px;", index + 1)) >= 0)
+            while ((index = html.IndexOf("class=\"uad_thumbfrm\">", index + 1)) >= 0)
             {
                 Video video = new Video();
-
-                index = html.LastIndexOf("vinfo_length", index);
-
-                video.length = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
 
                 int start = html.IndexOf("watch/", index) + 6;
                 int end = html.IndexOf('"', start);
                 video.video_id = html.Substring(start, end - start);
-
-                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "a", html));
                 
-                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
-                video.submit_date = DateTime.ParseExact(dateStr, "yy/MM/dd HH:mm", null);
+                video.length = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
 
                 string viewStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
                 video.point.view = IJStringUtil.ToIntFromCommaValue(viewStr);
@@ -809,8 +802,14 @@ namespace NicoTools
                 video.point.mylist = IJStringUtil.ToIntFromCommaValue(mylistStr);
 
                 // 宣伝ポイント。将来実装するときのため
-                //string comStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                //string comStr = 
+                IJStringUtil.GetStringBetweenTag(ref index, "strong", html); // 読み捨て
                 //video.com = IJStringUtil.ToIntFromCommaValue(comStr);
+
+                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                video.submit_date = DateTime.ParseExact(dateStr, "yyyy年MM月dd日 HH:mm", null);
+                
+                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "a", html));
 
                 ++count;
                 if (count >= start_num)
