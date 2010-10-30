@@ -21,6 +21,7 @@ namespace IJLib
         private string referer_ = "";
         private WebProxy proxy_ = null;
         private string content_type_;
+        private string user_agent_ = null;
         private List<string> custom_header_ = new List<string>();
         private CookieContainer container_ = new CookieContainer();
         private DownloadingEventDelegate delegate_ = null;
@@ -29,6 +30,12 @@ namespace IJLib
         public IJNetwork()
         {
             SetDefaultContentType();
+        }
+
+        public string UserAgent
+        {
+            get { return user_agent_; }
+            set { user_agent_ = value; }
         }
 
         public void SetReferer(string referer)
@@ -252,6 +259,10 @@ namespace IJLib
             request.ContentType = content_type_;
             request.Timeout = 15 * 60 * 1000;
             request.CookieContainer = container_;
+            if (user_agent_ != null)
+            {
+                request.UserAgent = user_agent_;
+            }
             if (referer_ != "")
             {
                 request.Referer = referer_;

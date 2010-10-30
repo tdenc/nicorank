@@ -12,7 +12,7 @@ namespace NicoTools
 {
     public class NicoNetworkManager
     {
-        private NicoNetwork niconico_network_ = new NicoNetwork();
+        private NicoNetwork niconico_network_;
         private MessageOut msgout_;
         private CancelObject cancel_object_;
 

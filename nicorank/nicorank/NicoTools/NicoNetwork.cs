@@ -36,7 +36,7 @@ namespace NicoTools
         private static Random random_ = new Random(); // for Wait
 
         private CookieKind cookie_kind_ = CookieKind.IE; // クッキーを読み込むブラウザ
-        private IJNetwork network_ = new IJNetwork(); // ネットワーク通信用
+        private IJNetwork network_; // ネットワーク通信用
         private bool is_loaded_cookie_ = false; // 通信を一度でもしたことがあるなら true になる
         private int wait_millisecond_; // デフォルトのイベント関数で Sleep するときのミリ秒数を保存
         private bool is_no_cache_ = false; // HTTP通信でキャッシュをしないように HttpWebRequest に強制させるか
@@ -45,6 +45,17 @@ namespace NicoTools
         private const string nicovideo_ext_uri_ = "http://ext.nicovideo.jp";
 
         private const string nicovideo_cookie_domain_ = ".nicovideo.jp"; // ニコニコ動画クッキードメイン
+
+        // ユーザエージェント（ニコニコ動画ではデータ取得アプリのユーザエージェントに連絡先を含めることを推奨している）
+        private const string nicovideo_user_agent_ = "Niconico_Ranking_Maker/%%version%% (by rankingloid at daily-vocaran.info)";
+
+        public NicoNetwork()
+        {
+            network_ = new IJNetwork();
+            string version = System.Windows.Forms.Application.ProductVersion;
+            version = version.Remove(version.Length - 4, 4); // 後ろの ".0.0" を削る
+            network_.UserAgent = nicovideo_user_agent_.Replace("%%version%%", version);
+        }
 
         /// <summary>
         /// HTTP通信でキャッシュをしないように HttpWebRequest に強制させるか
