@@ -916,24 +916,52 @@ namespace videocut
             }
         }
 
-        public Point GetSwfLeftPoint()
+        public Point GetVideoRectLeftPoint()
         {
-            return axShockwaveFlash1.PointToScreen(new Point(0, 0));
+            if (swf_mode_)
+            {
+                return axShockwaveFlash1.PointToScreen(new Point(0, 0));
+            }
+            else
+            {
+                return pictureBoxMain.PointToScreen(new Point(0, 0));
+            }
         }
 
-        public int GetSwfTotalFrames()
+        public int GetTotalFrames()
         {
-            return axShockwaveFlash1.TotalFrames;
+            if (swf_mode_)
+            {
+                return axShockwaveFlash1.TotalFrames;
+            }
+            else
+            {
+                return video_controller_.FrameLength;
+            }
         }
 
-        public int GetSwfWidth()
+        public int GetVideoRectWidth()
         {
-            return axShockwaveFlash1.Width;
+            if (swf_mode_)
+            {
+                return axShockwaveFlash1.Width;
+            }
+            else
+            {
+                return pictureBoxMain.Width;
+            }
         }
 
-        public int GetSwfHeight()
+        public int GetVideoRectHeight()
         {
-            return axShockwaveFlash1.Height;
+            if (swf_mode_)
+            {
+                return axShockwaveFlash1.Height;
+            }
+            else
+            {
+                return pictureBoxMain.Height;
+            }
         }
     }
 }

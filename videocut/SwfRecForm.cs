@@ -67,9 +67,9 @@ namespace videocut
                         frame_rate_ = double.Parse(textBoxFramePerSec.Text);
                         start_sec_ = double.Parse(textBoxStartSec.Text);
                         duration_ = double.Parse(textBoxDurationSec.Text);
-                        end_frame_ = main_form_.GetSwfTotalFrames();
-                        swf_width_ = main_form_.GetSwfWidth();
-                        swf_height_ = main_form_.GetSwfHeight();
+                        end_frame_ = main_form_.GetTotalFrames();
+                        swf_width_ = main_form_.GetVideoRectWidth();
+                        swf_height_ = main_form_.GetVideoRectHeight();
                         output_width_ = int.Parse(textBoxOutputWidth.Text);
                         output_height_ = int.Parse(textBoxOutputHeight.Text);
                     }
@@ -82,7 +82,7 @@ namespace videocut
                     is_rec_ = true;
                     buttonStart.Text = "録画中止";
 
-                    flash_left_top_ = main_form_.GetSwfLeftPoint();
+                    flash_left_top_ = main_form_.GetVideoRectLeftPoint();
                     bmp_list_.Clear();
                     is_stopping_ = false;
 
