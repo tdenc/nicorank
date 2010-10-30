@@ -306,12 +306,15 @@ namespace videocut
             }
             else
             {
-                int old_width = pictureBoxMain.Width;
-                int old_height = pictureBoxMain.Height;
-                
-                pictureBoxMain.Size = box_size;
-                this.Width = Math.Max(box_size.Width, 512) + 8;
-                this.Height = box_size.Height + panelControl.Height + 40;
+                if (config_.IsAdjustWindow)
+                {
+                    int old_width = pictureBoxMain.Width;
+                    int old_height = pictureBoxMain.Height;
+
+                    pictureBoxMain.Size = box_size;
+                    this.Width = Math.Max(box_size.Width, 512) + Math.Max(this.Width - this.ClientSize.Width, 8);
+                    this.Height = box_size.Height + panelControl.Height + 40;
+                }
             }
         }
 

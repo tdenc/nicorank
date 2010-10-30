@@ -19,6 +19,7 @@ namespace videocut
         private int video_size_fixed_height = -1;
         private bool is_memory_size_manual = false;
         private int memory_size = -1;
+        private bool is_adjust_window = true;
 
         private string output_avi_filename = "";
         private Size output_avi_size = new Size(512, 384);
@@ -180,6 +181,12 @@ namespace videocut
         {
             get { return memory_size; }
             set { memory_size = value; }
+        }
+
+        public bool IsAdjustWindow
+        {
+            get { return is_adjust_window; }
+            set { is_adjust_window = value; }
         }
 
         public List<string> CutListHistoryFileNameList
