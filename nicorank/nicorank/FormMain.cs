@@ -474,6 +474,11 @@ namespace nicorank
             StartThread(nicorank_mgr_.MylistSearch, null, true, textBoxMylistUrl.Text, GetInputOutputOption(), GetRankingMethod());
         }
 
+        private void buttonUpdateRankFileByMylist_Click(object sender, EventArgs e)
+        {
+            StartThread(nicorank_mgr_.UpdateRankFileByMylist, null, true, textBoxMylistUrl.Text, GetInputOutputOption(), GetRankingMethod());
+        }
+
         private void buttonNewArrival_Click(object sender, EventArgs e)
         {
             if (textBoxNewArrivalStart.Text == "")
@@ -575,6 +580,11 @@ namespace nicorank
         private void buttonMergeRankFileB_Click(object sender, EventArgs e)
         {
             StartThread(nicorank_mgr_.MergeRankFileB, null, true, GetInputOutputOption(), GetRankingMethod());
+        }
+
+        private void buttonUpdatePoint_Click(object sender, EventArgs e)
+        {
+            StartThread(nicorank_mgr_.UpdatePoint, null, true, GetInputOutputOption(), GetRankingMethod());
         }
 
         private void buttonCalculateSum_Click(object sender, EventArgs e)

@@ -313,6 +313,41 @@ namespace NicoTools
 
         public void MylistSearch(string mylist_str, InputOutputOption iooption, RankingMethod ranking_method)
         {
+            List<Video> video_list = GetMylist(mylist_str);
+
+            RankFile rank_file = new RankFile(video_list, iooption.GetRankFileCustomFormat());
+            rank_file.Sort(ranking_method);
+            iooption.OutputRankFile(rank_file, ranking_method);
+            msgout_.Write("マイリスト取得が終了しました。\r\n");
+        }
+
+        public void UpdateRankFileByMylist(string mylist_str, InputOutputOption iooption, RankingMethod ranking_method)
+        {
+            List<Video> video_list = GetMylist(mylist_str);
+
+            RankFile rank_file = iooption.GetRankFile();
+            RankFile new_rank_file = new RankFile(iooption.GetRankFileCustomFormat());
+
+            for (int i = 0; i < rank_file.Count; ++i)
+            {
+                Video video = rank_file.GetVideo(i);
+                int index = RankFile.SearchVideo(video_list, video.video_id);
+                if (index >= 0)
+                {
+                    video.title = video_list[index].title;
+                    video.tag_set = video_list[index].tag_set;
+                    video.point = video_list[index].point;
+                    video.description = video_list[index].description;
+                    new_rank_file.Add(video);
+                }
+            }
+            rank_file.Sort(ranking_method);
+            iooption.OutputRankFile(rank_file, ranking_method);
+            msgout_.Write("マイリスト更新が終了しました。\r\n");
+        }
+
+        public List<Video> GetMylist(string mylist_str)
+        {
             msgout_.Write("マイリスト取得中…\r\n");
             List<string> mylist_number_list = new List<string>();
 
@@ -357,11 +392,7 @@ namespace NicoTools
             }
 
             video_list = VideoListUtil.Distinct(video_list);
-
-            RankFile rank_file = new RankFile(video_list, iooption.GetRankFileCustomFormat());
-            rank_file.Sort(ranking_method);
-            iooption.OutputRankFile(rank_file, ranking_method);
-            msgout_.Write("マイリスト取得が終了しました。\r\n");
+            return video_list;
         }
 
         public void GetNewArrival(int start, int end, InputOutputOption iooption, RankingMethod ranking_method)

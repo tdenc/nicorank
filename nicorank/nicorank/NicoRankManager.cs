@@ -269,6 +269,11 @@ namespace nicorank
             nico_download_.MylistSearch((string)param_[0], (InputOutputOption)param_[1], (RankingMethod)param_[2]);
         }
 
+        public void UpdateRankFileByMylist()
+        {
+            nico_download_.UpdateRankFileByMylist((string)param_[0], (InputOutputOption)param_[1], (RankingMethod)param_[2]);
+        }
+
         public void GetNewArrival()
         {
             nico_download_.GetNewArrival((int)param_[0], (int)param_[1], (InputOutputOption)param_[2], (RankingMethod)param_[3]);
@@ -297,6 +302,11 @@ namespace nicorank
         public void MergeRankFileB()
         {
             nico_list_manager_.MergeRankFileB(path_mgr_.GetDiff1Path(), path_mgr_.GetDiff2Path(), (InputOutputOption)param_[0], (RankingMethod)param_[1]);
+        }
+
+        public void UpdatePoint()
+        {
+            nico_list_manager_.UpdatePoint(path_mgr_.GetDiff1Path(), path_mgr_.GetDiff2Path(), (InputOutputOption)param_[0], (RankingMethod)param_[1]);
         }
 
         public void SortRankFile()

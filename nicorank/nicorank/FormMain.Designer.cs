@@ -75,6 +75,9 @@
             this.buttonUpdateDetail = new System.Windows.Forms.Button();
             this.buttonGetDetail = new System.Windows.Forms.Button();
             this.checkBoxIsNoCache = new System.Windows.Forms.CheckBox();
+            this.checkBoxIsRankFileCustomize = new System.Windows.Forms.CheckBox();
+            this.checkBoxIsSendingUserSession = new System.Windows.Forms.CheckBox();
+            this.buttonUpdateRankFileByMylist = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPageOther2 = new System.Windows.Forms.TabPage();
             this.buttonGetMyMylistList = new System.Windows.Forms.Button();
@@ -94,6 +97,7 @@
             this.label58 = new System.Windows.Forms.Label();
             this.buttonFont = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label52 = new System.Windows.Forms.Label();
             this.groupBox35 = new System.Windows.Forms.GroupBox();
             this.radioButtonEncodingOutputShiftJIS = new System.Windows.Forms.RadioButton();
             this.radioButtonEncodingOutputUTF8 = new System.Windows.Forms.RadioButton();
@@ -114,7 +118,6 @@
             this.textBoxTagSearchInterval = new System.Windows.Forms.TextBox();
             this.textBoxDlInterval = new System.Windows.Forms.TextBox();
             this.labelInputRankFileFormat = new System.Windows.Forms.Label();
-            this.checkBoxIsRankFileCustomize = new System.Windows.Forms.CheckBox();
             this.label71 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
             this.label66 = new System.Windows.Forms.Label();
@@ -472,10 +475,12 @@
             this.radioButtonMakeUserIdFromDir = new System.Windows.Forms.RadioButton();
             this.radioButtonMakeUserIdFromFile = new System.Windows.Forms.RadioButton();
             this.label45 = new System.Windows.Forms.Label();
-            this.checkBoxIsSendingUserSession = new System.Windows.Forms.CheckBox();
-            this.label52 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
             this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
+            this.groupBox36 = new System.Windows.Forms.GroupBox();
+            this.buttonUpdatePoint = new System.Windows.Forms.Button();
+            this.label53 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -546,6 +551,8 @@
             this.tabPageTagComment.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.groupBox36.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonInputFromTextBox
@@ -1032,6 +1039,40 @@
             this.checkBoxIsNoCache.UseVisualStyleBackColor = true;
             this.checkBoxIsNoCache.CheckedChanged += new System.EventHandler(this.checkBoxIsNoCache_CheckedChanged);
             // 
+            // checkBoxIsRankFileCustomize
+            // 
+            this.checkBoxIsRankFileCustomize.AutoSize = true;
+            this.checkBoxIsRankFileCustomize.Location = new System.Drawing.Point(20, 150);
+            this.checkBoxIsRankFileCustomize.Name = "checkBoxIsRankFileCustomize";
+            this.checkBoxIsRankFileCustomize.Size = new System.Drawing.Size(165, 16);
+            this.checkBoxIsRankFileCustomize.TabIndex = 26;
+            this.checkBoxIsRankFileCustomize.Text = "ランクファイルをカスタマイズする";
+            this.toolTip1.SetToolTip(this.checkBoxIsRankFileCustomize, "ランクファイルのカスタマイズ機能はβ版であり、誤りを含む可能性があります。\r\n結果が正しいことを十分確認した上でご使用ください。");
+            this.checkBoxIsRankFileCustomize.UseVisualStyleBackColor = true;
+            this.checkBoxIsRankFileCustomize.CheckedChanged += new System.EventHandler(this.checkBoxIsRankFileCustomize_CheckedChanged);
+            // 
+            // checkBoxIsSendingUserSession
+            // 
+            this.checkBoxIsSendingUserSession.AutoSize = true;
+            this.checkBoxIsSendingUserSession.Location = new System.Drawing.Point(17, 202);
+            this.checkBoxIsSendingUserSession.Name = "checkBoxIsSendingUserSession";
+            this.checkBoxIsSendingUserSession.Size = new System.Drawing.Size(392, 16);
+            this.checkBoxIsSendingUserSession.TabIndex = 40;
+            this.checkBoxIsSendingUserSession.Text = "タグ・キーワード検索時に user_session を送る（通常はチェックしないでください）";
+            this.toolTip1.SetToolTip(this.checkBoxIsSendingUserSession, "チェックをONにすると、データがキャッシュされないようになります");
+            this.checkBoxIsSendingUserSession.UseVisualStyleBackColor = true;
+            // 
+            // buttonUpdateRankFileByMylist
+            // 
+            this.buttonUpdateRankFileByMylist.Location = new System.Drawing.Point(379, 109);
+            this.buttonUpdateRankFileByMylist.Name = "buttonUpdateRankFileByMylist";
+            this.buttonUpdateRankFileByMylist.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdateRankFileByMylist.TabIndex = 3;
+            this.buttonUpdateRankFileByMylist.Text = "ポイント更新";
+            this.toolTip1.SetToolTip(this.buttonUpdateRankFileByMylist, "入力ランクファイルのポイントデータをマイリスト取得によって更新します。");
+            this.buttonUpdateRankFileByMylist.UseVisualStyleBackColor = true;
+            this.buttonUpdateRankFileByMylist.Click += new System.EventHandler(this.buttonUpdateRankFileByMylist_Click);
+            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
@@ -1239,6 +1280,17 @@
             this.tabPage2.Text = "上級者向け";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label52.ForeColor = System.Drawing.Color.Red;
+            this.label52.Location = new System.Drawing.Point(129, 169);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(138, 12);
+            this.label52.TabIndex = 40;
+            this.label52.Text = "β版機能のため、使用注意";
+            // 
             // groupBox35
             // 
             this.groupBox35.Controls.Add(this.radioButtonEncodingOutputShiftJIS);
@@ -1444,18 +1496,6 @@
             this.labelInputRankFileFormat.Size = new System.Drawing.Size(53, 12);
             this.labelInputRankFileFormat.TabIndex = 28;
             this.labelInputRankFileFormat.Text = "入力書式";
-            // 
-            // checkBoxIsRankFileCustomize
-            // 
-            this.checkBoxIsRankFileCustomize.AutoSize = true;
-            this.checkBoxIsRankFileCustomize.Location = new System.Drawing.Point(20, 150);
-            this.checkBoxIsRankFileCustomize.Name = "checkBoxIsRankFileCustomize";
-            this.checkBoxIsRankFileCustomize.Size = new System.Drawing.Size(165, 16);
-            this.checkBoxIsRankFileCustomize.TabIndex = 26;
-            this.checkBoxIsRankFileCustomize.Text = "ランクファイルをカスタマイズする";
-            this.toolTip1.SetToolTip(this.checkBoxIsRankFileCustomize, "ランクファイルのカスタマイズ機能はβ版であり、誤りを含む可能性があります。\r\n結果が正しいことを十分確認した上でご使用ください。");
-            this.checkBoxIsRankFileCustomize.UseVisualStyleBackColor = true;
-            this.checkBoxIsRankFileCustomize.CheckedChanged += new System.EventHandler(this.checkBoxIsRankFileCustomize_CheckedChanged);
             // 
             // label71
             // 
@@ -3780,6 +3820,7 @@
             // 
             // groupBox27
             // 
+            this.groupBox27.Controls.Add(this.buttonUpdateRankFileByMylist);
             this.groupBox27.Controls.Add(this.buttonMylistSearch);
             this.groupBox27.Controls.Add(this.textBoxMylistUrl);
             this.groupBox27.Controls.Add(this.label20);
@@ -3792,7 +3833,7 @@
             // 
             // buttonMylistSearch
             // 
-            this.buttonMylistSearch.Location = new System.Drawing.Point(382, 107);
+            this.buttonMylistSearch.Location = new System.Drawing.Point(379, 82);
             this.buttonMylistSearch.Name = "buttonMylistSearch";
             this.buttonMylistSearch.Size = new System.Drawing.Size(75, 23);
             this.buttonMylistSearch.TabIndex = 1;
@@ -4016,14 +4057,10 @@
             // 
             // tabPage15
             // 
-            this.tabPage15.Controls.Add(this.groupBox8);
-            this.tabPage15.Controls.Add(this.groupBox6);
+            this.tabPage15.Controls.Add(this.panel3);
             this.tabPage15.Controls.Add(this.buttonExchangeCheckRankFile);
             this.tabPage15.Controls.Add(this.buttonSelectDiff2Path);
             this.tabPage15.Controls.Add(this.buttonSelectDiff1Path);
-            this.tabPage15.Controls.Add(this.groupBox21);
-            this.tabPage15.Controls.Add(this.groupBox20);
-            this.tabPage15.Controls.Add(this.groupBox19);
             this.tabPage15.Controls.Add(this.label99);
             this.tabPage15.Controls.Add(this.label98);
             this.tabPage15.Controls.Add(this.textBoxDiff2Path);
@@ -4040,16 +4077,16 @@
             // 
             this.groupBox8.Controls.Add(this.buttonMergeRankFileB);
             this.groupBox8.Controls.Add(this.label8);
-            this.groupBox8.Location = new System.Drawing.Point(243, 180);
+            this.groupBox8.Location = new System.Drawing.Point(239, 144);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(236, 39);
+            this.groupBox8.Size = new System.Drawing.Size(219, 39);
             this.groupBox8.TabIndex = 11;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "マージB";
             // 
             // buttonMergeRankFileB
             // 
-            this.buttonMergeRankFileB.Location = new System.Drawing.Point(185, 12);
+            this.buttonMergeRankFileB.Location = new System.Drawing.Point(166, 12);
             this.buttonMergeRankFileB.Name = "buttonMergeRankFileB";
             this.buttonMergeRankFileB.Size = new System.Drawing.Size(45, 23);
             this.buttonMergeRankFileB.TabIndex = 0;
@@ -4070,7 +4107,7 @@
             // 
             this.groupBox6.Controls.Add(this.buttonMergeRankFileA);
             this.groupBox6.Controls.Add(this.label1);
-            this.groupBox6.Location = new System.Drawing.Point(15, 179);
+            this.groupBox6.Location = new System.Drawing.Point(12, 144);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(222, 39);
             this.groupBox6.TabIndex = 10;
@@ -4134,16 +4171,16 @@
             // 
             this.groupBox21.Controls.Add(this.buttonMakeDup);
             this.groupBox21.Controls.Add(this.label107);
-            this.groupBox21.Location = new System.Drawing.Point(243, 139);
+            this.groupBox21.Location = new System.Drawing.Point(239, 99);
             this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(236, 39);
+            this.groupBox21.Size = new System.Drawing.Size(219, 39);
             this.groupBox21.TabIndex = 7;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "重複チェック";
             // 
             // buttonMakeDup
             // 
-            this.buttonMakeDup.Location = new System.Drawing.Point(155, 12);
+            this.buttonMakeDup.Location = new System.Drawing.Point(136, 12);
             this.buttonMakeDup.Name = "buttonMakeDup";
             this.buttonMakeDup.Size = new System.Drawing.Size(75, 23);
             this.buttonMakeDup.TabIndex = 0;
@@ -4164,7 +4201,7 @@
             // 
             this.groupBox20.Controls.Add(this.buttonMakeDiffB);
             this.groupBox20.Controls.Add(this.label106);
-            this.groupBox20.Location = new System.Drawing.Point(16, 139);
+            this.groupBox20.Location = new System.Drawing.Point(12, 99);
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(221, 39);
             this.groupBox20.TabIndex = 6;
@@ -4197,9 +4234,9 @@
             this.groupBox19.Controls.Add(this.label100);
             this.groupBox19.Controls.Add(this.dateTimePickerDiffExclusionDate);
             this.groupBox19.Controls.Add(this.buttonMakeDiff);
-            this.groupBox19.Location = new System.Drawing.Point(17, 75);
+            this.groupBox19.Location = new System.Drawing.Point(12, 32);
             this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(462, 61);
+            this.groupBox19.Size = new System.Drawing.Size(446, 61);
             this.groupBox19.TabIndex = 5;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "差分作成A";
@@ -4228,7 +4265,7 @@
             // label100
             // 
             this.label100.AutoSize = true;
-            this.label100.Location = new System.Drawing.Point(309, 15);
+            this.label100.Location = new System.Drawing.Point(297, 15);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(147, 12);
             this.label100.TabIndex = 5;
@@ -4247,7 +4284,7 @@
             // 
             // buttonMakeDiff
             // 
-            this.buttonMakeDiff.Location = new System.Drawing.Point(381, 32);
+            this.buttonMakeDiff.Location = new System.Drawing.Point(367, 32);
             this.buttonMakeDiff.Name = "buttonMakeDiff";
             this.buttonMakeDiff.Size = new System.Drawing.Size(75, 23);
             this.buttonMakeDiff.TabIndex = 2;
@@ -5393,27 +5430,19 @@
             this.label45.TabIndex = 0;
             this.label45.Text = "投稿者情報作成";
             // 
-            // checkBoxIsSendingUserSession
+            // panel3
             // 
-            this.checkBoxIsSendingUserSession.AutoSize = true;
-            this.checkBoxIsSendingUserSession.Location = new System.Drawing.Point(17, 202);
-            this.checkBoxIsSendingUserSession.Name = "checkBoxIsSendingUserSession";
-            this.checkBoxIsSendingUserSession.Size = new System.Drawing.Size(392, 16);
-            this.checkBoxIsSendingUserSession.TabIndex = 40;
-            this.checkBoxIsSendingUserSession.Text = "タグ・キーワード検索時に user_session を送る（通常はチェックしないでください）";
-            this.toolTip1.SetToolTip(this.checkBoxIsSendingUserSession, "チェックをONにすると、データがキャッシュされないようになります");
-            this.checkBoxIsSendingUserSession.UseVisualStyleBackColor = true;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label52.ForeColor = System.Drawing.Color.Red;
-            this.label52.Location = new System.Drawing.Point(129, 169);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(138, 12);
-            this.label52.TabIndex = 40;
-            this.label52.Text = "β版機能のため、使用注意";
+            this.panel3.AutoScroll = true;
+            this.panel3.Controls.Add(this.groupBox36);
+            this.panel3.Controls.Add(this.groupBox19);
+            this.panel3.Controls.Add(this.groupBox8);
+            this.panel3.Controls.Add(this.groupBox20);
+            this.panel3.Controls.Add(this.groupBox6);
+            this.panel3.Controls.Add(this.groupBox21);
+            this.panel3.Location = new System.Drawing.Point(8, 85);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(481, 133);
+            this.panel3.TabIndex = 12;
             // 
             // selectFileBoxMakeUserIdFromFile
             // 
@@ -5434,6 +5463,36 @@
             this.selectFileBoxMakeUserIdFromDir.Name = "selectFileBoxMakeUserIdFromDir";
             this.selectFileBoxMakeUserIdFromDir.Size = new System.Drawing.Size(423, 23);
             this.selectFileBoxMakeUserIdFromDir.TabIndex = 3;
+            // 
+            // groupBox36
+            // 
+            this.groupBox36.Controls.Add(this.buttonUpdatePoint);
+            this.groupBox36.Controls.Add(this.label53);
+            this.groupBox36.Location = new System.Drawing.Point(12, 188);
+            this.groupBox36.Name = "groupBox36";
+            this.groupBox36.Size = new System.Drawing.Size(223, 39);
+            this.groupBox36.TabIndex = 12;
+            this.groupBox36.TabStop = false;
+            this.groupBox36.Text = "ポイント更新";
+            // 
+            // buttonUpdatePoint
+            // 
+            this.buttonUpdatePoint.Location = new System.Drawing.Point(140, 12);
+            this.buttonUpdatePoint.Name = "buttonUpdatePoint";
+            this.buttonUpdatePoint.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdatePoint.TabIndex = 0;
+            this.buttonUpdatePoint.Text = "ポイント更新";
+            this.buttonUpdatePoint.UseVisualStyleBackColor = true;
+            this.buttonUpdatePoint.Click += new System.EventHandler(this.buttonUpdatePoint_Click);
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(9, 17);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(122, 12);
+            this.label53.TabIndex = 9;
+            this.label53.Text = "(2)のポイントで(1)を更新";
             // 
             // FormMain
             // 
@@ -5574,6 +5633,9 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.groupBox36.ResumeLayout(false);
+            this.groupBox36.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -6027,6 +6089,11 @@
         private System.Windows.Forms.Button buttonGetMyMylistList;
         private System.Windows.Forms.CheckBox checkBoxIsSendingUserSession;
         private System.Windows.Forms.Label label52;
+        private System.Windows.Forms.Button buttonUpdateRankFileByMylist;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.GroupBox groupBox36;
+        private System.Windows.Forms.Button buttonUpdatePoint;
+        private System.Windows.Forms.Label label53;
     }
 }
 

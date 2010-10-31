@@ -308,6 +308,48 @@ namespace NicoTools
             msgout_.Write("マージが終了しました。\r\n");
         }
 
+        public void UpdatePoint(string rank_file_diff1_path, string rank_file_diff2_path, InputOutputOption iooption, RankingMethod ranking_method)
+        {
+            bool exists_rank_file1 = File.Exists(rank_file_diff1_path);
+            if (!exists_rank_file1)
+            {
+                throw new Exception("ランクファイル(1)が存在しません。");
+            }
+
+            bool exists_rank_file2 = File.Exists(rank_file_diff2_path);
+            if (!exists_rank_file2)
+            {
+                throw new Exception("ランクファイル(2)が存在しません。");
+            }
+
+            msgout_.Write("ポイント更新中…\r\n");
+            
+            RankFile rank_file_diff1 = new RankFile(rank_file_diff1_path, iooption.GetRankFileCustomFormat());
+            RankFile rank_file_diff2 = new RankFile(rank_file_diff2_path, iooption.GetRankFileCustomFormat());
+
+            List<Video> video_list_diff2 = rank_file_diff2.GetVideoList();
+            List<Video> video_list = new List<Video>();
+
+            for (int i = 0; i < rank_file_diff1.Count; ++i)
+            {
+                Video video = rank_file_diff1.GetVideo(i);
+                int index = RankFile.SearchVideo(rank_file_diff2.GetVideoList(), video.video_id);
+                if (index >= 0)
+                {
+                    video.title = video_list_diff2[index].title;
+                    video.tag_set = video_list_diff2[index].tag_set;
+                    video.point = video_list_diff2[index].point;
+                    video.description = video_list_diff2[index].description;
+                    video_list.Add(video);
+                }
+            }
+
+            RankFile rank_file = new RankFile(video_list, iooption.GetRankFileCustomFormat());
+            rank_file.Sort(ranking_method);
+            iooption.OutputRankFile(rank_file, ranking_method);
+            msgout_.Write("ポイント更新が終了しました。\r\n");
+        }
+
         public void SortRankFile(InputOutputOption iooption, RankingMethod ranking_method)
         {
             RankFile rank_file = iooption.GetRankFile();
