@@ -91,9 +91,12 @@ namespace NicoTools
             RankFile rank_file = new RankFile(custom_format);
             int log_number = 0;
 
-            if (!System.IO.Directory.Exists("log"))
+            if (!string.IsNullOrEmpty(option.save_html_dir))
             {
-                System.IO.Directory.CreateDirectory("log");
+                if (!System.IO.Directory.Exists(option.save_html_dir))
+                {
+                    System.IO.Directory.CreateDirectory(option.save_html_dir);
+                }
             }
 
             msgout_.Write("タグ検索を開始します。\r\n");
