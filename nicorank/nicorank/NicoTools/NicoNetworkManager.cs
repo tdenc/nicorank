@@ -80,15 +80,15 @@ namespace NicoTools
         public void MakeListAndWriteBySearchTag(InputOutputOption iooption, SearchingTagOption option,
                                                 RankingMethod ranking_method)
         {
-            RankFile rank_file = MakeListBySearchTag(iooption, option, ranking_method.GetFilter());
+            RankFile rank_file = MakeListBySearchTag(option, ranking_method.GetFilter(), iooption.GetRankFileCustomFormat());
             rank_file.Sort(ranking_method);
             iooption.OutputRankFile(rank_file, ranking_method);
             msgout_.Write("リストを作成しました。\r\n");
         }
 
-        public RankFile MakeListBySearchTag(InputOutputOption iooption, SearchingTagOption option, IFilterManager filter)
+        public RankFile MakeListBySearchTag(SearchingTagOption option, IFilterManager filter, RankFileCustomFormat custom_format)
         {
-            RankFile rank_file = new RankFile(iooption.GetRankFileCustomFormat());
+            RankFile rank_file = new RankFile(custom_format);
             int log_number = 0;
 
             if (!System.IO.Directory.Exists("log"))
@@ -265,7 +265,10 @@ namespace NicoTools
                 }
             }
             msgout_.Write(page.ToString() + "ページ目を取得しました。\r\n");
-            IJFile.WriteUTF8("log\\search" + log_number.ToString() + ".html", str);
+            if (!string.IsNullOrEmpty(option.save_html_dir))
+            {
+                IJFile.WriteUTF8(Path.Combine(option.save_html_dir,  "search" + log_number.ToString() + ".html"), str);
+            }
             cancel_object_.CheckCancel();
             ++log_number;
             return ParseSearch(str);

@@ -591,6 +591,8 @@ namespace NicoTools
         public string searching_interval;
         public string getting_detail_interval;
 
+        public string save_html_dir;
+
         // 検索チケットID
         public string ticket_id;
         // 検索チケット作成フラグ
