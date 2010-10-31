@@ -680,10 +680,10 @@ namespace nicorank
         {
             if (textBoxTagSearchInterval.Text == "")
             {
-                textBoxTagSearchInterval.Text = "12";
+                textBoxTagSearchInterval.Text = "8";
             }
-            double interval_min = 10.0;
-            double interval_max = 12.0;
+            double interval_min = 8.0;
+            double interval_max = 10.0;
             try
             {
                 IJStringUtil.ParseDlInterval(textBoxTagSearchInterval.Text, ref interval_min, ref interval_max);
@@ -693,9 +693,9 @@ namespace nicorank
                 textBoxInfo.AppendText("タグ検索の間隔の指定が正しくありません。\r\n");
                 return false;
             }
-            if (interval_min < 5.0)
+            if (interval_min < 3.0)
             {
-                textBoxInfo.AppendText("タグ検索の間隔は5秒未満にはできません。\r\n");
+                textBoxInfo.AppendText("タグ検索の間隔は3秒未満にはできません。\r\n");
                 return false;
             }
             return true;

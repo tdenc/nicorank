@@ -395,6 +395,7 @@ namespace nicorank
             searching_tag_option.getting_detail_interval = textBoxGettingDetailInterval.Text;
             searching_tag_option.is_create_ticket = checkBoxSaveSearch.Checked;
             searching_tag_option.redundant_seatching_method = GetRedundantSeatchingMethod();
+            searching_tag_option.is_sending_user_session = checkBoxIsSendingUserSession.Checked;
 
             // 処理の最初にボタンのテキストを「中止」にする
             NicoRankManager.ThreadStarterDelegate ts_delegate = delegate {
@@ -1142,14 +1143,6 @@ namespace nicorank
         private void buttonMakeAviFromScript_Click(object sender, EventArgs e)
         {
             StartThread(nicorank_mgr_.MakeAviFromScript, null, false);
-        }
-
-        private void checkBoxIsRankFileCustomize_Click(object sender, EventArgs e)
-        {
-            if (checkBoxIsRankFileCustomize.Checked)
-            {
-                MessageBox.Show("ランクファイルのカスタマイズ機能はβ版であり、\r\n誤りを含む可能性があります。\r\n結果が正しいことを十分確認した上でご使用ください。");
-            }
         }
 
         private void listBoxSortNew_SelectedIndexChanged(object sender, EventArgs e)

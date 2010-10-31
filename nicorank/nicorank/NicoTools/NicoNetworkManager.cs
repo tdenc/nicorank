@@ -13,6 +13,7 @@ namespace NicoTools
     public class NicoNetworkManager
     {
         private NicoNetwork niconico_network_;
+        private NicoNetwork niconico_no_user_session_network_ = new NicoNetwork();
         private MessageOut msgout_;
         private CancelObject cancel_object_;
 
@@ -28,6 +29,8 @@ namespace NicoTools
             niconico_network_ = network;
             msgout_ = msgout;
             cancel_object_ = cancel_object;
+
+            niconico_no_user_session_network_.ReloadCookie(NicoNetwork.CookieKind.None);
         }
 
         public void SetDelegateSetDonwloadInfo(StringDelegate dlg)
@@ -203,6 +206,9 @@ namespace NicoTools
             }
             else
             {
+                // ニコニコ動画では、タグ（キーワード）検索の際、なぜかログインしているとアクセス制限がきつく、していないと弱い。
+                // そのため、タグ検索のときだけログインしないというオプションを用意している。
+                NicoNetwork network = (option.is_sending_user_session ? niconico_network_ : niconico_no_user_session_network_);
                 wait_required = true;
                 while (true)
                 {
@@ -210,11 +216,11 @@ namespace NicoTools
                     {
                         if (is_searching_kind_tag)
                         {
-                            str = niconico_network_.GetSearchTag(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
+                            str = network.GetSearchTag(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
                         }
                         else
                         {
-                            str = niconico_network_.GetSearchKeyword(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
+                            str = network.GetSearchKeyword(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
                         }
                         if (str.IndexOf("ここから先をご利用いただくにはログインしてください") >= 0)
                         {

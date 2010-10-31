@@ -232,6 +232,9 @@ namespace NicoTools
                 writer.WriteLine("getting_detail_interval={0}", option.getting_detail_interval ?? string.Empty);
 
                 writer.WriteLine("redundant_seatching_method={0}", option.redundant_seatching_method.ToString());
+
+                writer.WriteLine("save_html_dir={0}", option.save_html_dir);
+                writer.WriteLine("is_sending_user_session={0}", option.is_sending_user_session);
             }
 
             return option_text.ToString();
@@ -330,6 +333,12 @@ namespace NicoTools
                                 break;
                             case "redundant_seatching_method":
                                 option.redundant_seatching_method = (RedundantSearchingMethod)Enum.Parse(typeof(RedundantSearchingMethod), value);
+                                break;
+                            case "save_html_dir":
+                                option.save_html_dir = value;
+                                break;
+                            case "is_sending_user_session":
+                                option.is_sending_user_session = bool.Parse(value);
                                 break;
                             default:
                                 break;

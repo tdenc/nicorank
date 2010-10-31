@@ -77,6 +77,7 @@
             this.checkBoxIsNoCache = new System.Windows.Forms.CheckBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.tabPageOther2 = new System.Windows.Forms.TabPage();
+            this.buttonGetMyMylistList = new System.Windows.Forms.Button();
             this.labelCopyRight = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -471,7 +472,8 @@
             this.radioButtonMakeUserIdFromDir = new System.Windows.Forms.RadioButton();
             this.radioButtonMakeUserIdFromFile = new System.Windows.Forms.RadioButton();
             this.label45 = new System.Windows.Forms.Label();
-            this.buttonGetMyMylistList = new System.Windows.Forms.Button();
+            this.checkBoxIsSendingUserSession = new System.Windows.Forms.CheckBox();
+            this.label52 = new System.Windows.Forms.Label();
             this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
             this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -1023,9 +1025,9 @@
             this.checkBoxIsNoCache.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxIsNoCache.Location = new System.Drawing.Point(17, 180);
             this.checkBoxIsNoCache.Name = "checkBoxIsNoCache";
-            this.checkBoxIsNoCache.Size = new System.Drawing.Size(312, 16);
+            this.checkBoxIsNoCache.Size = new System.Drawing.Size(316, 16);
             this.checkBoxIsNoCache.TabIndex = 36;
-            this.checkBoxIsNoCache.Text = "HTTP通信時にヘッダにCache-Control: max-age=0 をつける";
+            this.checkBoxIsNoCache.Text = "HTTP通信時にヘッダに Cache-Control: max-age=0 をつける";
             this.toolTip1.SetToolTip(this.checkBoxIsNoCache, "チェックをONにすると、データがキャッシュされないようになります");
             this.checkBoxIsNoCache.UseVisualStyleBackColor = true;
             this.checkBoxIsNoCache.CheckedChanged += new System.EventHandler(this.checkBoxIsNoCache_CheckedChanged);
@@ -1047,13 +1049,23 @@
             this.tabPageOther2.Controls.Add(this.textBoxFont);
             this.tabPageOther2.Controls.Add(this.label58);
             this.tabPageOther2.Controls.Add(this.buttonFont);
-            this.tabPageOther2.Location = new System.Drawing.Point(4, 38);
+            this.tabPageOther2.Location = new System.Drawing.Point(4, 40);
             this.tabPageOther2.Name = "tabPageOther2";
             this.tabPageOther2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOther2.Size = new System.Drawing.Size(552, 338);
+            this.tabPageOther2.Size = new System.Drawing.Size(552, 336);
             this.tabPageOther2.TabIndex = 14;
             this.tabPageOther2.Text = "おまけ";
             this.tabPageOther2.UseVisualStyleBackColor = true;
+            // 
+            // buttonGetMyMylistList
+            // 
+            this.buttonGetMyMylistList.Location = new System.Drawing.Point(308, 226);
+            this.buttonGetMyMylistList.Name = "buttonGetMyMylistList";
+            this.buttonGetMyMylistList.Size = new System.Drawing.Size(146, 23);
+            this.buttonGetMyMylistList.TabIndex = 9;
+            this.buttonGetMyMylistList.Text = "自分のマイリスト番号取得";
+            this.buttonGetMyMylistList.UseVisualStyleBackColor = true;
+            this.buttonGetMyMylistList.Click += new System.EventHandler(this.buttonGetMyMylistList_Click);
             // 
             // labelCopyRight
             // 
@@ -1197,6 +1209,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label52);
             this.tabPage2.Controls.Add(this.groupBox35);
             this.tabPage2.Controls.Add(this.groupBox34);
             this.tabPage2.Controls.Add(this.buttonCustomRankFileOutputDefault);
@@ -1218,10 +1231,10 @@
             this.tabPage2.Controls.Add(this.label65);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.label23);
-            this.tabPage2.Location = new System.Drawing.Point(4, 38);
+            this.tabPage2.Location = new System.Drawing.Point(4, 40);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(552, 338);
+            this.tabPage2.Size = new System.Drawing.Size(552, 336);
             this.tabPage2.TabIndex = 20;
             this.tabPage2.Text = "上級者向け";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1412,7 +1425,7 @@
             this.textBoxTagSearchInterval.Name = "textBoxTagSearchInterval";
             this.textBoxTagSearchInterval.Size = new System.Drawing.Size(55, 19);
             this.textBoxTagSearchInterval.TabIndex = 21;
-            this.textBoxTagSearchInterval.Text = "12";
+            this.textBoxTagSearchInterval.Text = "8";
             // 
             // textBoxDlInterval
             // 
@@ -1440,8 +1453,8 @@
             this.checkBoxIsRankFileCustomize.Size = new System.Drawing.Size(165, 16);
             this.checkBoxIsRankFileCustomize.TabIndex = 26;
             this.checkBoxIsRankFileCustomize.Text = "ランクファイルをカスタマイズする";
+            this.toolTip1.SetToolTip(this.checkBoxIsRankFileCustomize, "ランクファイルのカスタマイズ機能はβ版であり、誤りを含む可能性があります。\r\n結果が正しいことを十分確認した上でご使用ください。");
             this.checkBoxIsRankFileCustomize.UseVisualStyleBackColor = true;
-            this.checkBoxIsRankFileCustomize.Click += new System.EventHandler(this.checkBoxIsRankFileCustomize_Click);
             this.checkBoxIsRankFileCustomize.CheckedChanged += new System.EventHandler(this.checkBoxIsRankFileCustomize_CheckedChanged);
             // 
             // label71
@@ -1519,6 +1532,7 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.checkBoxIsSendingUserSession);
             this.tabPage7.Controls.Add(this.buttonSelectVideocutPath);
             this.tabPage7.Controls.Add(this.textBoxVideocutPath);
             this.tabPage7.Controls.Add(this.label44);
@@ -1537,9 +1551,9 @@
             this.tabPage7.Controls.Add(this.label19);
             this.tabPage7.Controls.Add(this.label18);
             this.tabPage7.Controls.Add(this.label16);
-            this.tabPage7.Location = new System.Drawing.Point(4, 38);
+            this.tabPage7.Location = new System.Drawing.Point(4, 40);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(552, 338);
+            this.tabPage7.Size = new System.Drawing.Size(552, 336);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "設定";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1602,7 +1616,7 @@
             // 
             // buttonLoadConfig
             // 
-            this.buttonLoadConfig.Location = new System.Drawing.Point(16, 231);
+            this.buttonLoadConfig.Location = new System.Drawing.Point(17, 253);
             this.buttonLoadConfig.Name = "buttonLoadConfig";
             this.buttonLoadConfig.Size = new System.Drawing.Size(127, 23);
             this.buttonLoadConfig.TabIndex = 15;
@@ -1612,7 +1626,7 @@
             // 
             // buttonSaveConfig
             // 
-            this.buttonSaveConfig.Location = new System.Drawing.Point(16, 202);
+            this.buttonSaveConfig.Location = new System.Drawing.Point(17, 224);
             this.buttonSaveConfig.Name = "buttonSaveConfig";
             this.buttonSaveConfig.Size = new System.Drawing.Size(127, 23);
             this.buttonSaveConfig.TabIndex = 14;
@@ -1729,10 +1743,10 @@
             this.tabPageTimer.Controls.Add(this.comboBoxTimer1);
             this.tabPageTimer.Controls.Add(this.label3);
             this.tabPageTimer.Controls.Add(this.checkBoxTimer1);
-            this.tabPageTimer.Location = new System.Drawing.Point(4, 38);
+            this.tabPageTimer.Location = new System.Drawing.Point(4, 40);
             this.tabPageTimer.Name = "tabPageTimer";
             this.tabPageTimer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimer.Size = new System.Drawing.Size(552, 338);
+            this.tabPageTimer.Size = new System.Drawing.Size(552, 336);
             this.tabPageTimer.TabIndex = 12;
             this.tabPageTimer.Text = "タイマー";
             this.tabPageTimer.UseVisualStyleBackColor = true;
@@ -1873,9 +1887,9 @@
             this.tabPageMylist.Controls.Add(this.groupBox23);
             this.tabPageMylist.Controls.Add(this.groupBox14);
             this.tabPageMylist.Controls.Add(this.label33);
-            this.tabPageMylist.Location = new System.Drawing.Point(4, 38);
+            this.tabPageMylist.Location = new System.Drawing.Point(4, 40);
             this.tabPageMylist.Name = "tabPageMylist";
-            this.tabPageMylist.Size = new System.Drawing.Size(552, 338);
+            this.tabPageMylist.Size = new System.Drawing.Size(552, 336);
             this.tabPageMylist.TabIndex = 11;
             this.tabPageMylist.Text = "マイリスト";
             this.tabPageMylist.UseVisualStyleBackColor = true;
@@ -2229,8 +2243,8 @@
             this.textBoxCommentTime.Name = "textBoxCommentTime";
             this.textBoxCommentTime.Size = new System.Drawing.Size(36, 19);
             this.textBoxCommentTime.TabIndex = 1;
-            this.textBoxCommentTime.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxCommentTime.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForDouble_Validating);
+            this.textBoxCommentTime.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // buttonComment
             // 
@@ -2394,9 +2408,9 @@
             // 
             this.tabPage5.Controls.Add(this.groupBox33);
             this.tabPage5.Controls.Add(this.groupBox22);
-            this.tabPage5.Location = new System.Drawing.Point(4, 38);
+            this.tabPage5.Location = new System.Drawing.Point(4, 40);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(552, 338);
+            this.tabPage5.Size = new System.Drawing.Size(552, 336);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "画像・動画作成";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2673,10 +2687,10 @@
             this.tabPage14.Controls.Add(this.checkBoxIsOverwrite);
             this.tabPage14.Controls.Add(this.groupBoxTransIncludeWav);
             this.tabPage14.Controls.Add(this.checkBoxIsFlvToMp3);
-            this.tabPage14.Location = new System.Drawing.Point(4, 38);
+            this.tabPage14.Location = new System.Drawing.Point(4, 40);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(552, 338);
+            this.tabPage14.Size = new System.Drawing.Size(552, 336);
             this.tabPage14.TabIndex = 17;
             this.tabPage14.Text = "動画変換";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -2887,8 +2901,8 @@
             this.textBoxTransCutStart.Name = "textBoxTransCutStart";
             this.textBoxTransCutStart.Size = new System.Drawing.Size(41, 19);
             this.textBoxTransCutStart.TabIndex = 1;
-            this.textBoxTransCutStart.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTransCutStart.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForDouble_Validating);
+            this.textBoxTransCutStart.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // textBoxCutListPath
             // 
@@ -2908,8 +2922,8 @@
             this.textBoxTransCutEnd.Name = "textBoxTransCutEnd";
             this.textBoxTransCutEnd.Size = new System.Drawing.Size(40, 19);
             this.textBoxTransCutEnd.TabIndex = 2;
-            this.textBoxTransCutEnd.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTransCutEnd.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForDouble_Validating);
+            this.textBoxTransCutEnd.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // labelTransCut1
             // 
@@ -2965,8 +2979,8 @@
             this.textBoxTransFadeIn.Name = "textBoxTransFadeIn";
             this.textBoxTransFadeIn.Size = new System.Drawing.Size(35, 19);
             this.textBoxTransFadeIn.TabIndex = 1;
-            this.textBoxTransFadeIn.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTransFadeIn.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForDouble_Validating);
+            this.textBoxTransFadeIn.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // checkBoxTransIsFadeOut
             // 
@@ -2986,8 +3000,8 @@
             this.textBoxTransFadeOut.Name = "textBoxTransFadeOut";
             this.textBoxTransFadeOut.Size = new System.Drawing.Size(35, 19);
             this.textBoxTransFadeOut.TabIndex = 3;
-            this.textBoxTransFadeOut.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTransFadeOut.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForDouble_Validating);
+            this.textBoxTransFadeOut.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // labelTransFadeIn
             // 
@@ -3125,9 +3139,9 @@
             this.tabPage9.Controls.Add(this.label46);
             this.tabPage9.Controls.Add(this.groupBox4);
             this.tabPage9.Controls.Add(this.groupBox3);
-            this.tabPage9.Location = new System.Drawing.Point(4, 38);
+            this.tabPage9.Location = new System.Drawing.Point(4, 40);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(552, 338);
+            this.tabPage9.Size = new System.Drawing.Size(552, 336);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "リスト作成・更新";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -3242,10 +3256,10 @@
             this.tabPage8.Controls.Add(this.checkBoxIsGettingDetailNew);
             this.tabPage8.Controls.Add(this.label87);
             this.tabPage8.Controls.Add(this.panel1);
-            this.tabPage8.Location = new System.Drawing.Point(4, 21);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(499, 225);
+            this.tabPage8.Size = new System.Drawing.Size(499, 224);
             this.tabPage8.TabIndex = 6;
             this.tabPage8.Text = "タグ検索";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -3309,8 +3323,8 @@
             this.textBoxTagSearchPageEnd.Name = "textBoxTagSearchPageEnd";
             this.textBoxTagSearchPageEnd.Size = new System.Drawing.Size(42, 19);
             this.textBoxTagSearchPageEnd.TabIndex = 8;
-            this.textBoxTagSearchPageEnd.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTagSearchPageEnd.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber1_Validating);
+            this.textBoxTagSearchPageEnd.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // textBoxTagSearchPageStart
             // 
@@ -3318,8 +3332,8 @@
             this.textBoxTagSearchPageStart.Name = "textBoxTagSearchPageStart";
             this.textBoxTagSearchPageStart.Size = new System.Drawing.Size(37, 19);
             this.textBoxTagSearchPageStart.TabIndex = 7;
-            this.textBoxTagSearchPageStart.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTagSearchPageStart.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber1_Validating);
+            this.textBoxTagSearchPageStart.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // numericUpDownConditionMylistNew
             // 
@@ -3356,8 +3370,8 @@
             this.textBoxTagSearchUpper.Size = new System.Drawing.Size(55, 19);
             this.textBoxTagSearchUpper.TabIndex = 13;
             this.textBoxTagSearchUpper.Visible = false;
-            this.textBoxTagSearchUpper.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTagSearchUpper.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber0_Validating);
+            this.textBoxTagSearchUpper.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // textBoxTagSearchLower
             // 
@@ -3366,8 +3380,8 @@
             this.textBoxTagSearchLower.Size = new System.Drawing.Size(55, 19);
             this.textBoxTagSearchLower.TabIndex = 11;
             this.textBoxTagSearchLower.Visible = false;
-            this.textBoxTagSearchLower.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxTagSearchLower.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber0_Validating);
+            this.textBoxTagSearchLower.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // labelTagSearchTo
             // 
@@ -3598,10 +3612,10 @@
             this.tabPage4.Controls.Add(this.buttonAnalyzeRanking);
             this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.textBoxSavedRankDir);
-            this.tabPage4.Location = new System.Drawing.Point(4, 21);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(499, 225);
+            this.tabPage4.Size = new System.Drawing.Size(499, 224);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "ランキング解析";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -3694,10 +3708,10 @@
             // 
             this.tabPage1.Controls.Add(this.groupBox28);
             this.tabPage1.Controls.Add(this.groupBox27);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(499, 225);
+            this.tabPage1.Size = new System.Drawing.Size(499, 224);
             this.tabPage1.TabIndex = 7;
             this.tabPage1.Text = "マイリスト・新着";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3742,8 +3756,8 @@
             this.textBoxNewArrivalStart.Size = new System.Drawing.Size(46, 19);
             this.textBoxNewArrivalStart.TabIndex = 0;
             this.textBoxNewArrivalStart.Text = "1";
-            this.textBoxNewArrivalStart.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxNewArrivalStart.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber1_Validating);
+            this.textBoxNewArrivalStart.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // textBoxNewArrivalEnd
             // 
@@ -3752,8 +3766,8 @@
             this.textBoxNewArrivalEnd.Size = new System.Drawing.Size(46, 19);
             this.textBoxNewArrivalEnd.TabIndex = 1;
             this.textBoxNewArrivalEnd.Text = "10";
-            this.textBoxNewArrivalEnd.Validated += new System.EventHandler(this.textBox_Validated);
             this.textBoxNewArrivalEnd.Validating += new System.ComponentModel.CancelEventHandler(this.textBoxForNumber1_Validating);
+            this.textBoxNewArrivalEnd.Validated += new System.EventHandler(this.textBox_Validated);
             // 
             // label17
             // 
@@ -3815,10 +3829,10 @@
             this.tabPage16.Controls.Add(this.label104);
             this.tabPage16.Controls.Add(this.label102);
             this.tabPage16.Controls.Add(this.textBoxSavedRankNicoChartDir);
-            this.tabPage16.Location = new System.Drawing.Point(4, 21);
+            this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(499, 225);
+            this.tabPage16.Size = new System.Drawing.Size(499, 224);
             this.tabPage16.TabIndex = 5;
             this.tabPage16.Text = "ニコチャート";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -3903,10 +3917,10 @@
             this.tabPage12.Controls.Add(this.groupBox5);
             this.tabPage12.Controls.Add(this.buttonSort);
             this.tabPage12.Controls.Add(this.groupBox1);
-            this.tabPage12.Location = new System.Drawing.Point(4, 21);
+            this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(499, 225);
+            this.tabPage12.Size = new System.Drawing.Size(499, 224);
             this.tabPage12.TabIndex = 2;
             this.tabPage12.Text = "情報取得・更新";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -4014,10 +4028,10 @@
             this.tabPage15.Controls.Add(this.label98);
             this.tabPage15.Controls.Add(this.textBoxDiff2Path);
             this.tabPage15.Controls.Add(this.textBoxDiff1Path);
-            this.tabPage15.Location = new System.Drawing.Point(4, 21);
+            this.tabPage15.Location = new System.Drawing.Point(4, 22);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(499, 225);
+            this.tabPage15.Size = new System.Drawing.Size(499, 224);
             this.tabPage15.TabIndex = 4;
             this.tabPage15.Text = "差分作成";
             this.tabPage15.UseVisualStyleBackColor = true;
@@ -4283,10 +4297,10 @@
             // 
             this.tabPage6.Controls.Add(this.buttonShowFilterTester);
             this.tabPage6.Controls.Add(this.buttonCalculateSum);
-            this.tabPage6.Location = new System.Drawing.Point(4, 21);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(499, 225);
+            this.tabPage6.Size = new System.Drawing.Size(499, 224);
             this.tabPage6.TabIndex = 8;
             this.tabPage6.Text = "ツール";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -4422,10 +4436,10 @@
             this.tabPageFileDl.Controls.Add(this.groupBox32);
             this.tabPageFileDl.Controls.Add(this.groupBox31);
             this.tabPageFileDl.Controls.Add(this.groupBox18);
-            this.tabPageFileDl.Location = new System.Drawing.Point(4, 38);
+            this.tabPageFileDl.Location = new System.Drawing.Point(4, 40);
             this.tabPageFileDl.Name = "tabPageFileDl";
             this.tabPageFileDl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFileDl.Size = new System.Drawing.Size(552, 338);
+            this.tabPageFileDl.Size = new System.Drawing.Size(552, 336);
             this.tabPageFileDl.TabIndex = 1;
             this.tabPageFileDl.Text = "ファイルDL";
             this.tabPageFileDl.UseVisualStyleBackColor = true;
@@ -4638,10 +4652,10 @@
             this.tabPageLogin.Controls.Add(this.groupBox25);
             this.tabPageLogin.Controls.Add(this.groupBox26);
             this.tabPageLogin.Controls.Add(this.buttonCheckLogin);
-            this.tabPageLogin.Location = new System.Drawing.Point(4, 38);
+            this.tabPageLogin.Location = new System.Drawing.Point(4, 40);
             this.tabPageLogin.Name = "tabPageLogin";
             this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogin.Size = new System.Drawing.Size(552, 338);
+            this.tabPageLogin.Size = new System.Drawing.Size(552, 336);
             this.tabPageLogin.TabIndex = 19;
             this.tabPageLogin.Text = "ログイン";
             this.tabPageLogin.UseVisualStyleBackColor = true;
@@ -4932,10 +4946,10 @@
             this.tabPageDlRank.Controls.Add(this.textBoxRankingDlHour);
             this.tabPageDlRank.Controls.Add(this.groupBox17);
             this.tabPageDlRank.Controls.Add(this.buttonDlRank);
-            this.tabPageDlRank.Location = new System.Drawing.Point(4, 38);
+            this.tabPageDlRank.Location = new System.Drawing.Point(4, 40);
             this.tabPageDlRank.Name = "tabPageDlRank";
             this.tabPageDlRank.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDlRank.Size = new System.Drawing.Size(552, 338);
+            this.tabPageDlRank.Size = new System.Drawing.Size(552, 336);
             this.tabPageDlRank.TabIndex = 21;
             this.tabPageDlRank.Text = "ランキングDL";
             this.tabPageDlRank.UseVisualStyleBackColor = true;
@@ -5261,9 +5275,9 @@
             this.tabPageTagComment.Controls.Add(this.textBoxTagVideoId);
             this.tabPageTagComment.Controls.Add(this.groupBox24);
             this.tabPageTagComment.Controls.Add(this.groupBox16);
-            this.tabPageTagComment.Location = new System.Drawing.Point(4, 38);
+            this.tabPageTagComment.Location = new System.Drawing.Point(4, 40);
             this.tabPageTagComment.Name = "tabPageTagComment";
-            this.tabPageTagComment.Size = new System.Drawing.Size(552, 338);
+            this.tabPageTagComment.Size = new System.Drawing.Size(552, 336);
             this.tabPageTagComment.TabIndex = 22;
             this.tabPageTagComment.Text = "タグ・コメント";
             this.tabPageTagComment.UseVisualStyleBackColor = true;
@@ -5289,10 +5303,10 @@
             this.tabPage3.Controls.Add(this.label45);
             this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromFile);
             this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromDir);
-            this.tabPage3.Location = new System.Drawing.Point(4, 38);
+            this.tabPage3.Location = new System.Drawing.Point(4, 40);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(552, 338);
+            this.tabPage3.Size = new System.Drawing.Size(552, 336);
             this.tabPage3.TabIndex = 23;
             this.tabPage3.Text = "おまけ2";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -5379,15 +5393,27 @@
             this.label45.TabIndex = 0;
             this.label45.Text = "投稿者情報作成";
             // 
-            // buttonGetMyMylistList
+            // checkBoxIsSendingUserSession
             // 
-            this.buttonGetMyMylistList.Location = new System.Drawing.Point(308, 226);
-            this.buttonGetMyMylistList.Name = "buttonGetMyMylistList";
-            this.buttonGetMyMylistList.Size = new System.Drawing.Size(146, 23);
-            this.buttonGetMyMylistList.TabIndex = 9;
-            this.buttonGetMyMylistList.Text = "自分のマイリスト番号取得";
-            this.buttonGetMyMylistList.UseVisualStyleBackColor = true;
-            this.buttonGetMyMylistList.Click += new System.EventHandler(this.buttonGetMyMylistList_Click);
+            this.checkBoxIsSendingUserSession.AutoSize = true;
+            this.checkBoxIsSendingUserSession.Location = new System.Drawing.Point(17, 202);
+            this.checkBoxIsSendingUserSession.Name = "checkBoxIsSendingUserSession";
+            this.checkBoxIsSendingUserSession.Size = new System.Drawing.Size(392, 16);
+            this.checkBoxIsSendingUserSession.TabIndex = 40;
+            this.checkBoxIsSendingUserSession.Text = "タグ・キーワード検索時に user_session を送る（通常はチェックしないでください）";
+            this.toolTip1.SetToolTip(this.checkBoxIsSendingUserSession, "チェックをONにすると、データがキャッシュされないようになります");
+            this.checkBoxIsSendingUserSession.UseVisualStyleBackColor = true;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label52.ForeColor = System.Drawing.Color.Red;
+            this.label52.Location = new System.Drawing.Point(129, 169);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(138, 12);
+            this.label52.TabIndex = 40;
+            this.label52.Text = "β版機能のため、使用注意";
             // 
             // selectFileBoxMakeUserIdFromFile
             // 
@@ -5420,8 +5446,8 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "FormMain";
             this.Text = "ニコニコランキングメーカー";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -5999,6 +6025,8 @@
         private System.Windows.Forms.Button buttonMakeUserId;
         private System.Windows.Forms.LinkLabel linkLabelMakuUserId;
         private System.Windows.Forms.Button buttonGetMyMylistList;
+        private System.Windows.Forms.CheckBox checkBoxIsSendingUserSession;
+        private System.Windows.Forms.Label label52;
     }
 }
 

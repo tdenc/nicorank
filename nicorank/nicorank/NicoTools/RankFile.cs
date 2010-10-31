@@ -593,6 +593,8 @@ namespace NicoTools
 
         public string save_html_dir;
 
+        public bool is_sending_user_session;
+
         // 検索チケットID
         public string ticket_id;
         // 検索チケット作成フラグ
