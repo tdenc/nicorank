@@ -387,6 +387,100 @@ namespace NicoTools
             msgout_.Write("マイリストへの追加を終了します。\r\n");
         }
 
+        public void AddMultipleMylist(InputOutputOption iooption, List<string> mylist_id_list, List<int> mylist_count_list)
+        {
+            if (mylist_id_list.Count == 0) {
+                return;
+            }
+
+            const int try_times = 5;
+            const int large_wait_time = 50000;
+            const int large_wait_num = 70;
+            RankFile rank_file = iooption.GetRankFile();
+
+            if (rank_file.Count == 0)
+            {
+                msgout_.Write("追加する動画がありません。\r\n");
+                return;
+            }
+
+            msgout_.Write("マイリストへの追加を開始します。\r\n");
+            // 最小3秒、最大10秒
+            int wait_time = Math.Min(Math.Max(rank_file.Count * 1000 * 8 / 10, 3000), 10000);
+            int total_wait_time = (wait_time * rank_file.Count + large_wait_time * (rank_file.Count / large_wait_num)) / 1000 / 60 + 1;
+            msgout_.Write(rank_file.Count + "件の追加には推定" + total_wait_time.ToString() + "分かかります。\r\n");
+
+            //List<Video> exist_video_list = new List<Video>();
+            //NicoListManager.ParsePointRss(niconico_network_.GetMylistHtml(mylist_id, true), DateTime.Now, exist_video_list, false, true);
+            //cancel_object_.Wait(1000);
+
+            string mylist_id = mylist_id_list[0];
+            int count = mylist_count_list[0];
+            int current_mylist_index = 0;
+
+            for (int i = 0; i < rank_file.Count; ++i)
+            {
+                //if (RankFile.SearchVideo(exist_video_list, rank_file[i]) >= 0)
+                //{
+                //    msgout_.Write(rank_file[i] + " はすでに存在します。\r\n");
+                //    continue;
+                //}
+                for (int j = 0; j < try_times; ++j)
+                {
+                    try
+                    {
+                        niconico_network_.AddMylist(mylist_id, rank_file[i]);
+                        msgout_.Write(rank_file[i] + " をマイリストに追加しました。\r\n");
+                    }
+                    catch (NiconicoAddingMylistExistException) // 上でチェックしているが念のためもう一度チェック
+                    {
+                        msgout_.Write(rank_file[i] + " はすでに存在します。\r\n");
+                    }
+                    catch (Exception e)
+                    {
+                        if (j < try_times - 1)
+                        {
+                            msgout_.Write("エラー：" + e.Message + "\r\n3秒後に再試行します。\r\n");
+                            cancel_object_.Wait(3000);
+                            continue;
+                        }
+                        else
+                        {
+                            msgout_.Write("エラー：" + e.Message + "\r\n");
+                            cancel_object_.Wait(3000);
+                        }
+                    }
+                    if (i < rank_file.Count - 1)
+                    {
+                        msgout_.Write("待機しています。\r\n");
+                        // 基本的には wait_time ミリ秒だけ待つが、large_wait_num 回に1回は
+                        // large_wait_time ミリ秒待つ。
+                        if ((i + 1) % large_wait_num == 0)
+                        {
+                            cancel_object_.Wait(large_wait_time, large_wait_time + 1000);
+                        }
+                        else
+                        {
+                            cancel_object_.Wait(wait_time, wait_time + 1000);
+                        }
+                    }
+                    break;
+                }
+                --count;
+                if (count == 0)
+                {
+                    ++current_mylist_index;
+                    if (current_mylist_index >= mylist_id_list.Count)
+                    {
+                        break;
+                    }
+                    mylist_id = mylist_id_list[current_mylist_index];
+                    count = mylist_count_list[current_mylist_index];
+                }
+            }
+            msgout_.Write("マイリストへの追加を終了します。\r\n");
+        }
+
         public void UpdateMylistDescription(string mylist_id, string text, InputOutputOption iooption)
         {
             msgout_.Write("マイリストの説明の更新を開始します。\r\n");

@@ -164,6 +164,7 @@
             this.label47 = new System.Windows.Forms.Label();
             this.buttonMylistDescriptionPreview = new System.Windows.Forms.Button();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
+            this.buttonAddingMultipleMylist = new System.Windows.Forms.Button();
             this.textBoxMylistId = new System.Windows.Forms.TextBox();
             this.label39 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
@@ -349,27 +350,31 @@
             this.radioButtonDetailExceptPoint = new System.Windows.Forms.RadioButton();
             this.radioButtonDetailTag = new System.Windows.Forms.RadioButton();
             this.tabPage15 = new System.Windows.Forms.TabPage();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.buttonMergeRankFileB = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.buttonMergeRankFileA = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.buttonExchangeCheckRankFile = new System.Windows.Forms.Button();
-            this.buttonSelectDiff2Path = new System.Windows.Forms.Button();
-            this.buttonSelectDiff1Path = new System.Windows.Forms.Button();
-            this.groupBox21 = new System.Windows.Forms.GroupBox();
-            this.buttonMakeDup = new System.Windows.Forms.Button();
-            this.label107 = new System.Windows.Forms.Label();
-            this.groupBox20 = new System.Windows.Forms.GroupBox();
-            this.buttonMakeDiffB = new System.Windows.Forms.Button();
-            this.label106 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox36 = new System.Windows.Forms.GroupBox();
+            this.buttonUpdatePoint = new System.Windows.Forms.Button();
+            this.label53 = new System.Windows.Forms.Label();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.checkBoxIsExclusionDiff = new System.Windows.Forms.CheckBox();
             this.labelIsExclusionDiff = new System.Windows.Forms.Label();
             this.label100 = new System.Windows.Forms.Label();
             this.dateTimePickerDiffExclusionDate = new System.Windows.Forms.DateTimePicker();
             this.buttonMakeDiff = new System.Windows.Forms.Button();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.buttonMergeRankFileB = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.groupBox20 = new System.Windows.Forms.GroupBox();
+            this.buttonMakeDiffB = new System.Windows.Forms.Button();
+            this.label106 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.buttonMergeRankFileA = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.buttonMakeDup = new System.Windows.Forms.Button();
+            this.label107 = new System.Windows.Forms.Label();
+            this.buttonExchangeCheckRankFile = new System.Windows.Forms.Button();
+            this.buttonSelectDiff2Path = new System.Windows.Forms.Button();
+            this.buttonSelectDiff1Path = new System.Windows.Forms.Button();
             this.label99 = new System.Windows.Forms.Label();
             this.label98 = new System.Windows.Forms.Label();
             this.textBoxDiff2Path = new System.Windows.Forms.TextBox();
@@ -475,12 +480,8 @@
             this.radioButtonMakeUserIdFromDir = new System.Windows.Forms.RadioButton();
             this.radioButtonMakeUserIdFromFile = new System.Windows.Forms.RadioButton();
             this.label45 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.selectFileBoxMakeUserIdFromFile = new nicorank.SelectFileBox();
             this.selectFileBoxMakeUserIdFromDir = new nicorank.SelectFileBox();
-            this.groupBox36 = new System.Windows.Forms.GroupBox();
-            this.buttonUpdatePoint = new System.Windows.Forms.Button();
-            this.label53 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -526,11 +527,13 @@
             this.groupBox5.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage15.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox36.SuspendLayout();
+            this.groupBox19.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox20.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox21.SuspendLayout();
-            this.groupBox20.SuspendLayout();
-            this.groupBox19.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -551,8 +554,6 @@
             this.tabPageTagComment.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).BeginInit();
-            this.panel3.SuspendLayout();
-            this.groupBox36.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonInputFromTextBox
@@ -1090,10 +1091,10 @@
             this.tabPageOther2.Controls.Add(this.textBoxFont);
             this.tabPageOther2.Controls.Add(this.label58);
             this.tabPageOther2.Controls.Add(this.buttonFont);
-            this.tabPageOther2.Location = new System.Drawing.Point(4, 40);
+            this.tabPageOther2.Location = new System.Drawing.Point(4, 38);
             this.tabPageOther2.Name = "tabPageOther2";
             this.tabPageOther2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOther2.Size = new System.Drawing.Size(552, 336);
+            this.tabPageOther2.Size = new System.Drawing.Size(552, 338);
             this.tabPageOther2.TabIndex = 14;
             this.tabPageOther2.Text = "おまけ";
             this.tabPageOther2.UseVisualStyleBackColor = true;
@@ -1272,10 +1273,10 @@
             this.tabPage2.Controls.Add(this.label65);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.label23);
-            this.tabPage2.Location = new System.Drawing.Point(4, 40);
+            this.tabPage2.Location = new System.Drawing.Point(4, 38);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(552, 336);
+            this.tabPage2.Size = new System.Drawing.Size(552, 338);
             this.tabPage2.TabIndex = 20;
             this.tabPage2.Text = "上級者向け";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1591,9 +1592,9 @@
             this.tabPage7.Controls.Add(this.label19);
             this.tabPage7.Controls.Add(this.label18);
             this.tabPage7.Controls.Add(this.label16);
-            this.tabPage7.Location = new System.Drawing.Point(4, 40);
+            this.tabPage7.Location = new System.Drawing.Point(4, 38);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(552, 336);
+            this.tabPage7.Size = new System.Drawing.Size(552, 338);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "設定";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1783,10 +1784,10 @@
             this.tabPageTimer.Controls.Add(this.comboBoxTimer1);
             this.tabPageTimer.Controls.Add(this.label3);
             this.tabPageTimer.Controls.Add(this.checkBoxTimer1);
-            this.tabPageTimer.Location = new System.Drawing.Point(4, 40);
+            this.tabPageTimer.Location = new System.Drawing.Point(4, 38);
             this.tabPageTimer.Name = "tabPageTimer";
             this.tabPageTimer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimer.Size = new System.Drawing.Size(552, 336);
+            this.tabPageTimer.Size = new System.Drawing.Size(552, 338);
             this.tabPageTimer.TabIndex = 12;
             this.tabPageTimer.Text = "タイマー";
             this.tabPageTimer.UseVisualStyleBackColor = true;
@@ -1927,9 +1928,9 @@
             this.tabPageMylist.Controls.Add(this.groupBox23);
             this.tabPageMylist.Controls.Add(this.groupBox14);
             this.tabPageMylist.Controls.Add(this.label33);
-            this.tabPageMylist.Location = new System.Drawing.Point(4, 40);
+            this.tabPageMylist.Location = new System.Drawing.Point(4, 38);
             this.tabPageMylist.Name = "tabPageMylist";
-            this.tabPageMylist.Size = new System.Drawing.Size(552, 336);
+            this.tabPageMylist.Size = new System.Drawing.Size(552, 338);
             this.tabPageMylist.TabIndex = 11;
             this.tabPageMylist.Text = "マイリスト";
             this.tabPageMylist.UseVisualStyleBackColor = true;
@@ -1997,16 +1998,27 @@
             // 
             // groupBox23
             // 
+            this.groupBox23.Controls.Add(this.buttonAddingMultipleMylist);
             this.groupBox23.Controls.Add(this.textBoxMylistId);
             this.groupBox23.Controls.Add(this.label39);
             this.groupBox23.Controls.Add(this.label42);
             this.groupBox23.Controls.Add(this.buttonAddingMylist);
             this.groupBox23.Location = new System.Drawing.Point(341, 29);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(204, 106);
+            this.groupBox23.Size = new System.Drawing.Size(204, 140);
             this.groupBox23.TabIndex = 1;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "マイリストに追加";
+            // 
+            // buttonAddingMultipleMylist
+            // 
+            this.buttonAddingMultipleMylist.Location = new System.Drawing.Point(31, 106);
+            this.buttonAddingMultipleMylist.Name = "buttonAddingMultipleMylist";
+            this.buttonAddingMultipleMylist.Size = new System.Drawing.Size(167, 23);
+            this.buttonAddingMultipleMylist.TabIndex = 9;
+            this.buttonAddingMultipleMylist.Text = "複数のマイリストに動画を追加";
+            this.buttonAddingMultipleMylist.UseVisualStyleBackColor = true;
+            this.buttonAddingMultipleMylist.Click += new System.EventHandler(this.buttonAddingMultipleMylist_Click);
             // 
             // textBoxMylistId
             // 
@@ -2448,9 +2460,9 @@
             // 
             this.tabPage5.Controls.Add(this.groupBox33);
             this.tabPage5.Controls.Add(this.groupBox22);
-            this.tabPage5.Location = new System.Drawing.Point(4, 40);
+            this.tabPage5.Location = new System.Drawing.Point(4, 38);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(552, 336);
+            this.tabPage5.Size = new System.Drawing.Size(552, 338);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "画像・動画作成";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2727,10 +2739,10 @@
             this.tabPage14.Controls.Add(this.checkBoxIsOverwrite);
             this.tabPage14.Controls.Add(this.groupBoxTransIncludeWav);
             this.tabPage14.Controls.Add(this.checkBoxIsFlvToMp3);
-            this.tabPage14.Location = new System.Drawing.Point(4, 40);
+            this.tabPage14.Location = new System.Drawing.Point(4, 38);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(552, 336);
+            this.tabPage14.Size = new System.Drawing.Size(552, 338);
             this.tabPage14.TabIndex = 17;
             this.tabPage14.Text = "動画変換";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -3179,9 +3191,9 @@
             this.tabPage9.Controls.Add(this.label46);
             this.tabPage9.Controls.Add(this.groupBox4);
             this.tabPage9.Controls.Add(this.groupBox3);
-            this.tabPage9.Location = new System.Drawing.Point(4, 40);
+            this.tabPage9.Location = new System.Drawing.Point(4, 38);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(552, 336);
+            this.tabPage9.Size = new System.Drawing.Size(552, 338);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "リスト作成・更新";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -3296,10 +3308,10 @@
             this.tabPage8.Controls.Add(this.checkBoxIsGettingDetailNew);
             this.tabPage8.Controls.Add(this.label87);
             this.tabPage8.Controls.Add(this.panel1);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Location = new System.Drawing.Point(4, 21);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(499, 224);
+            this.tabPage8.Size = new System.Drawing.Size(499, 225);
             this.tabPage8.TabIndex = 6;
             this.tabPage8.Text = "タグ検索";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -3652,10 +3664,10 @@
             this.tabPage4.Controls.Add(this.buttonAnalyzeRanking);
             this.tabPage4.Controls.Add(this.label5);
             this.tabPage4.Controls.Add(this.textBoxSavedRankDir);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 21);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(499, 224);
+            this.tabPage4.Size = new System.Drawing.Size(499, 225);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "ランキング解析";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -3748,10 +3760,10 @@
             // 
             this.tabPage1.Controls.Add(this.groupBox28);
             this.tabPage1.Controls.Add(this.groupBox27);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(499, 224);
+            this.tabPage1.Size = new System.Drawing.Size(499, 225);
             this.tabPage1.TabIndex = 7;
             this.tabPage1.Text = "マイリスト・新着";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3870,10 +3882,10 @@
             this.tabPage16.Controls.Add(this.label104);
             this.tabPage16.Controls.Add(this.label102);
             this.tabPage16.Controls.Add(this.textBoxSavedRankNicoChartDir);
-            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Location = new System.Drawing.Point(4, 21);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(499, 224);
+            this.tabPage16.Size = new System.Drawing.Size(499, 225);
             this.tabPage16.TabIndex = 5;
             this.tabPage16.Text = "ニコチャート";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -3958,10 +3970,10 @@
             this.tabPage12.Controls.Add(this.groupBox5);
             this.tabPage12.Controls.Add(this.buttonSort);
             this.tabPage12.Controls.Add(this.groupBox1);
-            this.tabPage12.Location = new System.Drawing.Point(4, 22);
+            this.tabPage12.Location = new System.Drawing.Point(4, 21);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(499, 224);
+            this.tabPage12.Size = new System.Drawing.Size(499, 225);
             this.tabPage12.TabIndex = 2;
             this.tabPage12.Text = "情報取得・更新";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -4065,167 +4077,57 @@
             this.tabPage15.Controls.Add(this.label98);
             this.tabPage15.Controls.Add(this.textBoxDiff2Path);
             this.tabPage15.Controls.Add(this.textBoxDiff1Path);
-            this.tabPage15.Location = new System.Drawing.Point(4, 22);
+            this.tabPage15.Location = new System.Drawing.Point(4, 21);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(499, 224);
+            this.tabPage15.Size = new System.Drawing.Size(499, 225);
             this.tabPage15.TabIndex = 4;
             this.tabPage15.Text = "差分作成";
             this.tabPage15.UseVisualStyleBackColor = true;
             // 
-            // groupBox8
+            // panel3
             // 
-            this.groupBox8.Controls.Add(this.buttonMergeRankFileB);
-            this.groupBox8.Controls.Add(this.label8);
-            this.groupBox8.Location = new System.Drawing.Point(239, 144);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(219, 39);
-            this.groupBox8.TabIndex = 11;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "マージB";
+            this.panel3.AutoScroll = true;
+            this.panel3.Controls.Add(this.groupBox36);
+            this.panel3.Controls.Add(this.groupBox19);
+            this.panel3.Controls.Add(this.groupBox8);
+            this.panel3.Controls.Add(this.groupBox20);
+            this.panel3.Controls.Add(this.groupBox6);
+            this.panel3.Controls.Add(this.groupBox21);
+            this.panel3.Location = new System.Drawing.Point(8, 85);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(481, 133);
+            this.panel3.TabIndex = 12;
             // 
-            // buttonMergeRankFileB
+            // groupBox36
             // 
-            this.buttonMergeRankFileB.Location = new System.Drawing.Point(166, 12);
-            this.buttonMergeRankFileB.Name = "buttonMergeRankFileB";
-            this.buttonMergeRankFileB.Size = new System.Drawing.Size(45, 23);
-            this.buttonMergeRankFileB.TabIndex = 0;
-            this.buttonMergeRankFileB.Text = "マージ";
-            this.buttonMergeRankFileB.UseVisualStyleBackColor = true;
-            this.buttonMergeRankFileB.Click += new System.EventHandler(this.buttonMergeRankFileB_Click);
+            this.groupBox36.Controls.Add(this.buttonUpdatePoint);
+            this.groupBox36.Controls.Add(this.label53);
+            this.groupBox36.Location = new System.Drawing.Point(12, 188);
+            this.groupBox36.Name = "groupBox36";
+            this.groupBox36.Size = new System.Drawing.Size(223, 39);
+            this.groupBox36.TabIndex = 12;
+            this.groupBox36.TabStop = false;
+            this.groupBox36.Text = "ポイント更新";
             // 
-            // label8
+            // buttonUpdatePoint
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 17);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(141, 12);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "(1)と(2)をまとめる((1)を優先)";
+            this.buttonUpdatePoint.Location = new System.Drawing.Point(140, 12);
+            this.buttonUpdatePoint.Name = "buttonUpdatePoint";
+            this.buttonUpdatePoint.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdatePoint.TabIndex = 0;
+            this.buttonUpdatePoint.Text = "ポイント更新";
+            this.buttonUpdatePoint.UseVisualStyleBackColor = true;
+            this.buttonUpdatePoint.Click += new System.EventHandler(this.buttonUpdatePoint_Click);
             // 
-            // groupBox6
+            // label53
             // 
-            this.groupBox6.Controls.Add(this.buttonMergeRankFileA);
-            this.groupBox6.Controls.Add(this.label1);
-            this.groupBox6.Location = new System.Drawing.Point(12, 144);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(222, 39);
-            this.groupBox6.TabIndex = 10;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "マージA";
-            // 
-            // buttonMergeRankFileA
-            // 
-            this.buttonMergeRankFileA.Location = new System.Drawing.Point(172, 11);
-            this.buttonMergeRankFileA.Name = "buttonMergeRankFileA";
-            this.buttonMergeRankFileA.Size = new System.Drawing.Size(43, 23);
-            this.buttonMergeRankFileA.TabIndex = 0;
-            this.buttonMergeRankFileA.Text = "マージ";
-            this.buttonMergeRankFileA.UseVisualStyleBackColor = true;
-            this.buttonMergeRankFileA.Click += new System.EventHandler(this.buttonMergeRankFileA_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 12);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "(1)と(2)をまとめる(高ポイント優先)";
-            // 
-            // buttonExchangeCheckRankFile
-            // 
-            this.buttonExchangeCheckRankFile.Location = new System.Drawing.Point(389, 58);
-            this.buttonExchangeCheckRankFile.Name = "buttonExchangeCheckRankFile";
-            this.buttonExchangeCheckRankFile.Size = new System.Drawing.Size(75, 19);
-            this.buttonExchangeCheckRankFile.TabIndex = 4;
-            this.buttonExchangeCheckRankFile.Text = "(1)と(2)交換";
-            this.buttonExchangeCheckRankFile.UseVisualStyleBackColor = true;
-            this.buttonExchangeCheckRankFile.Click += new System.EventHandler(this.buttonExchangeCheckRankFile_Click);
-            // 
-            // buttonSelectDiff2Path
-            // 
-            this.buttonSelectDiff2Path.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonSelectDiff2Path.Location = new System.Drawing.Point(468, 34);
-            this.buttonSelectDiff2Path.Name = "buttonSelectDiff2Path";
-            this.buttonSelectDiff2Path.Size = new System.Drawing.Size(21, 21);
-            this.buttonSelectDiff2Path.TabIndex = 3;
-            this.buttonSelectDiff2Path.Tag = "";
-            this.buttonSelectDiff2Path.Text = "...";
-            this.buttonSelectDiff2Path.UseVisualStyleBackColor = true;
-            this.buttonSelectDiff2Path.Click += new System.EventHandler(this.buttonOpenDialog_Click);
-            // 
-            // buttonSelectDiff1Path
-            // 
-            this.buttonSelectDiff1Path.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonSelectDiff1Path.Location = new System.Drawing.Point(468, 8);
-            this.buttonSelectDiff1Path.Name = "buttonSelectDiff1Path";
-            this.buttonSelectDiff1Path.Size = new System.Drawing.Size(21, 21);
-            this.buttonSelectDiff1Path.TabIndex = 1;
-            this.buttonSelectDiff1Path.Tag = "";
-            this.buttonSelectDiff1Path.Text = "...";
-            this.buttonSelectDiff1Path.UseVisualStyleBackColor = true;
-            this.buttonSelectDiff1Path.Click += new System.EventHandler(this.buttonOpenDialog_Click);
-            // 
-            // groupBox21
-            // 
-            this.groupBox21.Controls.Add(this.buttonMakeDup);
-            this.groupBox21.Controls.Add(this.label107);
-            this.groupBox21.Location = new System.Drawing.Point(239, 99);
-            this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(219, 39);
-            this.groupBox21.TabIndex = 7;
-            this.groupBox21.TabStop = false;
-            this.groupBox21.Text = "重複チェック";
-            // 
-            // buttonMakeDup
-            // 
-            this.buttonMakeDup.Location = new System.Drawing.Point(136, 12);
-            this.buttonMakeDup.Name = "buttonMakeDup";
-            this.buttonMakeDup.Size = new System.Drawing.Size(75, 23);
-            this.buttonMakeDup.TabIndex = 0;
-            this.buttonMakeDup.Text = "重複チェック";
-            this.buttonMakeDup.UseVisualStyleBackColor = true;
-            this.buttonMakeDup.Click += new System.EventHandler(this.buttonMakeDup_Click);
-            // 
-            // label107
-            // 
-            this.label107.AutoSize = true;
-            this.label107.Location = new System.Drawing.Point(9, 17);
-            this.label107.Name = "label107";
-            this.label107.Size = new System.Drawing.Size(121, 12);
-            this.label107.TabIndex = 9;
-            this.label107.Text = "(1)、(2) 両方にある動画";
-            // 
-            // groupBox20
-            // 
-            this.groupBox20.Controls.Add(this.buttonMakeDiffB);
-            this.groupBox20.Controls.Add(this.label106);
-            this.groupBox20.Location = new System.Drawing.Point(12, 99);
-            this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(221, 39);
-            this.groupBox20.TabIndex = 6;
-            this.groupBox20.TabStop = false;
-            this.groupBox20.Text = "差分作成B";
-            // 
-            // buttonMakeDiffB
-            // 
-            this.buttonMakeDiffB.Location = new System.Drawing.Point(139, 11);
-            this.buttonMakeDiffB.Name = "buttonMakeDiffB";
-            this.buttonMakeDiffB.Size = new System.Drawing.Size(75, 23);
-            this.buttonMakeDiffB.TabIndex = 0;
-            this.buttonMakeDiffB.Text = "差分作成B";
-            this.buttonMakeDiffB.UseVisualStyleBackColor = true;
-            this.buttonMakeDiffB.Click += new System.EventHandler(this.buttonMakeDiffB_Click);
-            // 
-            // label106
-            // 
-            this.label106.AutoSize = true;
-            this.label106.Location = new System.Drawing.Point(7, 17);
-            this.label106.Name = "label106";
-            this.label106.Size = new System.Drawing.Size(126, 12);
-            this.label106.TabIndex = 9;
-            this.label106.Text = "(1) にあって(2)にない動画";
+            this.label53.AutoSize = true;
+            this.label53.Location = new System.Drawing.Point(9, 17);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(122, 12);
+            this.label53.TabIndex = 9;
+            this.label53.Text = "(2)のポイントで(1)を更新";
             // 
             // groupBox19
             // 
@@ -4292,6 +4194,160 @@
             this.buttonMakeDiff.UseVisualStyleBackColor = true;
             this.buttonMakeDiff.Click += new System.EventHandler(this.buttonMakeDiff_Click);
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.buttonMergeRankFileB);
+            this.groupBox8.Controls.Add(this.label8);
+            this.groupBox8.Location = new System.Drawing.Point(239, 144);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(219, 39);
+            this.groupBox8.TabIndex = 11;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "マージB";
+            // 
+            // buttonMergeRankFileB
+            // 
+            this.buttonMergeRankFileB.Location = new System.Drawing.Point(166, 12);
+            this.buttonMergeRankFileB.Name = "buttonMergeRankFileB";
+            this.buttonMergeRankFileB.Size = new System.Drawing.Size(45, 23);
+            this.buttonMergeRankFileB.TabIndex = 0;
+            this.buttonMergeRankFileB.Text = "マージ";
+            this.buttonMergeRankFileB.UseVisualStyleBackColor = true;
+            this.buttonMergeRankFileB.Click += new System.EventHandler(this.buttonMergeRankFileB_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(9, 17);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(141, 12);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "(1)と(2)をまとめる((1)を優先)";
+            // 
+            // groupBox20
+            // 
+            this.groupBox20.Controls.Add(this.buttonMakeDiffB);
+            this.groupBox20.Controls.Add(this.label106);
+            this.groupBox20.Location = new System.Drawing.Point(12, 99);
+            this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Size = new System.Drawing.Size(221, 39);
+            this.groupBox20.TabIndex = 6;
+            this.groupBox20.TabStop = false;
+            this.groupBox20.Text = "差分作成B";
+            // 
+            // buttonMakeDiffB
+            // 
+            this.buttonMakeDiffB.Location = new System.Drawing.Point(139, 11);
+            this.buttonMakeDiffB.Name = "buttonMakeDiffB";
+            this.buttonMakeDiffB.Size = new System.Drawing.Size(75, 23);
+            this.buttonMakeDiffB.TabIndex = 0;
+            this.buttonMakeDiffB.Text = "差分作成B";
+            this.buttonMakeDiffB.UseVisualStyleBackColor = true;
+            this.buttonMakeDiffB.Click += new System.EventHandler(this.buttonMakeDiffB_Click);
+            // 
+            // label106
+            // 
+            this.label106.AutoSize = true;
+            this.label106.Location = new System.Drawing.Point(7, 17);
+            this.label106.Name = "label106";
+            this.label106.Size = new System.Drawing.Size(126, 12);
+            this.label106.TabIndex = 9;
+            this.label106.Text = "(1) にあって(2)にない動画";
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.buttonMergeRankFileA);
+            this.groupBox6.Controls.Add(this.label1);
+            this.groupBox6.Location = new System.Drawing.Point(12, 144);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(222, 39);
+            this.groupBox6.TabIndex = 10;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "マージA";
+            // 
+            // buttonMergeRankFileA
+            // 
+            this.buttonMergeRankFileA.Location = new System.Drawing.Point(172, 11);
+            this.buttonMergeRankFileA.Name = "buttonMergeRankFileA";
+            this.buttonMergeRankFileA.Size = new System.Drawing.Size(43, 23);
+            this.buttonMergeRankFileA.TabIndex = 0;
+            this.buttonMergeRankFileA.Text = "マージ";
+            this.buttonMergeRankFileA.UseVisualStyleBackColor = true;
+            this.buttonMergeRankFileA.Click += new System.EventHandler(this.buttonMergeRankFileA_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 12);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "(1)と(2)をまとめる(高ポイント優先)";
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.buttonMakeDup);
+            this.groupBox21.Controls.Add(this.label107);
+            this.groupBox21.Location = new System.Drawing.Point(239, 99);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(219, 39);
+            this.groupBox21.TabIndex = 7;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "重複チェック";
+            // 
+            // buttonMakeDup
+            // 
+            this.buttonMakeDup.Location = new System.Drawing.Point(136, 12);
+            this.buttonMakeDup.Name = "buttonMakeDup";
+            this.buttonMakeDup.Size = new System.Drawing.Size(75, 23);
+            this.buttonMakeDup.TabIndex = 0;
+            this.buttonMakeDup.Text = "重複チェック";
+            this.buttonMakeDup.UseVisualStyleBackColor = true;
+            this.buttonMakeDup.Click += new System.EventHandler(this.buttonMakeDup_Click);
+            // 
+            // label107
+            // 
+            this.label107.AutoSize = true;
+            this.label107.Location = new System.Drawing.Point(9, 17);
+            this.label107.Name = "label107";
+            this.label107.Size = new System.Drawing.Size(121, 12);
+            this.label107.TabIndex = 9;
+            this.label107.Text = "(1)、(2) 両方にある動画";
+            // 
+            // buttonExchangeCheckRankFile
+            // 
+            this.buttonExchangeCheckRankFile.Location = new System.Drawing.Point(389, 58);
+            this.buttonExchangeCheckRankFile.Name = "buttonExchangeCheckRankFile";
+            this.buttonExchangeCheckRankFile.Size = new System.Drawing.Size(75, 19);
+            this.buttonExchangeCheckRankFile.TabIndex = 4;
+            this.buttonExchangeCheckRankFile.Text = "(1)と(2)交換";
+            this.buttonExchangeCheckRankFile.UseVisualStyleBackColor = true;
+            this.buttonExchangeCheckRankFile.Click += new System.EventHandler(this.buttonExchangeCheckRankFile_Click);
+            // 
+            // buttonSelectDiff2Path
+            // 
+            this.buttonSelectDiff2Path.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSelectDiff2Path.Location = new System.Drawing.Point(468, 34);
+            this.buttonSelectDiff2Path.Name = "buttonSelectDiff2Path";
+            this.buttonSelectDiff2Path.Size = new System.Drawing.Size(21, 21);
+            this.buttonSelectDiff2Path.TabIndex = 3;
+            this.buttonSelectDiff2Path.Tag = "";
+            this.buttonSelectDiff2Path.Text = "...";
+            this.buttonSelectDiff2Path.UseVisualStyleBackColor = true;
+            this.buttonSelectDiff2Path.Click += new System.EventHandler(this.buttonOpenDialog_Click);
+            // 
+            // buttonSelectDiff1Path
+            // 
+            this.buttonSelectDiff1Path.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSelectDiff1Path.Location = new System.Drawing.Point(468, 8);
+            this.buttonSelectDiff1Path.Name = "buttonSelectDiff1Path";
+            this.buttonSelectDiff1Path.Size = new System.Drawing.Size(21, 21);
+            this.buttonSelectDiff1Path.TabIndex = 1;
+            this.buttonSelectDiff1Path.Tag = "";
+            this.buttonSelectDiff1Path.Text = "...";
+            this.buttonSelectDiff1Path.UseVisualStyleBackColor = true;
+            this.buttonSelectDiff1Path.Click += new System.EventHandler(this.buttonOpenDialog_Click);
+            // 
             // label99
             // 
             this.label99.AutoSize = true;
@@ -4334,10 +4390,10 @@
             // 
             this.tabPage6.Controls.Add(this.buttonShowFilterTester);
             this.tabPage6.Controls.Add(this.buttonCalculateSum);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Location = new System.Drawing.Point(4, 21);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(499, 224);
+            this.tabPage6.Size = new System.Drawing.Size(499, 225);
             this.tabPage6.TabIndex = 8;
             this.tabPage6.Text = "ツール";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -4473,10 +4529,10 @@
             this.tabPageFileDl.Controls.Add(this.groupBox32);
             this.tabPageFileDl.Controls.Add(this.groupBox31);
             this.tabPageFileDl.Controls.Add(this.groupBox18);
-            this.tabPageFileDl.Location = new System.Drawing.Point(4, 40);
+            this.tabPageFileDl.Location = new System.Drawing.Point(4, 38);
             this.tabPageFileDl.Name = "tabPageFileDl";
             this.tabPageFileDl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFileDl.Size = new System.Drawing.Size(552, 336);
+            this.tabPageFileDl.Size = new System.Drawing.Size(552, 338);
             this.tabPageFileDl.TabIndex = 1;
             this.tabPageFileDl.Text = "ファイルDL";
             this.tabPageFileDl.UseVisualStyleBackColor = true;
@@ -4689,10 +4745,10 @@
             this.tabPageLogin.Controls.Add(this.groupBox25);
             this.tabPageLogin.Controls.Add(this.groupBox26);
             this.tabPageLogin.Controls.Add(this.buttonCheckLogin);
-            this.tabPageLogin.Location = new System.Drawing.Point(4, 40);
+            this.tabPageLogin.Location = new System.Drawing.Point(4, 38);
             this.tabPageLogin.Name = "tabPageLogin";
             this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogin.Size = new System.Drawing.Size(552, 336);
+            this.tabPageLogin.Size = new System.Drawing.Size(552, 338);
             this.tabPageLogin.TabIndex = 19;
             this.tabPageLogin.Text = "ログイン";
             this.tabPageLogin.UseVisualStyleBackColor = true;
@@ -4983,10 +5039,10 @@
             this.tabPageDlRank.Controls.Add(this.textBoxRankingDlHour);
             this.tabPageDlRank.Controls.Add(this.groupBox17);
             this.tabPageDlRank.Controls.Add(this.buttonDlRank);
-            this.tabPageDlRank.Location = new System.Drawing.Point(4, 40);
+            this.tabPageDlRank.Location = new System.Drawing.Point(4, 38);
             this.tabPageDlRank.Name = "tabPageDlRank";
             this.tabPageDlRank.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDlRank.Size = new System.Drawing.Size(552, 336);
+            this.tabPageDlRank.Size = new System.Drawing.Size(552, 338);
             this.tabPageDlRank.TabIndex = 21;
             this.tabPageDlRank.Text = "ランキングDL";
             this.tabPageDlRank.UseVisualStyleBackColor = true;
@@ -5312,9 +5368,9 @@
             this.tabPageTagComment.Controls.Add(this.textBoxTagVideoId);
             this.tabPageTagComment.Controls.Add(this.groupBox24);
             this.tabPageTagComment.Controls.Add(this.groupBox16);
-            this.tabPageTagComment.Location = new System.Drawing.Point(4, 40);
+            this.tabPageTagComment.Location = new System.Drawing.Point(4, 38);
             this.tabPageTagComment.Name = "tabPageTagComment";
-            this.tabPageTagComment.Size = new System.Drawing.Size(552, 336);
+            this.tabPageTagComment.Size = new System.Drawing.Size(552, 338);
             this.tabPageTagComment.TabIndex = 22;
             this.tabPageTagComment.Text = "タグ・コメント";
             this.tabPageTagComment.UseVisualStyleBackColor = true;
@@ -5340,10 +5396,10 @@
             this.tabPage3.Controls.Add(this.label45);
             this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromFile);
             this.tabPage3.Controls.Add(this.selectFileBoxMakeUserIdFromDir);
-            this.tabPage3.Location = new System.Drawing.Point(4, 40);
+            this.tabPage3.Location = new System.Drawing.Point(4, 38);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(552, 336);
+            this.tabPage3.Size = new System.Drawing.Size(552, 338);
             this.tabPage3.TabIndex = 23;
             this.tabPage3.Text = "おまけ2";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -5430,20 +5486,6 @@
             this.label45.TabIndex = 0;
             this.label45.Text = "投稿者情報作成";
             // 
-            // panel3
-            // 
-            this.panel3.AutoScroll = true;
-            this.panel3.Controls.Add(this.groupBox36);
-            this.panel3.Controls.Add(this.groupBox19);
-            this.panel3.Controls.Add(this.groupBox8);
-            this.panel3.Controls.Add(this.groupBox20);
-            this.panel3.Controls.Add(this.groupBox6);
-            this.panel3.Controls.Add(this.groupBox21);
-            this.panel3.Location = new System.Drawing.Point(8, 85);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(481, 133);
-            this.panel3.TabIndex = 12;
-            // 
             // selectFileBoxMakeUserIdFromFile
             // 
             this.selectFileBoxMakeUserIdFromFile.FileDialog = this.openFileDialog1;
@@ -5463,36 +5505,6 @@
             this.selectFileBoxMakeUserIdFromDir.Name = "selectFileBoxMakeUserIdFromDir";
             this.selectFileBoxMakeUserIdFromDir.Size = new System.Drawing.Size(423, 23);
             this.selectFileBoxMakeUserIdFromDir.TabIndex = 3;
-            // 
-            // groupBox36
-            // 
-            this.groupBox36.Controls.Add(this.buttonUpdatePoint);
-            this.groupBox36.Controls.Add(this.label53);
-            this.groupBox36.Location = new System.Drawing.Point(12, 188);
-            this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(223, 39);
-            this.groupBox36.TabIndex = 12;
-            this.groupBox36.TabStop = false;
-            this.groupBox36.Text = "ポイント更新";
-            // 
-            // buttonUpdatePoint
-            // 
-            this.buttonUpdatePoint.Location = new System.Drawing.Point(140, 12);
-            this.buttonUpdatePoint.Name = "buttonUpdatePoint";
-            this.buttonUpdatePoint.Size = new System.Drawing.Size(75, 23);
-            this.buttonUpdatePoint.TabIndex = 0;
-            this.buttonUpdatePoint.Text = "ポイント更新";
-            this.buttonUpdatePoint.UseVisualStyleBackColor = true;
-            this.buttonUpdatePoint.Click += new System.EventHandler(this.buttonUpdatePoint_Click);
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(9, 17);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(122, 12);
-            this.label53.TabIndex = 9;
-            this.label53.Text = "(2)のポイントで(1)を更新";
             // 
             // FormMain
             // 
@@ -5587,16 +5599,19 @@
             this.groupBox1.PerformLayout();
             this.tabPage15.ResumeLayout(false);
             this.tabPage15.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.groupBox36.ResumeLayout(false);
+            this.groupBox36.PerformLayout();
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox19.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
+            this.groupBox20.ResumeLayout(false);
+            this.groupBox20.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox21.ResumeLayout(false);
             this.groupBox21.PerformLayout();
-            this.groupBox20.ResumeLayout(false);
-            this.groupBox20.PerformLayout();
-            this.groupBox19.ResumeLayout(false);
-            this.groupBox19.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -5633,9 +5648,6 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.groupBox36.ResumeLayout(false);
-            this.groupBox36.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -6094,6 +6106,7 @@
         private System.Windows.Forms.GroupBox groupBox36;
         private System.Windows.Forms.Button buttonUpdatePoint;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Button buttonAddingMultipleMylist;
     }
 }
 

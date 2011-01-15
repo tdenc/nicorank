@@ -119,6 +119,11 @@ namespace nicorank
             }
         }
 
+        public void AddMultipleMylist(List<string> mylist_id_list, List<int> mylist_count_list)
+        {
+            StartThread(nicorank_mgr_.AddMultipleMylist, null, false, GetInputOutputOption(), mylist_id_list, mylist_count_list);
+        }
+
         ///////////// private method
 
         private void SetButtonDialog()

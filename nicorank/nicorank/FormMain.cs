@@ -1479,5 +1479,11 @@ namespace nicorank
         {
             StartThread(nicorank_mgr_.GetMyMylistList, null, false);
         }
+
+        private void buttonAddingMultipleMylist_Click(object sender, EventArgs e)
+        {
+            FormMultipleMylist form = new FormMultipleMylist(this);
+            form.Show();
+        }
     }
 }

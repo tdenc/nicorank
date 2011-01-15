@@ -393,6 +393,11 @@ namespace nicorank
             nico_mylist_.AddMylist((InputOutputOption)param_[0], (string)param_[1]);
         }
 
+        public void AddMultipleMylist()
+        {
+            nico_mylist_.AddMultipleMylist((InputOutputOption)param_[0], (List<string>)param_[1], (List<int>)param_[2]);
+        }
+
         public void UpdateMylistDescription()
         {
             nico_mylist_.UpdateMylistDescription((string)param_[0], (string)param_[1], (InputOutputOption)param_[2]);
