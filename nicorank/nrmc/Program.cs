@@ -2,6 +2,8 @@
 using IJLib;
 using NicoTools;
 using nicorank;
+using System.IO;
+using System;
 
 namespace nrmc
 {
@@ -10,6 +12,7 @@ namespace nrmc
         private static Dictionary<string, string> option_ = new Dictionary<string, string>();
         private static string input_rank_file_ = null;
         private static string output_rank_file_ = null;
+        private static string config_file_ = null;
 
         private class Receiver : MessageOut
         {
@@ -26,112 +29,173 @@ namespace nrmc
 
         static void Main(string[] args)
         {
-            if (args.Length <= 1)
+            try
             {
-                ShowUsage();
-                System.Environment.Exit(1);
-            }
-
-            Receiver receiver = new Receiver();
-            CancelObject cancel_object = new CancelObject();
-            NicoNetwork network = new NicoNetwork();
-            NicoNetworkManager network_mgr = new NicoNetworkManager(network, receiver, cancel_object);
-            NicoMylist nico_mylist = new NicoMylist(network, receiver, cancel_object);
-            ParseConfig(IJFile.Read("config.txt"));
-
-            for (int i = 2; i < args.Length; ++i)
-            {
-                switch (args[i])
+                if (args.Length <= 1)
                 {
-                    case "-i":
-                        if (i < args.Length - 1)
+                    ShowUsage();
+                    System.Environment.Exit(1);
+                }
+
+                Receiver receiver = new Receiver();
+                CancelObject cancel_object = new CancelObject();
+                NicoNetwork network = new NicoNetwork();
+                NicoNetworkManager network_mgr = new NicoNetworkManager(network, receiver, cancel_object);
+                NicoMylist nico_mylist = new NicoMylist(network, receiver, cancel_object);
+
+                for (int i = 2; i < args.Length; ++i)
+                {
+                    switch (args[i])
+                    {
+                        case "-i":
+                            if (i < args.Length - 1)
+                            {
+                                input_rank_file_ = Dequote(args[i + 1]);
+                                if (!File.Exists(input_rank_file_))
+                                {
+                                    System.Console.WriteLine("入力ランクファイルが存在しません。");
+                                    System.Environment.Exit(1);
+                                }
+                                ++i;
+                            }
+                            else
+                            {
+                                System.Console.WriteLine("入力ランクファイルを指定してください。");
+                                System.Environment.Exit(1);
+                            }
+                            break;
+                        case "-o":
+                            if (i < args.Length - 1)
+                            {
+                                output_rank_file_ = Dequote(args[i + 1]);
+                                if (!File.Exists(output_rank_file_))
+                                {
+                                    System.Console.WriteLine("出力ランクファイルが存在しません。");
+                                    System.Environment.Exit(1);
+                                }
+                                ++i;
+                            }
+                            else
+                            {
+                                System.Console.WriteLine("出力ランクファイルを指定してください。");
+                                System.Environment.Exit(1);
+                            }
+                            break;
+                        case "-c":
+                            if (i < args.Length - 1)
+                            {
+                                config_file_ = Dequote(args[i + 1]);
+                                ++i;
+                            }
+                            break;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(config_file_)) // config ファイル指定なしの場合
+                {
+                    config_file_ = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "config.txt");
+                    if (!File.Exists(config_file_))
+                    {
+                        System.Console.WriteLine("最初に nicorank.exe を起動してオプションを指定してください。");
+                        System.Environment.Exit(1);
+                    }
+                }
+                else
+                {
+                    if (!File.Exists(config_file_))
+                    {
+                        System.Console.WriteLine("config ファイルが見つかりません。");
+                        System.Environment.Exit(1);
+                    }
+                }
+                ParseConfig(IJFile.Read(config_file_));
+
+                InputOutputOption iooption = new InputOutputOption(!string.IsNullOrEmpty(input_rank_file_), !string.IsNullOrEmpty(output_rank_file_));
+                if (string.IsNullOrEmpty(input_rank_file_)) // 標準入力から
+                {
+                    iooption.SetInputFromStdin();
+                }
+                else
+                {
+                    iooption.SetInputPath(input_rank_file_);
+                }
+                if (string.IsNullOrEmpty(output_rank_file_)) // 標準出力へ
+                {
+                    iooption.SetOutputRankFileDelegate(delegate(string s)
+                    {
+                        System.Console.Write(s);
+                    });
+                }
+                else
+                {
+                    iooption.SetOutputPath(output_rank_file_);
+                }
+
+                switch (args[0])
+                {
+                    case "download":
+                        switch (args[1])
                         {
-                            input_rank_file_ = args[i + 1];
-                            ++i;
+                            case "ranking":
+                                CategoryManager category_manager = new CategoryManager();
+                                category_manager.SetString(option_["dlrank_category"]);
+                                category_manager.ParseCategoryFile();
+                                network_mgr.DownloadRanking(GetDownloadKind(category_manager), option_["textBoxRankDlDir"]);
+                                break;
+                            case "video":
+                                LoadCookie(network);
+                                network_mgr.DownloadFlv(iooption, option_["textBoxDlInterval"], MakeDirectoryPath(option_["textBoxFlvDlDir"]),
+                                    bool.Parse(option_["checkBoxIsFixFlvDlExtension"]));
+                                break;
+                            default:
+                                ShowInvalidAndUsage(args[1]);
+                                System.Environment.Exit(1);
+                                break;
                         }
                         break;
-                    case "-o":
-                        if (i < args.Length - 1)
+                    case "list":
+                        switch (args[1])
                         {
-                            output_rank_file_ = args[i + 1];
-                            ++i;
+                            case "searchtag":
+                                network_mgr.MakeListAndWriteBySearchTag(iooption, MakeSearchingTagOption(), MakeRankingMethod());
+                                break;
+                            default:
+                                ShowInvalidAndUsage(args[1]);
+                                System.Environment.Exit(1);
+                                break;
                         }
+                        break;
+                    case "mylist":
+                        switch (args[1])
+                        {
+                            case "add":
+                                LoadCookie(network);
+                                nico_mylist.AddMylist(iooption, option_["textBoxMylistId"]);
+                                break;
+                            default:
+                                ShowInvalidAndUsage(args[1]);
+                                System.Environment.Exit(1);
+                                break;
+                        }
+                        break;
+                    default:
+                        ShowInvalidAndUsage(args[0]);
+                        System.Environment.Exit(1);
                         break;
                 }
             }
-
-            InputOutputOption iooption = new InputOutputOption(!string.IsNullOrEmpty(input_rank_file_), !string.IsNullOrEmpty(output_rank_file_));
-            if (string.IsNullOrEmpty(input_rank_file_)) // 標準入力から
+            catch (KeyNotFoundException e)
             {
-                iooption.SetInputFromStdin();
+                System.Console.WriteLine("エラーが発生しました。");
+                System.Console.WriteLine("キーが存在しません: " + e.Data.ToString());
             }
-            else
+            catch (Exception e)
             {
-                iooption.SetInputPath(input_rank_file_);
-            }
-            if (string.IsNullOrEmpty(output_rank_file_)) // 標準出力へ
-            {
-                iooption.SetOutputRankFileDelegate(delegate(string s)
-                {
-                    System.Console.Write(s);
-                });
-            }
-            else
-            {
-                iooption.SetOutputPath(output_rank_file_);
-            }
-
-            switch (args[0])
-            {
-                case "download":
-                    switch (args[1])
-                    {
-                        case "ranking":
-                            CategoryManager category_manager = new CategoryManager();
-                            category_manager.SetString(option_["dlrank_category"]);
-                            category_manager.ParseCategoryFile();
-                            network_mgr.DownloadRanking(GetDownloadKind(category_manager), option_["textBoxRankDlDir"]);
-                            break;
-                        case "video":
-                            LoadCookie(network);
-                            network_mgr.DownloadFlv(iooption, option_["textBoxDlInterval"], MakePath(option_["textBoxFlvDlDir"]),
-                                bool.Parse(option_["checkBoxIsFixFlvDlExtension"]));
-                            break;
-                        default:
-                            ShowInvalidAndUsage(args[1]);
-                            System.Environment.Exit(1);
-                            break;
-                    }
-                    break;
-                case "list":
-                    switch (args[1])
-                    {
-                        case "searchtag":
-                            network_mgr.MakeListAndWriteBySearchTag(iooption, MakeSearchingTagOption(), MakeRankingMethod());
-                            break;
-                        default:
-                            ShowInvalidAndUsage(args[1]);
-                            System.Environment.Exit(1);
-                            break;
-                    }
-                    break;
-                case "mylist":
-                    switch (args[1])
-                    {
-                        case "add":
-                            LoadCookie(network);
-                            nico_mylist.AddMylist(iooption, option_["textBoxMylistId"]);
-                            break;
-                        default:
-                            ShowInvalidAndUsage(args[1]);
-                            System.Environment.Exit(1);
-                            break;
-                    }
-                    break;
-                default:
-                    ShowInvalidAndUsage(args[0]);
-                    System.Environment.Exit(1);
-                    break;
+                System.Console.WriteLine("エラーが発生しました。");
+                System.Console.WriteLine("エラー\r\n---メッセージ\r\n" +
+                e.Message + "\r\n---ソース\r\n" + e.Source + "\r\n---スタックトレース\r\n" +
+                e.StackTrace + "\r\n---ターゲット\r\n" + e.TargetSite + "\r\n---文字列\r\n" +
+                e.ToString());
             }
         }
 
@@ -144,14 +208,16 @@ namespace nrmc
         static void ShowUsage()
         {
             string text = "使用方法:" + System.Environment.NewLine +
-                "nrmc.exe 第1引数 第2引数 [-i input_rank_file] [-o output_rank_file]" + System.Environment.NewLine +
+                "nrmc.exe 第1引数 第2引数 [-i input_rank_file] [-o output_rank_file] [-c config_file]" + System.Environment.NewLine +
                 "  download ranking  ランキングをダウンロード" + System.Environment.NewLine +
                 "  download video  動画をダウンロード" + System.Environment.NewLine +
                 "  list searchtag  タグ検索" + System.Environment.NewLine +
                 "  mylist add  マイリスト追加" + System.Environment.NewLine +
                 "オプション:" + System.Environment.NewLine +
                 "  -i input_rank_file  入力ランクファイルを指定。指定しない場合は標準入力から読み込み" + System.Environment.NewLine +
-                "  -o output_rank_file  出力ランクファイルを指定。指定しない場合は標準出力に書き出し";
+                "  -o output_rank_file  出力ランクファイルを指定。指定しない場合は標準出力に書き出し" + System.Environment.NewLine +
+                "  -c config_file  設定ファイルを指定。デフォルトは nrmc.exe と同じ場所にある config.txt" + System.Environment.NewLine +
+                "  （空白を含むファイルパスは引用符 \" \" で囲ってください。）";
             System.Console.WriteLine(text);
         }
 
@@ -295,7 +361,7 @@ namespace nrmc
             return download_kind;
         }
 
-        private static string MakePath(string path)
+        private static string MakeDirectoryPath(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -308,6 +374,18 @@ namespace nrmc
             else
             {
                 return path;
+            }
+        }
+
+        private static string Dequote(string text)
+        {
+            if (text.StartsWith("\"") && text.EndsWith("\""))
+            {
+                return text.Substring(1, text.Length - 2);
+            }
+            else
+            {
+                return text;
             }
         }
     }

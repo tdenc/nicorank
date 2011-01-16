@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ニコニコランキングメーカー")]
-[assembly: AssemblyCopyright("Copyright © rankingloid and hazychill 2008-2010 under GNU GPL Version 2")]
+[assembly: AssemblyCopyright("Copyright © rankingloid and hazychill 2008-2011 under GNU GPL Version 2")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
