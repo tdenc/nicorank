@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
-using IJLib;
-using NicoTools;
-using nicorank;
-using System.IO;
+﻿// Copyright (c) 2008 - 2011 rankingloid
+//
+// under GNU General Public License Version 2.
+//
 using System;
+using System.Collections.Generic;
+using System.IO;
+using IJLib;
+using nicorank;
+using NicoTools;
 
 namespace nrmc
 {
