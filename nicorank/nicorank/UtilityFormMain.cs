@@ -254,18 +254,7 @@ namespace nicorank
             }
             buff.Append(trans_detail_option_.SaveData());
 
-            StringBuilder cate_buff = new StringBuilder();
-            for (int i = 0; i < checkedListBoxDlRankCategory.CheckedItems.Count; ++i)
-            {
-                cate_buff.Append(category_item_dic_[(string)checkedListBoxDlRankCategory.CheckedItems[i]].id);
-                cate_buff.Append(",");
-            }
-            if (cate_buff.Length >= 1) // Remove last comma
-            {
-                cate_buff.Remove(cate_buff.Length - 1, 1);
-                
-            }
-            buff.Append("dlrank_category\t").Append(cate_buff.ToString()).Append("\r\n");
+            buff.Append("dlrank_category\t").Append(category_manager_.GetSaveString()).Append("\r\n");
 
             IJFile.Write(filename, buff.ToString());
         }
@@ -302,7 +291,7 @@ namespace nicorank
                     }
                     if (sa[0] == "dlrank_category")
                     {
-                        category_config_ = sa[1].Split(',');
+                        category_manager_.SetString(sa[1]);
                     }
                     if (sa.Length < 3 || sa[1] == "")
                     {
@@ -854,25 +843,6 @@ namespace nicorank
             nicorank_mgr_.StartNewThreadNotCatch(ts_delegate, param_array);
         }
 
-        private RedundantSearchingMethod GetRedundantSeatchingMethod()
-        {
-            switch (comboBoxRedundantSearchMethod.SelectedIndex)
-            {
-                case 0:
-                    return RedundantSearchingMethod.Once;
-                case 1:
-                    return RedundantSearchingMethod.TwiceTakeFirst;
-                case 2:
-                    return RedundantSearchingMethod.TwiceTakeLast;
-                case 3:
-                    return RedundantSearchingMethod.TwiceMergeResult;
-                case 4:
-                    return RedundantSearchingMethod.AtMostThreeTimes;
-                default:
-                    return RedundantSearchingMethod.Once;
-            }
-        }
-
         private void ChangeSearchButtonText(AsyncCompletedEventArgs e) 
         {
             if (this.InvokeRequired)
@@ -886,61 +856,6 @@ namespace nicorank
             else
             {
                 this.buttonTagSearchNew.Text = "検索";
-            }
-        }
-
-        private void ParseCategoryFile(string[] config_list)
-        {
-            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "category.txt");
-            string str;
-
-            if (File.Exists(filename))
-            {
-                str = IJFile.ReadUTF8(filename);
-
-                if (!str.StartsWith("version")) // 昔のバージョンの category.txt なら
-                {
-                    if (str != Properties.Resources.category204) // ユーザによって改変されているなら
-                    {
-                        File.Move(filename,
-                            Path.Combine(Path.GetDirectoryName(Application.ExecutablePath),
-                                "category_old1.txt")); // 念のためバックアップを取る
-                        MessageBox.Show(this, "category.txt を category_old1.txt にリネームしました。",
-                            "ニコニコランキングメーカー", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        File.Delete(filename);
-                    }
-                    str = Properties.Resources.category;
-                    IJFile.WriteUTF8(filename, str);
-                }
-            }
-            else
-            {
-                str = Properties.Resources.category;
-                IJFile.WriteUTF8(filename, str);
-            }
-
-            string[] lines = IJStringUtil.SplitWithCRLF(str);
-
-            for (int i = 1; i < lines.Length; ++i)
-            {
-                string[] ar = lines[i].Split('\t');
-                CategoryItem item = new CategoryItem();
-                item.id = ar[0];
-                item.short_name = ar[1];
-                item.name = ar[2];
-                int[] page = new int[5];
-                for (int j = 0; j < page.Length; ++j)
-                {
-                    page[j] = int.Parse(ar[3 + j]);
-                }
-                item.page = page;
-                category_item_list_.Add(item);
-                category_item_dic_.Add(item.name, item);
-
-                checkedListBoxDlRankCategory.Items.Add(item.name, Array.IndexOf(config_list, item.id) >= 0);
             }
         }
     }

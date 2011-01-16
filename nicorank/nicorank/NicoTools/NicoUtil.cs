@@ -325,7 +325,7 @@ namespace NicoTools
                 return;
             }
 
-            msgout_.Write("マイリストへの追加を開始します。\r\n");
+            msgout_.Write("マイリスト " + mylist_id + " への追加を開始します。\r\n");
             // 最小3秒、最大10秒
             int wait_time = Math.Min(Math.Max(rank_file.Count * 1000 * 8 / 10, 3000), 10000);
             int total_wait_time = (wait_time * rank_file.Count + large_wait_time * (rank_file.Count / large_wait_num)) / 1000 / 60 + 1;

@@ -141,6 +141,7 @@
     <Compile Include="MessageBoxWithCheckBox.Designer.cs">
       <DependentUpon>MessageBoxWithCheckBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="NicoRankMakerUtility.cs" />
     <Compile Include="NicoRankManager.cs">
     </Compile>
     <Compile Include="NicoTools\CustomFormat.cs" />

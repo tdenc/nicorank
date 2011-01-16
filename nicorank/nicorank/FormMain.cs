@@ -42,13 +42,13 @@ namespace nicorank
         private int post_comment_counter = 3;
 
         private TransDetailOption trans_detail_option_ = new TransDetailOption();
-        private List<CategoryItem> category_item_list_ = new List<CategoryItem>();
-        private Dictionary<string, CategoryItem> category_item_dic_ = new Dictionary<string, CategoryItem>();
-        private string[] category_config_ = new string[0];
+        private CategoryManagerWithCListBox category_manager_;
 
         public FormMain()
         {
+            
             InitializeComponent();
+            category_manager_ = new CategoryManagerWithCListBox(checkedListBoxDlRankCategory);
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -110,7 +110,7 @@ namespace nicorank
                 textBoxPassword.Text = IJStringUtil.DecryptString(sArray[1], "dailyvocaran");
             }
 
-            ParseCategoryFile(category_config_);
+            category_manager_.ParseCategoryFile2(this);
 
             SetPath();
             SetButtonDialog();
@@ -252,15 +252,7 @@ namespace nicorank
                 checkBoxDlRankDurationHourly.Checked);
             download_kind.SetTarget(checkBoxDlRankView.Checked, checkBoxDlRankRes.Checked, checkBoxDlRankMylist.Checked);
 
-            List<CategoryItem> c_list = new List<CategoryItem>();
-
-            for (int i = 0; i < checkedListBoxDlRankCategory.CheckedItems.Count; ++i)
-            {
-                string name = (string)checkedListBoxDlRankCategory.CheckedItems[i];
-                c_list.Add(category_item_dic_[name]);
-            }
-
-            download_kind.CategoryList = c_list;
+            download_kind.CategoryList = category_manager_.GetDownloadCategoryItemList();
 
             if (radioButtonDlRankRss.Checked)
             {
@@ -394,7 +386,7 @@ namespace nicorank
             searching_tag_option.searching_interval = textBoxTagSearchInterval.Text;
             searching_tag_option.getting_detail_interval = textBoxGettingDetailInterval.Text;
             searching_tag_option.is_create_ticket = checkBoxSaveSearch.Checked;
-            searching_tag_option.redundant_seatching_method = GetRedundantSeatchingMethod();
+            searching_tag_option.SetRedundantSearchMethod(comboBoxRedundantSearchMethod.SelectedIndex);
             searching_tag_option.is_sending_user_session = checkBoxIsSendingUserSession.Checked;
 
             // 処理の最初にボタンのテキストを「中止」にする

@@ -679,6 +679,31 @@ namespace NicoTools
             return (sort_kind_num % 2 == 0) ? NicoNetwork.SearchOrder.Desc : NicoNetwork.SearchOrder.Asc;
         }
 
+        public void SetRedundantSearchMethod(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    redundant_seatching_method = RedundantSearchingMethod.Once;
+                    break;
+                case 1:
+                    redundant_seatching_method = RedundantSearchingMethod.TwiceTakeFirst;
+                    break;
+                case 2:
+                    redundant_seatching_method = RedundantSearchingMethod.TwiceTakeLast;
+                    break;
+                case 3:
+                    redundant_seatching_method = RedundantSearchingMethod.TwiceMergeResult;
+                    break;
+                case 4:
+                    redundant_seatching_method = RedundantSearchingMethod.AtMostThreeTimes;
+                    break;
+                default:
+                    redundant_seatching_method = RedundantSearchingMethod.Once;
+                    break;
+            }
+        }
+
         // 古いので消す
         public string GetUrlOption()
         {
@@ -711,6 +736,7 @@ namespace NicoTools
         private string output_path_;
         private bool is_input_from_file_;
         private bool is_output_from_file_;
+        private bool is_input_from_stdin_ = false;
 
         private string input_text_;
         private RankFileCustomFormat custom_format_ = null;
@@ -767,6 +793,11 @@ namespace NicoTools
             OnOutputRankFile = dlg;
         }
 
+        public void SetInputFromStdin()
+        {
+            is_input_from_stdin_ = true;
+        }
+
         public virtual RankFile GetRankFile()
         {
             if (is_input_from_file_)
@@ -779,6 +810,23 @@ namespace NicoTools
             }
             else
             {
+                if (is_input_from_stdin_)
+                {
+                    StreamReader reader = null;
+                    try
+                    {
+                        reader = new StreamReader(System.Console.OpenStandardInput());
+                        input_text_ = reader.ReadToEnd();
+                    }
+                    finally
+                    {
+                        if (reader != null)
+                        {
+                            reader.Close();
+                        }
+                    }
+                    is_input_from_stdin_ = false;
+                }
                 RankFile rank_file = new RankFile(custom_format_);
                 string separator = custom_format_.GetInputSeparator();
                 if (input_text_.IndexOf(separator) >= 0)
