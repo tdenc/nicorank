@@ -859,8 +859,8 @@ namespace IJLib
 
         public delegate void ProcessRunningEventDelegate();
 
-        public static int RunProcessAndWaitForExitAndGetOutput(string exec_name, string argument, bool is_window_show,
-            out string standard_output, out string standard_error)
+        public static int RunProcessAndWaitForExitAndGetErr(string exec_name, string argument, bool is_window_show,
+            out string standard_error)
         {
             Debug.WriteLine(exec_name + " " + argument);
             ProcessStartInfo p_info = new ProcessStartInfo();
@@ -868,15 +868,14 @@ namespace IJLib
             p_info.CreateNoWindow = !is_window_show;
             p_info.Arguments = argument;
             p_info.RedirectStandardInput = false;
-            p_info.RedirectStandardOutput = true;
+            p_info.RedirectStandardOutput = false;
             p_info.RedirectStandardError = true;
             p_info.UseShellExecute = false;
 
             Process p = Process.Start(p_info);
 
-            standard_output = p.StandardOutput.ReadToEnd();
             standard_error = p.StandardError.ReadToEnd();
-
+            
             p.WaitForExit();
             return p.ExitCode;
         }

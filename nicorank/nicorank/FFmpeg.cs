@@ -361,14 +361,13 @@ namespace nicorank
             {
                 throw new FFmpegFailedException(filename + " が存在しません。");
             }
-            string output;
             string error_str;
-            IJProcess.RunProcessAndWaitForExitAndGetOutput(app_path_.ffmpeg_path,
-                "-i \"" + filename + "\"", is_window_show, out output, out error_str);
+            IJProcess.RunProcessAndWaitForExitAndGetErr(app_path_.ffmpeg_path,
+                "-i \"" + filename + "\"", is_window_show, out error_str);
 
             //IJFile.WriteAppend("ffmpeglog.txt", "\r\n\r\nffmpeglog getflvtime start\r\n" +
             //    output + "\r\n" + error_str + "\r\n");
-            return output + "\r\n" + error_str;
+            return error_str;
         }
 
         /// <summary>
@@ -812,11 +811,10 @@ namespace nicorank
 
         public void FFmpegExec(string argument, string ffmpeg_path)
         {
-            string o_str;
             string o_err_str;
-            IJProcess.RunProcessAndWaitForExitAndGetOutput(ffmpeg_path,
-                argument, false, out o_str, out o_err_str);
-            msgout_.Write(o_str + "\r\n" + o_err_str);
+            IJProcess.RunProcessAndWaitForExitAndGetErr(ffmpeg_path,
+                argument, false, out o_err_str);
+            msgout_.Write(o_err_str);
         }
 
         /// <summary>
