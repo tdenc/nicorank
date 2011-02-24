@@ -827,9 +827,11 @@ namespace NicoTools
             List<Video> list = new List<Video>();
             int count = 0;
 
-            while ((index = html.IndexOf("class=\"uad_thumbfrm\">", index + 1)) >= 0)
+            while ((index = html.IndexOf("thumb_col_1\">", index + 1)) >= 0)
             {
                 Video video = new Video();
+
+                
 
                 int start = html.IndexOf("watch/", index) + 6;
                 int end = html.IndexOf('"', start);
@@ -849,7 +851,7 @@ namespace NicoTools
                 IJStringUtil.GetStringBetweenTag(ref index, "strong", html); // 読み捨て
                 //video.com = IJStringUtil.ToIntFromCommaValue(comStr);
 
-                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html).Trim();
                 video.submit_date = DateTime.ParseExact(dateStr, "yyyy年MM月dd日 HH:mm", null);
                 
                 video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "a", html));
