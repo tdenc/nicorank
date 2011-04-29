@@ -72,17 +72,7 @@ namespace nrmc
                             if (i < args.Length - 1)
                             {
                                 output_rank_file_ = Dequote(args[i + 1]);
-                                if (!File.Exists(output_rank_file_))
-                                {
-                                    System.Console.WriteLine("出力ランクファイルが存在しません。");
-                                    System.Environment.Exit(1);
-                                }
                                 ++i;
-                            }
-                            else
-                            {
-                                System.Console.WriteLine("出力ランクファイルを指定してください。");
-                                System.Environment.Exit(1);
                             }
                             break;
                         case "-c":
@@ -308,8 +298,8 @@ namespace nrmc
             searching_tag_option.detail_info_lower = int.Parse(option_["numericUpDownConditionMylistNew"]);
             searching_tag_option.sort_kind_num = int.Parse(option_["listBoxSortNew"]);
             searching_tag_option.is_page_all = bool.Parse(option_["radioButtonTagSearchPageAll"]);
-            searching_tag_option.page_start = int.Parse(option_["textBoxTagSearchPageStart"]);
-            searching_tag_option.page_end = int.Parse(option_["textBoxTagSearchPageEnd"]);
+            searching_tag_option.page_start = IJStringUtil.ToNumberWithDef(option_["textBoxTagSearchPageStart"], 1);
+            searching_tag_option.page_end = IJStringUtil.ToNumberWithDef(option_["textBoxTagSearchPageEnd"], int.MaxValue);
             searching_tag_option.is_using_condition = bool.Parse(option_["checkBoxTagSearchIsUsingCondition"]);
             searching_tag_option.condition_lower = IJStringUtil.ToNumberWithDef(option_["textBoxTagSearchLower"], 0);
             searching_tag_option.condition_upper = IJStringUtil.ToNumberWithDef(option_["textBoxTagSearchUpper"], int.MaxValue);
