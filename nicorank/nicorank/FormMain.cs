@@ -250,13 +250,13 @@ namespace nicorank
                 checkBoxDlRankDurationWeekly.Checked, 
                 checkBoxDlRankDurationDaily.Checked, 
                 checkBoxDlRankDurationHourly.Checked);
-            download_kind.SetTarget(checkBoxDlRankView.Checked, checkBoxDlRankRes.Checked, checkBoxDlRankMylist.Checked);
+            download_kind.SetTarget(false, checkBoxDlRankView.Checked, checkBoxDlRankRes.Checked, checkBoxDlRankMylist.Checked); // 「総合」には未対応
 
             download_kind.CategoryList = category_manager_.GetDownloadCategoryItemList();
 
             if (radioButtonDlRankRss.Checked)
             {
-                download_kind.SetFormatRss();
+                download_kind.IsRss = true;
             }
             //int hour = -1;
             if (checkBoxRankingDlSetHour.Checked)

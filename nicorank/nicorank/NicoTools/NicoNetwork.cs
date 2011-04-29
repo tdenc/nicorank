@@ -221,7 +221,7 @@ namespace NicoTools
 
             for (int i = 0; i < name_list.Count; ++i)
             {
-                DownloadRankingOnePage(name_list[i], saved_dir, filename_list[i], -1, download_kind.IsFormatRss());
+                DownloadRankingOnePage(name_list[i], saved_dir, filename_list[i], -1, download_kind.IsRss);
                 if (dlg != null)
                 {
                     dlg(name_list[i], i + 1, name_list.Count);
@@ -1587,7 +1587,7 @@ namespace NicoTools
     {
         public enum FormatKind { Html, Rss };
 
-        protected static string[] target_name = { "view", "res", "mylist" };
+        protected static string[] target_name = { "fav", "view", "res", "mylist" };
         protected static string[] target_short_name = { "vie", "res", "myl" };
         protected static string[] duration_name = { "total", "monthly", "weekly", "daily", "hourly" };
         protected static string[] duration_short_name = { "tot", "mon", "wek", "day", "hou" };
@@ -1616,6 +1616,12 @@ namespace NicoTools
             set { category_list = value; }
         }
 
+        public bool IsRss
+        {
+            get { return format_kind_ == FormatKind.Rss; }
+            set { format_kind_ = (value ? FormatKind.Rss : FormatKind.Html); }
+        }
+
         /// <summary>
         /// ダウンロードするランキングの期間を設定。true を指定するとその期間のランキングをDLする
         /// </summary>
@@ -1636,40 +1642,16 @@ namespace NicoTools
         /// <summary>
         /// ダウンロードするランキングの対象を設定。
         /// </summary>
+        /// <param name="fav">総合</param>
         /// <param name="view">再生</param>
         /// <param name="res">コメント</param>
         /// <param name="mylist">マイリスト</param>
-        public void SetTarget(bool view, bool res, bool mylist)
+        public void SetTarget(bool fav, bool view, bool res, bool mylist)
         {
-            target_[0] = view;
-            target_[1] = res;
-            target_[2] = mylist;
-        }
-
-        /// <summary>
-        /// ダウンロードする形式の指定
-        /// </summary>
-        /// <param name="format_kind">HTML か RSS か</param>
-        public void SetFormat(FormatKind format_kind)
-        {
-            format_kind_ = format_kind;
-        }
-
-        /// <summary>
-        /// ダウンロードする形式を RSS に指定する
-        /// </summary>
-        public void SetFormatRss()
-        {
-            format_kind_ = FormatKind.Rss;
-        }
-
-        /// <summary>
-        /// 設定されたダウンロード形式が RSS かどうかを取得
-        /// </summary>
-        /// <returns>true なら RSS、false なら HTML</returns>
-        public bool IsFormatRss()
-        {
-            return format_kind_ == FormatKind.Rss;
+            target_[0] = fav;
+            target_[1] = view;
+            target_[2] = res;
+            target_[3] = mylist;
         }
 
         /// <summary>

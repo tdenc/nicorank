@@ -342,7 +342,7 @@ namespace nrmc
                 bool.Parse(option_["checkBoxDlRankDurationWeekly"]),
                 bool.Parse(option_["checkBoxDlRankDurationDaily"]),
                 bool.Parse(option_["checkBoxDlRankDurationHourly"]));
-            download_kind.SetTarget(bool.Parse(option_["checkBoxDlRankView"]),
+            download_kind.SetTarget(false, bool.Parse(option_["checkBoxDlRankView"]), // 「総合」には未対応
                 bool.Parse(option_["checkBoxDlRankRes"]),
                 bool.Parse(option_["checkBoxDlRankMylist"]));
 
@@ -350,7 +350,7 @@ namespace nrmc
 
             if (bool.Parse(option_["radioButtonDlRankRss"]))
             {
-                download_kind.SetFormatRss();
+                download_kind.IsRss = true;
             }
             return download_kind;
         }
