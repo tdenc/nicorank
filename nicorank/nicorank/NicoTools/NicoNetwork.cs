@@ -709,7 +709,10 @@ namespace NicoTools
 
             string item_id = match.Groups[1].Value;
 
-            string token = GetToken(html);
+            //--- 2014/10/19 UPDATE marky マイリスト追加の仕様変更対応
+            //string token = GetToken(html);
+            string token = GetTokenAddPage(html);
+            //---
 
             Thread.Sleep(500);
             string str = AddMylist(mylist_id, item_id, "", token);
@@ -1440,6 +1443,21 @@ namespace NicoTools
             return match.Groups[1].Value;
         }
 
+        // HTMLを解析して token を取得 マイリスト追加ページ用 2014/10/19 ADD marky
+        private static string GetTokenAddPage(string html)
+        {
+            //2014/10/31 UPDATE marky 再度のソース変更に対応
+            //Match match = Regex.Match(html, "NicoAPI.token=\"([-0-9a-f]+)\";");
+            Match match = Regex.Match(html, "NicoAPI.token = '([-0-9a-f]+)';");
+
+            if (!match.Success)
+            {
+                throw new NiconicoAddingMylistFailedException("マイリストの追加に失敗しました。html の解析ができませんでした。");
+            }
+
+            return match.Groups[1].Value;
+        }
+
         // コメントXMLを解析して ticket を取得
         private static string GetTicket(string xml)
         {
@@ -1883,13 +1901,19 @@ namespace NicoTools
 
         private static bool MatchDigitUnderscore(byte[] data, ref int index)
         {
-            if (!char.IsDigit((char)data[index]) && data[index] != (byte)'_')
+            //--- 2014/10/22 UPDATE marky
+            //if (!char.IsDigit((char)data[index]) && data[index] != (byte)'_')
+            if (!char.IsLetterOrDigit((char)data[index]) && data[index] != (byte)'_')
+            //---
             {
                 return false;
             }
             while (index < data.Length)
             {
-                if (char.IsDigit((char)data[index]) || data[index] == (byte)'_')
+                //--- 2014/10/22 UPDATE marky
+                //if (char.IsDigit((char)data[index]) || data[index] == (byte)'_')
+                if (char.IsLetterOrDigit((char)data[index]) || data[index] == (byte)'_')
+                //---
                 {
                     ++index;
                 }
@@ -2074,7 +2098,10 @@ namespace NicoTools
             if (start >= 0)
             {
                 int index = start + "user_session_".Length;
-                while (index < str.Length && ('0' <= str[index] && str[index] <= '9' || str[index] == '_'))
+                //--- 2014/10/22 UPDATE marky
+                //while (index < str.Length && ('0' <= str[index] && str[index] <= '9' || str[index] == '_'))
+                while (index < str.Length && ('0' <= str[index] && str[index] <= 'z' || str[index] == '_'))
+                //---
                 {
                     ++index;
                 }
