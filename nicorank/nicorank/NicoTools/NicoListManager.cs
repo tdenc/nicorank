@@ -546,12 +546,47 @@ namespace NicoTools
         {
             int index = -1;
 
-            while ((index = html.IndexOf("<table width=\"648\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" summary=\"\">", index + 1)) >= 0)
+            //while ((index = html.IndexOf("<table width=\"648\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" summary=\"\">", index + 1)) >= 0)
+            //GINZA対応  2013/10/14 UPDATE marky
+            while ((index = html.IndexOf("<div class=\"rankingNumWrap\">", index + 1)) >= 0)
             {
                 yield return index;
             }
         }
 
+        //private static void ParseRankingHtmlVideoInfo(string html, int index,
+        //    out int value,
+        //    out DateTime date,
+        //    out int view,
+        //    out int res,
+        //    out int mylist,
+        //    out string video_id,
+        //    out string title)
+        //{
+        //    int ps = html.IndexOf("watch/", index) + 6;
+        //    int pe = html.IndexOf('"', ps);
+        //    video_id = html.Substring(ps, pe - ps);
+
+        //    index = html.IndexOf("<strong", index) + 1;
+        //    string value_str = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
+
+        //    string date_str = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+
+        //    // ニコニコ動画(9)のランキングHTMLにはランキング対象の期間ポイント以外は表示されない
+        //    string view_str = "0";
+        //    string res_str = "0";
+        //    string mylist_str = "0";
+
+        //    title = IJStringUtil.GetStringBetweenTag(ref index, "a", html);
+
+        //    value = IJStringUtil.ToIntFromCommaValue(value_str);
+        //    date = NicoUtil.StringToDate(date_str);
+        //    view = IJStringUtil.ToIntFromCommaValue(view_str);
+        //    res = IJStringUtil.ToIntFromCommaValue(res_str);
+        //    mylist = IJStringUtil.ToIntFromCommaValue(mylist_str);
+        //}
+
+        //HTMLランキングファイル動画情報取得 GINZA対応 2013/10/14 marky
         private static void ParseRankingHtmlVideoInfo(string html, int index,
             out int value,
             out DateTime date,
@@ -561,24 +596,31 @@ namespace NicoTools
             out string video_id,
             out string title)
         {
-            int ps = html.IndexOf("watch/", index) + 6;
-            int pe = html.IndexOf('"', ps);
+            //ポイント
+            int ps = html.IndexOf("rankingPt\">+", index) + 12;
+            int pe = html.IndexOf('<', ps);
+            string value_str = html.Substring(ps, pe - ps);
+
+            //投稿日時
+            string date_str = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
+
+            //動画ID
+            ps = html.IndexOf("data-id=\"", index) + 9;
+            pe = html.IndexOf('"', ps);
             video_id = html.Substring(ps, pe - ps);
 
-            index = html.IndexOf("<strong", index) + 1;
-            string value_str = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
-
-            string date_str = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+            //タイトル
+            index = html.IndexOf("<p class=\"itemTitle ranking\">", index) + 1;
+            title = IJStringUtil.GetStringBetweenTag(ref index, "a", html);
 
             // ニコニコ動画(9)のランキングHTMLにはランキング対象の期間ポイント以外は表示されない
             string view_str = "0";
             string res_str = "0";
             string mylist_str = "0";
 
-            title = IJStringUtil.GetStringBetweenTag(ref index, "a", html);
-
             value = IJStringUtil.ToIntFromCommaValue(value_str);
-            date = NicoUtil.StringToDate(date_str);
+            //date = NicoUtil.StringToDate(date_str);
+            date = DateTime.ParseExact(date_str, "yyyy/MM/dd HH:mm", null);
             view = IJStringUtil.ToIntFromCommaValue(view_str);
             res = IJStringUtil.ToIntFromCommaValue(res_str);
             mylist = IJStringUtil.ToIntFromCommaValue(mylist_str);

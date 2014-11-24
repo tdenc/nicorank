@@ -1583,12 +1583,13 @@ namespace NicoTools
     /// <summary>
     /// ニコニコ動画公式ランキングをダウンロードする時に、種類を指定するためのクラス
     /// </summary>
+    // (Thanks to Asarima-san)
     public class DownloadKind
     {
         public enum FormatKind { Html, Rss };
 
         protected static string[] target_name = { "fav", "view", "res", "mylist" };
-        protected static string[] target_short_name = { "vie", "res", "myl" };
+        protected static string[] target_short_name = { "fav", "vie", "res", "myl" };
         protected static string[] duration_name = { "total", "monthly", "weekly", "daily", "hourly" };
         protected static string[] duration_short_name = { "tot", "mon", "wek", "day", "hou" };
         

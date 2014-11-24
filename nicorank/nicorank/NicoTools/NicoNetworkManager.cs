@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2008 - 2009 rankingloid
+﻿// Copyright (c) 2008 - 2013 rankingloid
 //
 // under GNU General Public License Version 2.
 //
@@ -821,40 +821,55 @@ namespace NicoTools
 
         // 前から start_num - 1 件は捨てる
         // start_num が -1 なら全件登録
+        // (Thanks to Asarima-san and marky-san)
         public static List<Video> ParseSearch(string html, int start_num)
         {
             int index = -1;
             List<Video> list = new List<Video>();
             int count = 0;
 
-            while ((index = html.IndexOf("thumb_col_1\">", index + 1)) >= 0)
+            while ((index = html.IndexOf("videoList01Wrap\">", index + 1)) >= 0)
             {
                 Video video = new Video();
 
-                
+                //投稿日時
+                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "span", html).Trim();
+                if (!DateTime.TryParseExact(dateStr, "MM/dd HH:mm", null, System.Globalization.DateTimeStyles.None, out video.submit_date))
+                {
+                    video.submit_date = DateTime.ParseExact(dateStr, "yy/MM/dd HH:mm", null);
+                }
 
+                //動画ID
                 int start = html.IndexOf("watch/", index) + 6;
                 int end = html.IndexOf('"', start);
+                int c = html.IndexOf('?', start);
+                if (end > c)
+                {
+                    end = c;
+                }
                 video.video_id = html.Substring(start, end - start);
-                
+
+                //再生時間
                 video.length = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
 
-                string viewStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                index = html.IndexOf("itemContent", index + 1);
+                //タイトル
+                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "a", html));
+
+                //再生
+                string viewStr = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
                 video.point.view = IJStringUtil.ToIntFromCommaValue(viewStr);
-                string resStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                //コメント
+                string resStr = IJStringUtil.GetStringBetweenTag(ref index, "span", html);
                 video.point.res = IJStringUtil.ToIntFromCommaValue(resStr);
-                string mylistStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html);
+                //マイリスト
+                string mylistStr = IJStringUtil.GetStringBetweenTag(ref index, "a", html);
                 video.point.mylist = IJStringUtil.ToIntFromCommaValue(mylistStr);
 
                 // 宣伝ポイント。将来実装するときのため
                 //string comStr = 
-                IJStringUtil.GetStringBetweenTag(ref index, "strong", html); // 読み捨て
+                IJStringUtil.GetStringBetweenTag(ref index, "a", html); // 読み捨て
                 //video.com = IJStringUtil.ToIntFromCommaValue(comStr);
-
-                string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "strong", html).Trim();
-                video.submit_date = DateTime.ParseExact(dateStr, "yyyy年MM月dd日 HH:mm", null);
-                
-                video.title = IJStringUtil.UnescapeHtml(IJStringUtil.GetStringBetweenTag(ref index, "a", html));
 
                 ++count;
                 if (count >= start_num)
