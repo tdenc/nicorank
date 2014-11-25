@@ -911,7 +911,6 @@ namespace NicoTools
         // start_num が -1 なら全件登録
         public static List<Video> ParseSearchFromAPI(string json, int start_num)
         {
-            int index = -1;
             List<Video> list = new List<Video>();
             int count = 0;
 
@@ -1225,49 +1224,49 @@ namespace NicoTools
     class NiconicoAPIResult
     {
         [DataMember]
-        public string dqnid;
+        public string dqnid = "";
 
         [DataMember]
-        public string type;
+        public string type = "";
 
         [DataMember]
-        public List<ValueC> values;
+        public List<ValueC> values = null;
 
         [DataMember]
-        public string endofstream;
+        public string endofstream = "";
 
         [DataContract]
         public class ValueC
         {
             [DataMember]
-            public string _rowid;
+            public string _rowid = "";
 
             [DataMember]
-            public string cmsid;
+            public string cmsid = "";
 
             [DataMember]
-            public string comment_counter;
+            public string comment_counter = "";
 
             [DataMember]
-            public string length_seconds;
+            public string length_seconds = "";
 
             [DataMember]
-            public string mylist_counter;
+            public string mylist_counter = "";
 
             [DataMember]
-            public string start_time;
+            public string start_time = "";
 
             [DataMember]
-            public string tags;
+            public string tags = "";
 
             [DataMember]
-            public string thumbnail_url;
+            public string thumbnail_url = "";
 
             [DataMember]
-            public string title;
+            public string title = "";
 
             [DataMember]
-            public string view_counter;
+            public string view_counter = "";
         }
     }
 }
