@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2008 - 2009 rankingloid
+﻿// Copyright (c) 2008 - 2014 rankingloid
 //
 // under GNU General Public License Version 2.
 //
