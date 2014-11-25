@@ -279,8 +279,14 @@
             this.checkBoxFilter = new System.Windows.Forms.CheckBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox38 = new System.Windows.Forms.GroupBox();
+            this.radioButtonSearchKindKeyword = new System.Windows.Forms.RadioButton();
+            this.radioButtonSearchKindTag = new System.Windows.Forms.RadioButton();
+            this.groupBox37 = new System.Windows.Forms.GroupBox();
+            this.radioButtonSearchGetKindHTML = new System.Windows.Forms.RadioButton();
+            this.radioButtonSearchGetKindAPI = new System.Windows.Forms.RadioButton();
             this.comboBoxRedundantSearchMethod = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.labelRedundantSearch = new System.Windows.Forms.Label();
             this.checkBoxSaveSearch = new System.Windows.Forms.CheckBox();
             this.buttonRestartSearch = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -308,9 +314,6 @@
             this.labelGettingDetail1 = new System.Windows.Forms.Label();
             this.checkBoxIsGettingDetailNew = new System.Windows.Forms.CheckBox();
             this.label87 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButtonSearchKindKeyword = new System.Windows.Forms.RadioButton();
-            this.radioButtonSearchKindTag = new System.Windows.Forms.RadioButton();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.buttonSelectSavedRankDir = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -470,6 +473,11 @@
             this.buttonDlRank = new System.Windows.Forms.Button();
             this.tabPageTagComment = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBoxFirefoxProfileDir = new System.Windows.Forms.TextBox();
+            this.buttonSelectFirefoxProfileDir = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.linkLabelMakuUserId = new System.Windows.Forms.LinkLabel();
             this.buttonMakeUserId = new System.Windows.Forms.Button();
@@ -514,8 +522,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMylistRate)).BeginInit();
             this.tabControl2.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            this.groupBox38.SuspendLayout();
+            this.groupBox37.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownConditionMylistNew)).BeginInit();
-            this.panel1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -551,6 +560,7 @@
             this.groupBox9.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.tabPageTagComment.SuspendLayout();
+            this.tabPage10.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).BeginInit();
             this.SuspendLayout();
@@ -582,7 +592,7 @@
             // buttonClear
             // 
             this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonClear.Location = new System.Drawing.Point(385, 617);
+            this.buttonClear.Location = new System.Drawing.Point(385, 682);
             this.buttonClear.Name = "buttonClear";
             this.buttonClear.Size = new System.Drawing.Size(75, 23);
             this.buttonClear.TabIndex = 7;
@@ -592,35 +602,35 @@
             // 
             // textBoxInputRank
             // 
-            this.textBoxInputRank.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxInputRank.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInputRank.Enabled = false;
             this.textBoxInputRank.Location = new System.Drawing.Point(19, 59);
             this.textBoxInputRank.MaxLength = 10000000;
             this.textBoxInputRank.Multiline = true;
             this.textBoxInputRank.Name = "textBoxInputRank";
             this.textBoxInputRank.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxInputRank.Size = new System.Drawing.Size(252, 80);
+            this.textBoxInputRank.Size = new System.Drawing.Size(252, 97);
             this.textBoxInputRank.TabIndex = 5;
             // 
             // textBoxInfo
             // 
-            this.textBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxInfo.Location = new System.Drawing.Point(0, 0);
+            this.textBoxInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxInfo.Location = new System.Drawing.Point(0, 3);
             this.textBoxInfo.MaxLength = 10000000;
             this.textBoxInfo.Multiline = true;
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxInfo.Size = new System.Drawing.Size(561, 67);
+            this.textBoxInfo.Size = new System.Drawing.Size(560, 43);
             this.textBoxInfo.TabIndex = 6;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(470, 617);
+            this.buttonCancel.Location = new System.Drawing.Point(470, 682);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(106, 23);
             this.buttonCancel.TabIndex = 8;
@@ -631,8 +641,8 @@
             // textBoxInputRankFilePath
             // 
             this.textBoxInputRankFilePath.AllowDrop = true;
-            this.textBoxInputRankFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxInputRankFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxInputRankFilePath.Location = new System.Drawing.Point(19, 20);
             this.textBoxInputRankFilePath.Name = "textBoxInputRankFilePath";
             this.textBoxInputRankFilePath.Size = new System.Drawing.Size(225, 19);
@@ -806,11 +816,11 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -829,7 +839,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.textBoxOutputRankFilePath);
             this.splitContainer1.Panel2.Controls.Add(this.radioButtonOutputToTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.textBoxOutputRank);
-            this.splitContainer1.Size = new System.Drawing.Size(560, 146);
+            this.splitContainer1.Size = new System.Drawing.Size(560, 163);
             this.splitContainer1.SplitterDistance = 279;
             this.splitContainer1.SplitterWidth = 2;
             this.splitContainer1.TabIndex = 9;
@@ -873,8 +883,8 @@
             // textBoxOutputRankFilePath
             // 
             this.textBoxOutputRankFilePath.AllowDrop = true;
-            this.textBoxOutputRankFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxOutputRankFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputRankFilePath.Location = new System.Drawing.Point(19, 20);
             this.textBoxOutputRankFilePath.Name = "textBoxOutputRankFilePath";
             this.textBoxOutputRankFilePath.Size = new System.Drawing.Size(225, 19);
@@ -896,36 +906,37 @@
             // 
             // textBoxOutputRank
             // 
-            this.textBoxOutputRank.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxOutputRank.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxOutputRank.Enabled = false;
             this.textBoxOutputRank.Location = new System.Drawing.Point(19, 59);
             this.textBoxOutputRank.MaxLength = 10000000;
             this.textBoxOutputRank.Multiline = true;
             this.textBoxOutputRank.Name = "textBoxOutputRank";
             this.textBoxOutputRank.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxOutputRank.Size = new System.Drawing.Size(252, 80);
+            this.textBoxOutputRank.Size = new System.Drawing.Size(252, 97);
             this.textBoxOutputRank.TabIndex = 10;
             // 
             // splitContainer2
             // 
-            this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer2.Location = new System.Drawing.Point(12, 394);
+            this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer2.Location = new System.Drawing.Point(12, 462);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.splitContainer1);
+            this.splitContainer2.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer2_Panel1_Paint);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.textBoxInfo);
-            this.splitContainer2.Size = new System.Drawing.Size(564, 217);
-            this.splitContainer2.SplitterDistance = 146;
+            this.splitContainer2.Size = new System.Drawing.Size(560, 219);
+            this.splitContainer2.SplitterDistance = 169;
             this.splitContainer2.TabIndex = 10;
             // 
             // toolTip1
@@ -973,7 +984,7 @@
             // checkBoxIsOutputFilteredVideo
             // 
             this.checkBoxIsOutputFilteredVideo.AutoSize = true;
-            this.checkBoxIsOutputFilteredVideo.Location = new System.Drawing.Point(436, 54);
+            this.checkBoxIsOutputFilteredVideo.Location = new System.Drawing.Point(437, 54);
             this.checkBoxIsOutputFilteredVideo.Name = "checkBoxIsOutputFilteredVideo";
             this.checkBoxIsOutputFilteredVideo.Size = new System.Drawing.Size(103, 16);
             this.checkBoxIsOutputFilteredVideo.TabIndex = 31;
@@ -1093,9 +1104,9 @@
             this.tabPageOther2.Location = new System.Drawing.Point(4, 40);
             this.tabPageOther2.Name = "tabPageOther2";
             this.tabPageOther2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOther2.Size = new System.Drawing.Size(552, 336);
+            this.tabPageOther2.Size = new System.Drawing.Size(552, 404);
             this.tabPageOther2.TabIndex = 14;
-            this.tabPageOther2.Text = "おまけ";
+            this.tabPageOther2.Text = "おまけ1";
             this.tabPageOther2.UseVisualStyleBackColor = true;
             // 
             // buttonGetMyMylistList
@@ -1124,7 +1135,7 @@
             this.label26.Size = new System.Drawing.Size(263, 36);
             this.label26.TabIndex = 7;
             this.label26.Text = "ICSharpCode.SharpZipLib.dll　作者：John Reilly氏ら\r\nFFmpeg　作者：FFmpegチーム\r\nwaveflt2　作者：To" +
-                "moya Tokairin氏";
+    "moya Tokairin氏";
             // 
             // label15
             // 
@@ -1275,9 +1286,9 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 40);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(552, 336);
+            this.tabPage2.Size = new System.Drawing.Size(552, 404);
             this.tabPage2.TabIndex = 20;
-            this.tabPage2.Text = "上級者向け";
+            this.tabPage2.Text = "上級者向け1";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label52
@@ -1593,7 +1604,7 @@
             this.tabPage7.Controls.Add(this.label16);
             this.tabPage7.Location = new System.Drawing.Point(4, 40);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(552, 336);
+            this.tabPage7.Size = new System.Drawing.Size(552, 404);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "設定";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1786,7 +1797,7 @@
             this.tabPageTimer.Location = new System.Drawing.Point(4, 40);
             this.tabPageTimer.Name = "tabPageTimer";
             this.tabPageTimer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTimer.Size = new System.Drawing.Size(552, 336);
+            this.tabPageTimer.Size = new System.Drawing.Size(552, 404);
             this.tabPageTimer.TabIndex = 12;
             this.tabPageTimer.Text = "タイマー";
             this.tabPageTimer.UseVisualStyleBackColor = true;
@@ -1929,7 +1940,7 @@
             this.tabPageMylist.Controls.Add(this.label33);
             this.tabPageMylist.Location = new System.Drawing.Point(4, 40);
             this.tabPageMylist.Name = "tabPageMylist";
-            this.tabPageMylist.Size = new System.Drawing.Size(552, 336);
+            this.tabPageMylist.Size = new System.Drawing.Size(552, 404);
             this.tabPageMylist.TabIndex = 11;
             this.tabPageMylist.Text = "マイリスト";
             this.tabPageMylist.UseVisualStyleBackColor = true;
@@ -2461,7 +2472,7 @@
             this.tabPage5.Controls.Add(this.groupBox22);
             this.tabPage5.Location = new System.Drawing.Point(4, 40);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(552, 336);
+            this.tabPage5.Size = new System.Drawing.Size(552, 404);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "画像・動画作成";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -2741,7 +2752,7 @@
             this.tabPage14.Location = new System.Drawing.Point(4, 40);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(552, 336);
+            this.tabPage14.Size = new System.Drawing.Size(552, 404);
             this.tabPage14.TabIndex = 17;
             this.tabPage14.Text = "動画変換";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -3192,14 +3203,14 @@
             this.tabPage9.Controls.Add(this.groupBox3);
             this.tabPage9.Location = new System.Drawing.Point(4, 40);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(552, 336);
+            this.tabPage9.Size = new System.Drawing.Size(552, 404);
             this.tabPage9.TabIndex = 8;
             this.tabPage9.Text = "リスト作成・更新";
             this.tabPage9.UseVisualStyleBackColor = true;
             // 
             // numericUpDownMylistRate
             // 
-            this.numericUpDownMylistRate.Location = new System.Drawing.Point(464, 25);
+            this.numericUpDownMylistRate.Location = new System.Drawing.Point(465, 25);
             this.numericUpDownMylistRate.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3217,7 +3228,7 @@
             // buttonWatchFilter
             // 
             this.buttonWatchFilter.Enabled = false;
-            this.buttonWatchFilter.Location = new System.Drawing.Point(378, 52);
+            this.buttonWatchFilter.Location = new System.Drawing.Point(379, 52);
             this.buttonWatchFilter.Name = "buttonWatchFilter";
             this.buttonWatchFilter.Size = new System.Drawing.Size(38, 21);
             this.buttonWatchFilter.TabIndex = 30;
@@ -3229,7 +3240,7 @@
             // 
             this.buttonSelectFilterPath.Enabled = false;
             this.buttonSelectFilterPath.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.buttonSelectFilterPath.Location = new System.Drawing.Point(351, 52);
+            this.buttonSelectFilterPath.Location = new System.Drawing.Point(352, 52);
             this.buttonSelectFilterPath.Name = "buttonSelectFilterPath";
             this.buttonSelectFilterPath.Size = new System.Drawing.Size(21, 21);
             this.buttonSelectFilterPath.TabIndex = 29;
@@ -3241,7 +3252,7 @@
             // 
             this.textBoxFilterPath.AllowDrop = true;
             this.textBoxFilterPath.Enabled = false;
-            this.textBoxFilterPath.Location = new System.Drawing.Point(101, 53);
+            this.textBoxFilterPath.Location = new System.Drawing.Point(102, 53);
             this.textBoxFilterPath.Name = "textBoxFilterPath";
             this.textBoxFilterPath.Size = new System.Drawing.Size(246, 19);
             this.textBoxFilterPath.TabIndex = 3;
@@ -3251,7 +3262,7 @@
             // checkBoxFilter
             // 
             this.checkBoxFilter.AutoSize = true;
-            this.checkBoxFilter.Location = new System.Drawing.Point(28, 54);
+            this.checkBoxFilter.Location = new System.Drawing.Point(29, 54);
             this.checkBoxFilter.Name = "checkBoxFilter";
             this.checkBoxFilter.Size = new System.Drawing.Size(67, 16);
             this.checkBoxFilter.TabIndex = 28;
@@ -3268,17 +3279,19 @@
             this.tabControl2.Controls.Add(this.tabPage12);
             this.tabControl2.Controls.Add(this.tabPage15);
             this.tabControl2.Controls.Add(this.tabPage6);
-            this.tabControl2.Location = new System.Drawing.Point(22, 79);
+            this.tabControl2.Location = new System.Drawing.Point(23, 79);
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(507, 250);
+            this.tabControl2.Size = new System.Drawing.Size(507, 322);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.groupBox38);
+            this.tabPage8.Controls.Add(this.groupBox37);
             this.tabPage8.Controls.Add(this.comboBoxRedundantSearchMethod);
-            this.tabPage8.Controls.Add(this.label10);
+            this.tabPage8.Controls.Add(this.labelRedundantSearch);
             this.tabPage8.Controls.Add(this.checkBoxSaveSearch);
             this.tabPage8.Controls.Add(this.buttonRestartSearch);
             this.tabPage8.Controls.Add(this.label14);
@@ -3306,18 +3319,86 @@
             this.tabPage8.Controls.Add(this.labelGettingDetail1);
             this.tabPage8.Controls.Add(this.checkBoxIsGettingDetailNew);
             this.tabPage8.Controls.Add(this.label87);
-            this.tabPage8.Controls.Add(this.panel1);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(499, 224);
+            this.tabPage8.Size = new System.Drawing.Size(499, 296);
             this.tabPage8.TabIndex = 6;
             this.tabPage8.Text = "タグ検索";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
+            // groupBox38
+            // 
+            this.groupBox38.Controls.Add(this.radioButtonSearchKindKeyword);
+            this.groupBox38.Controls.Add(this.radioButtonSearchKindTag);
+            this.groupBox38.Location = new System.Drawing.Point(224, 6);
+            this.groupBox38.Name = "groupBox38";
+            this.groupBox38.Size = new System.Drawing.Size(193, 39);
+            this.groupBox38.TabIndex = 4;
+            this.groupBox38.TabStop = false;
+            this.groupBox38.Text = "検索種類";
+            // 
+            // radioButtonSearchKindKeyword
+            // 
+            this.radioButtonSearchKindKeyword.AutoSize = true;
+            this.radioButtonSearchKindKeyword.Location = new System.Drawing.Point(82, 16);
+            this.radioButtonSearchKindKeyword.Name = "radioButtonSearchKindKeyword";
+            this.radioButtonSearchKindKeyword.Size = new System.Drawing.Size(95, 16);
+            this.radioButtonSearchKindKeyword.TabIndex = 1;
+            this.radioButtonSearchKindKeyword.Text = "キーワード検索";
+            this.radioButtonSearchKindKeyword.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonSearchKindTag
+            // 
+            this.radioButtonSearchKindTag.AutoSize = true;
+            this.radioButtonSearchKindTag.Checked = true;
+            this.radioButtonSearchKindTag.Location = new System.Drawing.Point(12, 16);
+            this.radioButtonSearchKindTag.Name = "radioButtonSearchKindTag";
+            this.radioButtonSearchKindTag.Size = new System.Drawing.Size(64, 16);
+            this.radioButtonSearchKindTag.TabIndex = 0;
+            this.radioButtonSearchKindTag.TabStop = true;
+            this.radioButtonSearchKindTag.Text = "タグ検索";
+            this.radioButtonSearchKindTag.UseVisualStyleBackColor = true;
+            // 
+            // groupBox37
+            // 
+            this.groupBox37.Controls.Add(this.radioButtonSearchGetKindHTML);
+            this.groupBox37.Controls.Add(this.radioButtonSearchGetKindAPI);
+            this.groupBox37.Location = new System.Drawing.Point(12, 6);
+            this.groupBox37.Name = "groupBox37";
+            this.groupBox37.Size = new System.Drawing.Size(202, 39);
+            this.groupBox37.TabIndex = 3;
+            this.groupBox37.TabStop = false;
+            this.groupBox37.Text = "取得方法";
+            // 
+            // radioButtonSearchGetKindHTML
+            // 
+            this.radioButtonSearchGetKindHTML.AutoSize = true;
+            this.radioButtonSearchGetKindHTML.Location = new System.Drawing.Point(102, 16);
+            this.radioButtonSearchGetKindHTML.Name = "radioButtonSearchGetKindHTML";
+            this.radioButtonSearchGetKindHTML.Size = new System.Drawing.Size(53, 16);
+            this.radioButtonSearchGetKindHTML.TabIndex = 1;
+            this.radioButtonSearchGetKindHTML.Text = "HTML";
+            this.radioButtonSearchGetKindHTML.UseVisualStyleBackColor = true;
+            this.radioButtonSearchGetKindHTML.CheckedChanged += new System.EventHandler(this.radioButtonSearchGetKind_CheckedChanged);
+            // 
+            // radioButtonSearchGetKindAPI
+            // 
+            this.radioButtonSearchGetKindAPI.AutoSize = true;
+            this.radioButtonSearchGetKindAPI.Checked = true;
+            this.radioButtonSearchGetKindAPI.Location = new System.Drawing.Point(8, 16);
+            this.radioButtonSearchGetKindAPI.Name = "radioButtonSearchGetKindAPI";
+            this.radioButtonSearchGetKindAPI.Size = new System.Drawing.Size(77, 16);
+            this.radioButtonSearchGetKindAPI.TabIndex = 0;
+            this.radioButtonSearchGetKindAPI.TabStop = true;
+            this.radioButtonSearchGetKindAPI.Text = "API（推奨）";
+            this.radioButtonSearchGetKindAPI.UseVisualStyleBackColor = true;
+            this.radioButtonSearchGetKindAPI.CheckedChanged += new System.EventHandler(this.radioButtonSearchGetKind_CheckedChanged);
+            // 
             // comboBoxRedundantSearchMethod
             // 
             this.comboBoxRedundantSearchMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxRedundantSearchMethod.Enabled = false;
             this.comboBoxRedundantSearchMethod.FormattingEnabled = true;
             this.comboBoxRedundantSearchMethod.Items.AddRange(new object[] {
             "無し",
@@ -3325,24 +3406,25 @@
             "2回(2回目を優先)",
             "2回(マージ)",
             "最大3回"});
-            this.comboBoxRedundantSearchMethod.Location = new System.Drawing.Point(234, 71);
+            this.comboBoxRedundantSearchMethod.Location = new System.Drawing.Point(234, 129);
             this.comboBoxRedundantSearchMethod.Name = "comboBoxRedundantSearchMethod";
             this.comboBoxRedundantSearchMethod.Size = new System.Drawing.Size(118, 20);
             this.comboBoxRedundantSearchMethod.TabIndex = 74;
             // 
-            // label10
+            // labelRedundantSearch
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(169, 74);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 12);
-            this.label10.TabIndex = 73;
-            this.label10.Text = "複数回検索";
+            this.labelRedundantSearch.AutoSize = true;
+            this.labelRedundantSearch.Enabled = false;
+            this.labelRedundantSearch.Location = new System.Drawing.Point(161, 132);
+            this.labelRedundantSearch.Name = "labelRedundantSearch";
+            this.labelRedundantSearch.Size = new System.Drawing.Size(65, 12);
+            this.labelRedundantSearch.TabIndex = 73;
+            this.labelRedundantSearch.Text = "複数回検索";
             // 
             // checkBoxSaveSearch
             // 
             this.checkBoxSaveSearch.AutoSize = true;
-            this.checkBoxSaveSearch.Location = new System.Drawing.Point(276, 6);
+            this.checkBoxSaveSearch.Location = new System.Drawing.Point(44, 101);
             this.checkBoxSaveSearch.Name = "checkBoxSaveSearch";
             this.checkBoxSaveSearch.Size = new System.Drawing.Size(105, 16);
             this.checkBoxSaveSearch.TabIndex = 72;
@@ -3351,7 +3433,7 @@
             // 
             // buttonRestartSearch
             // 
-            this.buttonRestartSearch.Location = new System.Drawing.Point(303, 190);
+            this.buttonRestartSearch.Location = new System.Drawing.Point(303, 263);
             this.buttonRestartSearch.Name = "buttonRestartSearch";
             this.buttonRestartSearch.Size = new System.Drawing.Size(90, 24);
             this.buttonRestartSearch.TabIndex = 71;
@@ -3362,15 +3444,15 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(19, 47);
+            this.label14.Location = new System.Drawing.Point(90, 53);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(244, 12);
             this.label14.TabIndex = 70;
-            this.label14.Text = "↑複数のワードを検索する場合は or で区切ります";
+            this.label14.Text = "↓複数のワードを検索する場合は or で区切ります\r\n";
             // 
             // textBoxTagSearchPageEnd
             // 
-            this.textBoxTagSearchPageEnd.Location = new System.Drawing.Point(356, 124);
+            this.textBoxTagSearchPageEnd.Location = new System.Drawing.Point(356, 182);
             this.textBoxTagSearchPageEnd.Name = "textBoxTagSearchPageEnd";
             this.textBoxTagSearchPageEnd.Size = new System.Drawing.Size(42, 19);
             this.textBoxTagSearchPageEnd.TabIndex = 8;
@@ -3379,7 +3461,7 @@
             // 
             // textBoxTagSearchPageStart
             // 
-            this.textBoxTagSearchPageStart.Location = new System.Drawing.Point(253, 124);
+            this.textBoxTagSearchPageStart.Location = new System.Drawing.Point(253, 182);
             this.textBoxTagSearchPageStart.Name = "textBoxTagSearchPageStart";
             this.textBoxTagSearchPageStart.Size = new System.Drawing.Size(37, 19);
             this.textBoxTagSearchPageStart.TabIndex = 7;
@@ -3389,7 +3471,7 @@
             // numericUpDownConditionMylistNew
             // 
             this.numericUpDownConditionMylistNew.Enabled = false;
-            this.numericUpDownConditionMylistNew.Location = new System.Drawing.Point(400, 59);
+            this.numericUpDownConditionMylistNew.Location = new System.Drawing.Point(400, 117);
             this.numericUpDownConditionMylistNew.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -3407,7 +3489,7 @@
             // labelTagSearchUnlimited
             // 
             this.labelTagSearchUnlimited.AutoSize = true;
-            this.labelTagSearchUnlimited.Location = new System.Drawing.Point(183, 171);
+            this.labelTagSearchUnlimited.Location = new System.Drawing.Point(183, 229);
             this.labelTagSearchUnlimited.Name = "labelTagSearchUnlimited";
             this.labelTagSearchUnlimited.Size = new System.Drawing.Size(109, 12);
             this.labelTagSearchUnlimited.TabIndex = 14;
@@ -3416,7 +3498,7 @@
             // 
             // textBoxTagSearchUpper
             // 
-            this.textBoxTagSearchUpper.Location = new System.Drawing.Point(306, 166);
+            this.textBoxTagSearchUpper.Location = new System.Drawing.Point(306, 224);
             this.textBoxTagSearchUpper.Name = "textBoxTagSearchUpper";
             this.textBoxTagSearchUpper.Size = new System.Drawing.Size(55, 19);
             this.textBoxTagSearchUpper.TabIndex = 13;
@@ -3426,7 +3508,7 @@
             // 
             // textBoxTagSearchLower
             // 
-            this.textBoxTagSearchLower.Location = new System.Drawing.Point(306, 145);
+            this.textBoxTagSearchLower.Location = new System.Drawing.Point(306, 203);
             this.textBoxTagSearchLower.Name = "textBoxTagSearchLower";
             this.textBoxTagSearchLower.Size = new System.Drawing.Size(55, 19);
             this.textBoxTagSearchLower.TabIndex = 11;
@@ -3437,7 +3519,7 @@
             // labelTagSearchTo
             // 
             this.labelTagSearchTo.AutoSize = true;
-            this.labelTagSearchTo.Location = new System.Drawing.Point(468, 169);
+            this.labelTagSearchTo.Location = new System.Drawing.Point(469, 227);
             this.labelTagSearchTo.Name = "labelTagSearchTo";
             this.labelTagSearchTo.Size = new System.Drawing.Size(24, 12);
             this.labelTagSearchTo.TabIndex = 59;
@@ -3446,7 +3528,7 @@
             // labelTagSearchFrom
             // 
             this.labelTagSearchFrom.AutoSize = true;
-            this.labelTagSearchFrom.Location = new System.Drawing.Point(468, 148);
+            this.labelTagSearchFrom.Location = new System.Drawing.Point(469, 206);
             this.labelTagSearchFrom.Name = "labelTagSearchFrom";
             this.labelTagSearchFrom.Size = new System.Drawing.Size(23, 12);
             this.labelTagSearchFrom.TabIndex = 58;
@@ -3456,7 +3538,7 @@
             // 
             this.dateTimePickerTagSearchFrom.CustomFormat = "yyyy年MM月dd日 HH：mm：ss";
             this.dateTimePickerTagSearchFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerTagSearchFrom.Location = new System.Drawing.Point(298, 145);
+            this.dateTimePickerTagSearchFrom.Location = new System.Drawing.Point(298, 203);
             this.dateTimePickerTagSearchFrom.Name = "dateTimePickerTagSearchFrom";
             this.dateTimePickerTagSearchFrom.ShowUpDown = true;
             this.dateTimePickerTagSearchFrom.Size = new System.Drawing.Size(165, 19);
@@ -3465,7 +3547,7 @@
             // checkBoxTagSearchIsUsingCondition
             // 
             this.checkBoxTagSearchIsUsingCondition.AutoSize = true;
-            this.checkBoxTagSearchIsUsingCondition.Location = new System.Drawing.Point(163, 147);
+            this.checkBoxTagSearchIsUsingCondition.Location = new System.Drawing.Point(163, 205);
             this.checkBoxTagSearchIsUsingCondition.Name = "checkBoxTagSearchIsUsingCondition";
             this.checkBoxTagSearchIsUsingCondition.Size = new System.Drawing.Size(72, 16);
             this.checkBoxTagSearchIsUsingCondition.TabIndex = 9;
@@ -3477,7 +3559,7 @@
             // 
             this.labelGettingDetail2.AutoSize = true;
             this.labelGettingDetail2.Enabled = false;
-            this.labelGettingDetail2.Location = new System.Drawing.Point(399, 83);
+            this.labelGettingDetail2.Location = new System.Drawing.Point(399, 141);
             this.labelGettingDetail2.Name = "labelGettingDetail2";
             this.labelGettingDetail2.Size = new System.Drawing.Size(93, 12);
             this.labelGettingDetail2.TabIndex = 42;
@@ -3486,7 +3568,7 @@
             // labelTagSearchPage1
             // 
             this.labelTagSearchPage1.AutoSize = true;
-            this.labelTagSearchPage1.Location = new System.Drawing.Point(296, 127);
+            this.labelTagSearchPage1.Location = new System.Drawing.Point(296, 185);
             this.labelTagSearchPage1.Name = "labelTagSearchPage1";
             this.labelTagSearchPage1.Size = new System.Drawing.Size(59, 12);
             this.labelTagSearchPage1.TabIndex = 55;
@@ -3495,7 +3577,7 @@
             // labelTagSearchPage2
             // 
             this.labelTagSearchPage2.AutoSize = true;
-            this.labelTagSearchPage2.Location = new System.Drawing.Point(402, 127);
+            this.labelTagSearchPage2.Location = new System.Drawing.Point(402, 185);
             this.labelTagSearchPage2.Name = "labelTagSearchPage2";
             this.labelTagSearchPage2.Size = new System.Drawing.Size(47, 12);
             this.labelTagSearchPage2.TabIndex = 54;
@@ -3503,18 +3585,17 @@
             // 
             // textBoxTagNew
             // 
-            this.textBoxTagNew.Location = new System.Drawing.Point(13, 25);
+            this.textBoxTagNew.Location = new System.Drawing.Point(12, 68);
             this.textBoxTagNew.Name = "textBoxTagNew";
             this.textBoxTagNew.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxTagNew.Size = new System.Drawing.Size(365, 19);
+            this.textBoxTagNew.Size = new System.Drawing.Size(477, 19);
             this.textBoxTagNew.TabIndex = 0;
-            this.textBoxTagNew.WordWrap = false;
             // 
             // radioButtonTagSearchPageAll
             // 
             this.radioButtonTagSearchPageAll.AutoSize = true;
             this.radioButtonTagSearchPageAll.Checked = true;
-            this.radioButtonTagSearchPageAll.Location = new System.Drawing.Point(163, 103);
+            this.radioButtonTagSearchPageAll.Location = new System.Drawing.Point(163, 161);
             this.radioButtonTagSearchPageAll.Name = "radioButtonTagSearchPageAll";
             this.radioButtonTagSearchPageAll.Size = new System.Drawing.Size(108, 16);
             this.radioButtonTagSearchPageAll.TabIndex = 5;
@@ -3526,7 +3607,7 @@
             // labelTagSearchCondition
             // 
             this.labelTagSearchCondition.AutoSize = true;
-            this.labelTagSearchCondition.Location = new System.Drawing.Point(234, 148);
+            this.labelTagSearchCondition.Location = new System.Drawing.Point(234, 206);
             this.labelTagSearchCondition.Name = "labelTagSearchCondition";
             this.labelTagSearchCondition.Size = new System.Drawing.Size(63, 12);
             this.labelTagSearchCondition.TabIndex = 52;
@@ -3549,16 +3630,16 @@
             "マイリスト登録が少ない順",
             "再生時間が長い順",
             "再生時間が短い順"});
-            this.listBoxSortNew.Location = new System.Drawing.Point(12, 105);
+            this.listBoxSortNew.Location = new System.Drawing.Point(12, 145);
             this.listBoxSortNew.Name = "listBoxSortNew";
-            this.listBoxSortNew.Size = new System.Drawing.Size(141, 100);
+            this.listBoxSortNew.Size = new System.Drawing.Size(141, 124);
             this.listBoxSortNew.TabIndex = 4;
             this.listBoxSortNew.SelectedIndexChanged += new System.EventHandler(this.listBoxSortNew_SelectedIndexChanged);
             // 
             // radioButtonTagSearchPagePart
             // 
             this.radioButtonTagSearchPagePart.AutoSize = true;
-            this.radioButtonTagSearchPagePart.Location = new System.Drawing.Point(163, 125);
+            this.radioButtonTagSearchPagePart.Location = new System.Drawing.Point(163, 183);
             this.radioButtonTagSearchPagePart.Name = "radioButtonTagSearchPagePart";
             this.radioButtonTagSearchPagePart.Size = new System.Drawing.Size(89, 16);
             this.radioButtonTagSearchPagePart.TabIndex = 6;
@@ -3569,7 +3650,7 @@
             // labelUsingSearchDetail1
             // 
             this.labelUsingSearchDetail1.AutoSize = true;
-            this.labelUsingSearchDetail1.Location = new System.Drawing.Point(10, 90);
+            this.labelUsingSearchDetail1.Location = new System.Drawing.Point(10, 129);
             this.labelUsingSearchDetail1.Name = "labelUsingSearchDetail1";
             this.labelUsingSearchDetail1.Size = new System.Drawing.Size(41, 12);
             this.labelUsingSearchDetail1.TabIndex = 50;
@@ -3579,7 +3660,7 @@
             // 
             this.dateTimePickerTagSearchTo.CustomFormat = "yyyy年MM月dd日 HH：mm：ss";
             this.dateTimePickerTagSearchTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerTagSearchTo.Location = new System.Drawing.Point(298, 166);
+            this.dateTimePickerTagSearchTo.Location = new System.Drawing.Point(298, 224);
             this.dateTimePickerTagSearchTo.Name = "dateTimePickerTagSearchTo";
             this.dateTimePickerTagSearchTo.ShowUpDown = true;
             this.dateTimePickerTagSearchTo.Size = new System.Drawing.Size(165, 19);
@@ -3587,7 +3668,7 @@
             // 
             // buttonTagSearchNew
             // 
-            this.buttonTagSearchNew.Location = new System.Drawing.Point(399, 190);
+            this.buttonTagSearchNew.Location = new System.Drawing.Point(399, 263);
             this.buttonTagSearchNew.Name = "buttonTagSearchNew";
             this.buttonTagSearchNew.Size = new System.Drawing.Size(90, 24);
             this.buttonTagSearchNew.TabIndex = 15;
@@ -3599,7 +3680,7 @@
             // 
             this.labelGettingDetail1.AutoSize = true;
             this.labelGettingDetail1.Enabled = false;
-            this.labelGettingDetail1.Location = new System.Drawing.Point(399, 43);
+            this.labelGettingDetail1.Location = new System.Drawing.Point(399, 101);
             this.labelGettingDetail1.Name = "labelGettingDetail1";
             this.labelGettingDetail1.Size = new System.Drawing.Size(59, 12);
             this.labelGettingDetail1.TabIndex = 41;
@@ -3608,7 +3689,7 @@
             // checkBoxIsGettingDetailNew
             // 
             this.checkBoxIsGettingDetailNew.AutoSize = true;
-            this.checkBoxIsGettingDetailNew.Location = new System.Drawing.Point(400, 22);
+            this.checkBoxIsGettingDetailNew.Location = new System.Drawing.Point(297, 101);
             this.checkBoxIsGettingDetailNew.Name = "checkBoxIsGettingDetailNew";
             this.checkBoxIsGettingDetailNew.Size = new System.Drawing.Size(96, 16);
             this.checkBoxIsGettingDetailNew.TabIndex = 2;
@@ -3619,42 +3700,11 @@
             // label87
             // 
             this.label87.AutoSize = true;
-            this.label87.Location = new System.Drawing.Point(10, 10);
+            this.label87.Location = new System.Drawing.Point(12, 53);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(57, 12);
             this.label87.TabIndex = 40;
             this.label87.Text = "検索ワード";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.radioButtonSearchKindKeyword);
-            this.panel1.Controls.Add(this.radioButtonSearchKindTag);
-            this.panel1.Location = new System.Drawing.Point(82, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(172, 26);
-            this.panel1.TabIndex = 1;
-            // 
-            // radioButtonSearchKindKeyword
-            // 
-            this.radioButtonSearchKindKeyword.AutoSize = true;
-            this.radioButtonSearchKindKeyword.Location = new System.Drawing.Point(73, 4);
-            this.radioButtonSearchKindKeyword.Name = "radioButtonSearchKindKeyword";
-            this.radioButtonSearchKindKeyword.Size = new System.Drawing.Size(95, 16);
-            this.radioButtonSearchKindKeyword.TabIndex = 1;
-            this.radioButtonSearchKindKeyword.Text = "キーワード検索";
-            this.radioButtonSearchKindKeyword.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonSearchKindTag
-            // 
-            this.radioButtonSearchKindTag.AutoSize = true;
-            this.radioButtonSearchKindTag.Checked = true;
-            this.radioButtonSearchKindTag.Location = new System.Drawing.Point(5, 4);
-            this.radioButtonSearchKindTag.Name = "radioButtonSearchKindTag";
-            this.radioButtonSearchKindTag.Size = new System.Drawing.Size(64, 16);
-            this.radioButtonSearchKindTag.TabIndex = 0;
-            this.radioButtonSearchKindTag.TabStop = true;
-            this.radioButtonSearchKindTag.Text = "タグ検索";
-            this.radioButtonSearchKindTag.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -3666,7 +3716,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(499, 224);
+            this.tabPage4.Size = new System.Drawing.Size(499, 296);
             this.tabPage4.TabIndex = 0;
             this.tabPage4.Text = "ランキング解析";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -3762,7 +3812,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(499, 224);
+            this.tabPage1.Size = new System.Drawing.Size(499, 296);
             this.tabPage1.TabIndex = 7;
             this.tabPage1.Text = "マイリスト・新着";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -3884,7 +3934,7 @@
             this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(499, 224);
+            this.tabPage16.Size = new System.Drawing.Size(499, 296);
             this.tabPage16.TabIndex = 5;
             this.tabPage16.Text = "ニコチャート";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -3972,7 +4022,7 @@
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(499, 224);
+            this.tabPage12.Size = new System.Drawing.Size(499, 296);
             this.tabPage12.TabIndex = 2;
             this.tabPage12.Text = "情報取得・更新";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -4079,7 +4129,7 @@
             this.tabPage15.Location = new System.Drawing.Point(4, 22);
             this.tabPage15.Name = "tabPage15";
             this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage15.Size = new System.Drawing.Size(499, 224);
+            this.tabPage15.Size = new System.Drawing.Size(499, 296);
             this.tabPage15.TabIndex = 4;
             this.tabPage15.Text = "差分作成";
             this.tabPage15.UseVisualStyleBackColor = true;
@@ -4392,7 +4442,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(499, 224);
+            this.tabPage6.Size = new System.Drawing.Size(499, 296);
             this.tabPage6.TabIndex = 8;
             this.tabPage6.Text = "ツール";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -4420,7 +4470,7 @@
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(508, 28);
+            this.label48.Location = new System.Drawing.Point(509, 28);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(17, 12);
             this.label48.TabIndex = 23;
@@ -4429,7 +4479,7 @@
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(458, 8);
+            this.label46.Location = new System.Drawing.Point(459, 8);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(71, 12);
             this.label46.TabIndex = 21;
@@ -4440,7 +4490,7 @@
             this.groupBox4.Controls.Add(this.radioButtonHoseiNothing);
             this.groupBox4.Controls.Add(this.radioButtonHoseiNicoran);
             this.groupBox4.Controls.Add(this.radioButtonHoseiVocaran);
-            this.groupBox4.Location = new System.Drawing.Point(22, 8);
+            this.groupBox4.Location = new System.Drawing.Point(23, 8);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(202, 39);
             this.groupBox4.TabIndex = 0;
@@ -4484,7 +4534,7 @@
             this.groupBox3.Controls.Add(this.radioButtonSortNon);
             this.groupBox3.Controls.Add(this.radioButtonSortPoint);
             this.groupBox3.Controls.Add(this.radioButtonSortMylist);
-            this.groupBox3.Location = new System.Drawing.Point(230, 8);
+            this.groupBox3.Location = new System.Drawing.Point(231, 8);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(222, 39);
             this.groupBox3.TabIndex = 1;
@@ -4531,7 +4581,7 @@
             this.tabPageFileDl.Location = new System.Drawing.Point(4, 40);
             this.tabPageFileDl.Name = "tabPageFileDl";
             this.tabPageFileDl.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFileDl.Size = new System.Drawing.Size(552, 336);
+            this.tabPageFileDl.Size = new System.Drawing.Size(552, 404);
             this.tabPageFileDl.TabIndex = 1;
             this.tabPageFileDl.Text = "ファイルDL";
             this.tabPageFileDl.UseVisualStyleBackColor = true;
@@ -4746,7 +4796,7 @@
             this.tabPageLogin.Location = new System.Drawing.Point(4, 40);
             this.tabPageLogin.Name = "tabPageLogin";
             this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogin.Size = new System.Drawing.Size(552, 336);
+            this.tabPageLogin.Size = new System.Drawing.Size(552, 404);
             this.tabPageLogin.TabIndex = 19;
             this.tabPageLogin.Text = "ログイン";
             this.tabPageLogin.UseVisualStyleBackColor = true;
@@ -5002,13 +5052,14 @@
             this.tabControl1.Controls.Add(this.tabPageTimer);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage10);
             this.tabControl1.Controls.Add(this.tabPageOther2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(560, 380);
+            this.tabControl1.Size = new System.Drawing.Size(560, 448);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageDlRank
@@ -5031,7 +5082,7 @@
             this.tabPageDlRank.Location = new System.Drawing.Point(4, 40);
             this.tabPageDlRank.Name = "tabPageDlRank";
             this.tabPageDlRank.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDlRank.Size = new System.Drawing.Size(552, 336);
+            this.tabPageDlRank.Size = new System.Drawing.Size(552, 404);
             this.tabPageDlRank.TabIndex = 21;
             this.tabPageDlRank.Text = "ランキングDL";
             this.tabPageDlRank.UseVisualStyleBackColor = true;
@@ -5359,7 +5410,7 @@
             this.tabPageTagComment.Controls.Add(this.groupBox16);
             this.tabPageTagComment.Location = new System.Drawing.Point(4, 40);
             this.tabPageTagComment.Name = "tabPageTagComment";
-            this.tabPageTagComment.Size = new System.Drawing.Size(552, 336);
+            this.tabPageTagComment.Size = new System.Drawing.Size(552, 404);
             this.tabPageTagComment.TabIndex = 22;
             this.tabPageTagComment.Text = "タグ・コメント";
             this.tabPageTagComment.UseVisualStyleBackColor = true;
@@ -5372,6 +5423,58 @@
             this.label29.Size = new System.Drawing.Size(224, 12);
             this.label29.TabIndex = 17;
             this.label29.Text = "このタブにあるボタンは各3回までしか押せません";
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Controls.Add(this.button1);
+            this.tabPage10.Controls.Add(this.textBoxFirefoxProfileDir);
+            this.tabPage10.Controls.Add(this.buttonSelectFirefoxProfileDir);
+            this.tabPage10.Controls.Add(this.label13);
+            this.tabPage10.Location = new System.Drawing.Point(4, 40);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(552, 404);
+            this.tabPage10.TabIndex = 24;
+            this.tabPage10.Text = "上級者向け2";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(17, 56);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBoxFirefoxProfileDir
+            // 
+            this.textBoxFirefoxProfileDir.AllowDrop = true;
+            this.textBoxFirefoxProfileDir.Location = new System.Drawing.Point(17, 31);
+            this.textBoxFirefoxProfileDir.Name = "textBoxFirefoxProfileDir";
+            this.textBoxFirefoxProfileDir.Size = new System.Drawing.Size(464, 19);
+            this.textBoxFirefoxProfileDir.TabIndex = 2;
+            // 
+            // buttonSelectFirefoxProfileDir
+            // 
+            this.buttonSelectFirefoxProfileDir.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.buttonSelectFirefoxProfileDir.Location = new System.Drawing.Point(487, 30);
+            this.buttonSelectFirefoxProfileDir.Name = "buttonSelectFirefoxProfileDir";
+            this.buttonSelectFirefoxProfileDir.Size = new System.Drawing.Size(21, 21);
+            this.buttonSelectFirefoxProfileDir.TabIndex = 3;
+            this.buttonSelectFirefoxProfileDir.Tag = "";
+            this.buttonSelectFirefoxProfileDir.Text = "...";
+            this.buttonSelectFirefoxProfileDir.UseVisualStyleBackColor = true;
+            this.buttonSelectFirefoxProfileDir.Click += new System.EventHandler(this.buttonFolderDialog_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(15, 14);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(434, 12);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "Firefoxからクッキー情報を読み込む際のプロファイルフォルダ（空欄のときはFirefoxデフォルト）";
             // 
             // tabPage3
             // 
@@ -5388,7 +5491,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 40);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(552, 336);
+            this.tabPage3.Size = new System.Drawing.Size(552, 404);
             this.tabPage3.TabIndex = 23;
             this.tabPage3.Text = "おまけ2";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -5499,7 +5602,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 646);
+            this.ClientSize = new System.Drawing.Size(584, 711);
             this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonClear);
@@ -5567,9 +5670,11 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
+            this.groupBox38.ResumeLayout(false);
+            this.groupBox38.PerformLayout();
+            this.groupBox37.ResumeLayout(false);
+            this.groupBox37.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownConditionMylistNew)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -5633,6 +5738,8 @@
             this.groupBox17.PerformLayout();
             this.tabPageTagComment.ResumeLayout(false);
             this.tabPageTagComment.PerformLayout();
+            this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMakeUserIdColumn)).EndInit();
@@ -5758,7 +5865,6 @@
         private System.Windows.Forms.Label labelGettingDetail1;
         private System.Windows.Forms.CheckBox checkBoxIsGettingDetailNew;
         private System.Windows.Forms.Label label87;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton radioButtonSearchKindKeyword;
         private System.Windows.Forms.RadioButton radioButtonSearchKindTag;
         private System.Windows.Forms.TabPage tabPage4;
@@ -6006,7 +6112,7 @@
         private System.Windows.Forms.Button buttonRestartSearch;
         private System.Windows.Forms.CheckBox checkBoxSaveSearch;
         private System.Windows.Forms.ComboBox comboBoxRedundantSearchMethod;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label labelRedundantSearch;
         private System.Windows.Forms.CheckBox checkBoxConfirmFilter;
         private System.Windows.Forms.CheckBox checkBoxConfirmOverWrite;
         private System.Windows.Forms.Button buttonCustomRankFileOutputDefault;
@@ -6094,6 +6200,15 @@
         private System.Windows.Forms.Button buttonUpdatePoint;
         private System.Windows.Forms.Label label53;
         private System.Windows.Forms.Button buttonAddingMultipleMylist;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.TextBox textBoxFirefoxProfileDir;
+        private System.Windows.Forms.Button buttonSelectFirefoxProfileDir;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox37;
+        private System.Windows.Forms.RadioButton radioButtonSearchGetKindHTML;
+        private System.Windows.Forms.RadioButton radioButtonSearchGetKindAPI;
+        private System.Windows.Forms.GroupBox groupBox38;
     }
 }
 

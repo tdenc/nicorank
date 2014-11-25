@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using IJLib;
 using System.Text;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace NicoTools
 {
@@ -102,30 +104,38 @@ namespace NicoTools
                 }
             }
 
-            msgout_.Write("タグ検索を開始します。\r\n");
+            msgout_.Write("タグ・キーワード検索を開始します。\r\n");
 
             // 冗長検索方法を判定
             MakeListBySearchDelegate search_method;
-            switch (option.redundant_seatching_method)
-            { 
-                case RedundantSearchingMethod.Once:
-                    search_method = MakeListBySearchOnce;
-                    break;
-                case RedundantSearchingMethod.TwiceTakeFirst:
-                    search_method = MakeListBySearchTwiceTakeFirst;
-                    break;
-                case RedundantSearchingMethod.TwiceTakeLast:
-                    search_method = MakeListBySearchTwiceTakeLast;
-                    break;
-                case RedundantSearchingMethod.TwiceMergeResult:
-                    search_method = MakeListBySearchTwiceMergeResult;
-                    break;
-                case RedundantSearchingMethod.AtMostThreeTimes:
-                    search_method = MakeListBySearchThreeTimes;
-                    break;
-                default:
-                    search_method = MakeListBySearchOnce;
-                    break;
+
+            if (option.is_searching_get_kind_api) // use API
+            {
+                search_method = MakeListBySearchAPI;
+            }
+            else // use HTML
+            {
+                switch (option.redundant_seatching_method)
+                {
+                    case RedundantSearchingMethod.Once:
+                        search_method = MakeListBySearchOnce;
+                        break;
+                    case RedundantSearchingMethod.TwiceTakeFirst:
+                        search_method = MakeListBySearchTwiceTakeFirst;
+                        break;
+                    case RedundantSearchingMethod.TwiceTakeLast:
+                        search_method = MakeListBySearchTwiceTakeLast;
+                        break;
+                    case RedundantSearchingMethod.TwiceMergeResult:
+                        search_method = MakeListBySearchTwiceMergeResult;
+                        break;
+                    case RedundantSearchingMethod.AtMostThreeTimes:
+                        search_method = MakeListBySearchThreeTimes;
+                        break;
+                    default:
+                        search_method = MakeListBySearchOnce;
+                        break;
+                }
             }
 
             List<Video> video_list = search_method(option, ref log_number);
@@ -216,11 +226,11 @@ namespace NicoTools
                     {
                         if (is_searching_kind_tag)
                         {
-                            str = network.GetSearchTag(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
+                            str = network.GetSearchTag(tag_word, page, option.GetSortMethod(), option.GetSearchOrder(), option.is_searching_get_kind_api);
                         }
                         else
                         {
-                            str = network.GetSearchKeyword(tag_word, page, option.GetSortMethod(), option.GetSearchOrder());
+                            str = network.GetSearchKeyword(tag_word, page, option.GetSortMethod(), option.GetSearchOrder(), option.is_searching_get_kind_api);
                         }
                         if (str.IndexOf("ここから先をご利用いただくにはログインしてください") >= 0)
                         {
@@ -280,7 +290,14 @@ namespace NicoTools
             }
             cancel_object_.CheckCancel();
             ++log_number;
-            return ParseSearch(str);
+            if (option.is_searching_get_kind_api)
+            {
+                return ParseSearchFromAPI(str);
+            }
+            else
+            {
+                return ParseSearch(str);
+            }
         }
 
         private void GetDetail(List<Video> video_list, int detail_info_lower, IFilterManager filter, string interval)
@@ -783,6 +800,11 @@ namespace NicoTools
             return ranking_dir;
         }
 
+        public void GetDataFromNicoApi()
+        {
+            msgout_.Write(niconico_network_.GetDataFromNicoApi());
+        }
+
         public static List<string> ParseTag(string html)
         {
             List<string> tag_list = new List<string>();
@@ -878,6 +900,73 @@ namespace NicoTools
                 }
             }
             return list;
+        }
+
+        public static List<Video> ParseSearchFromAPI(string json)
+        {
+            return ParseSearchFromAPI(json, -1);
+        }
+
+        // 前から start_num - 1 件は捨てる
+        // start_num が -1 なら全件登録
+        public static List<Video> ParseSearchFromAPI(string json, int start_num)
+        {
+            int index = -1;
+            List<Video> list = new List<Video>();
+            int count = 0;
+
+            string[] ar = json.Split(new char[]{'\n'}, StringSplitOptions.RemoveEmptyEntries);
+
+            for (int i = 0; i < ar.Length; ++i)
+            {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(NiconicoAPIResult));
+                using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(ar[i])))
+                {
+                    NiconicoAPIResult result = (NiconicoAPIResult)serializer.ReadObject(ms);
+                    if (result.values != null)
+                    {
+                        for (int j = 0; j < result.values.Count; ++j)
+                        {
+                            if (!string.IsNullOrEmpty(result.values[j].cmsid))
+                            {
+                                Video video = new Video();
+                                video.video_id = result.values[j].cmsid;
+                                video.point.view = int.Parse(result.values[j].view_counter);
+                                video.point.res = int.Parse(result.values[j].comment_counter);
+                                video.point.mylist = int.Parse(result.values[j].mylist_counter);
+                                video.title = result.values[j].title;
+                                video.submit_date = DateTime.ParseExact(result.values[j].start_time, "yyyy-MM-dd HH:mm:ss",
+                                    null, System.Globalization.DateTimeStyles.None);
+                                video.thumbnail_url = result.values[j].thumbnail_url;
+                                video.length = result.values[j].length_seconds;
+                                video.tag_set.ParseBlank(result.values[j].tags);
+                                ++count;
+                                if (count >= start_num)
+                                {
+                                    list.Add(video);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        // 冗長検索ロジック(1回(冗長検索無し))
+        private List<Video> MakeListBySearchAPI(SearchingTagOption option, ref int log_number)
+        {
+            List<Video> video_list = new List<Video>();
+            int redundant_search_count = 1;
+            bool wait_required = false;
+
+            for (int i = 0; i < option.searching_tag_list.Count; ++i)
+            {
+                video_list.AddRange(SearchTag(option.searching_tag_list[i], option, ref log_number, redundant_search_count, ref wait_required));
+            }
+
+            // 重複を排除
+            return VideoListUtil.Distinct(video_list);
         }
 
         // 冗長検索ロジック(1回(冗長検索無し))
@@ -1129,6 +1218,56 @@ namespace NicoTools
                     }
                 }
             }
+        }
+    }
+
+    [DataContract]
+    class NiconicoAPIResult
+    {
+        [DataMember]
+        public string dqnid;
+
+        [DataMember]
+        public string type;
+
+        [DataMember]
+        public List<ValueC> values;
+
+        [DataMember]
+        public string endofstream;
+
+        [DataContract]
+        public class ValueC
+        {
+            [DataMember]
+            public string _rowid;
+
+            [DataMember]
+            public string cmsid;
+
+            [DataMember]
+            public string comment_counter;
+
+            [DataMember]
+            public string length_seconds;
+
+            [DataMember]
+            public string mylist_counter;
+
+            [DataMember]
+            public string start_time;
+
+            [DataMember]
+            public string tags;
+
+            [DataMember]
+            public string thumbnail_url;
+
+            [DataMember]
+            public string title;
+
+            [DataMember]
+            public string view_counter;
         }
     }
 }

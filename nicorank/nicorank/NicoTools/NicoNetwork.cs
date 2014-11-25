@@ -1413,7 +1413,7 @@ namespace NicoTools
             }
             try
             {
-                string escapedWord = Uri.EscapeDataString(word).Replace("%20", "+");
+                //string escapedWord = Uri.EscapeDataString(word).Replace("%20", "+");
                 string json = "{\"query\":\"";
                 //json += escapedWord;
                 json += word;

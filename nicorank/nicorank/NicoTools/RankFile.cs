@@ -569,6 +569,8 @@ namespace NicoTools
     {
         public List<string> searching_tag_list;
 
+        public bool is_searching_get_kind_api;
+
         public bool is_searching_kind_tag;
 
         public bool is_detail_getting;

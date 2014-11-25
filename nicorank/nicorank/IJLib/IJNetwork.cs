@@ -53,6 +53,11 @@ namespace IJLib
             content_type_ = "application/x-www-form-urlencoded";
         }
 
+        public void SetContentTypeJSON()
+        {
+            content_type_ = "application/json";
+        }
+
         public void SetProxy(string proxy_url)
         {
             proxy_ = new WebProxy(proxy_url);
@@ -121,7 +126,7 @@ namespace IJLib
 
         public string PostAndReadFromWebUTF8(string uri, string post_data)
         {
-            byte[] post_data_byte = Encoding.ASCII.GetBytes(post_data);
+            byte[] post_data_byte = Encoding.UTF8.GetBytes(post_data);
             return PostAndReadFromWebUTF8(uri, post_data_byte);
         }
 
@@ -257,6 +262,10 @@ namespace IJLib
             }
 
             request.ContentType = content_type_;
+            if (content_type_ == "application/json")
+            {
+                request.Accept = "application/json";
+            }
             request.Timeout = 15 * 60 * 1000;
             request.CookieContainer = container_;
             if (user_agent_ != null)
