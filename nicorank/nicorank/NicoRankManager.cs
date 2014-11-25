@@ -175,31 +175,47 @@ namespace nicorank
 
         public void CheckLogin()
         {
-            if (niconico_network_.IsLoginNiconico())
+            msg_receiver_.Write("ログインチェック中です…\r\n");
+            try
             {
-                msg_receiver_.Write("ログインされています。\r\n");
+                if (niconico_network_.IsLoginNiconico())
+                {
+                    msg_receiver_.Write("ログインされています。\r\n");
+                }
+                else
+                {
+                    msg_receiver_.Write("ログインされていません。\r\n");
+                }
             }
-            else
+            catch (NiconicoFormatException)
             {
-                msg_receiver_.Write("ログインされていません。\r\n");
+                msg_receiver_.Write("ログインに成功したか確認できません。ニコニコ動画が仕様変更された可能性があります。\r\n");
             }
         }
 
         public void LoginNiconico()
         {
             msg_receiver_.Write("ログインしています…\r\n");
-            if (niconico_network_.LoginNiconico((string)param_[0], (string)param_[1]))
+            try
             {
-                msg_receiver_.Write("ログインに成功しました。\r\n");
+                if (niconico_network_.LoginNiconico((string)param_[0], (string)param_[1]))
+                {
+                    msg_receiver_.Write("ログインに成功しました。\r\n");
+                }
+                else
+                {
+                    msg_receiver_.Write("ログインに失敗しました。\r\n");
+                }
             }
-            else
+            catch (NiconicoFormatException)
             {
-                msg_receiver_.Write("ログインに失敗しました。\r\n");
+                msg_receiver_.Write("ログインに成功したか確認できません。ニコニコ動画が仕様変更された可能性があります。\r\n");
             }
         }
 
-        public void ReloadCookie(NicoNetwork.CookieKind cookie_kind)
+        public void ReloadCookie(NicoNetwork.CookieKind cookie_kind, string profile_dir)
         {
+            niconico_network_.ProfileDir = profile_dir;
             niconico_network_.ReloadCookie(cookie_kind);
         }
 
@@ -426,6 +442,11 @@ namespace nicorank
         public void FFmpegExec()
         {
             video_translater_.FFmpegExec((string)param_[0], path_mgr_.GetFFMpegPath());
+        }
+
+        public void GetDataFromNicoApi()
+        {
+            nico_download_.GetDataFromNicoApi();
         }
     }
 

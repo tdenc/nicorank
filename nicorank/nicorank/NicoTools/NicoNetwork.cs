@@ -40,6 +40,7 @@ namespace NicoTools
         private bool is_loaded_cookie_ = false; // 通信を一度でもしたことがあるなら true になる
         private int wait_millisecond_; // デフォルトのイベント関数で Sleep するときのミリ秒数を保存
         private bool is_no_cache_ = false; // HTTP通信でキャッシュをしないように HttpWebRequest に強制させるか
+        private string firefox_profile_dir_ = ""; // Firefox のプロファイルディレクトリ（空ならデフォルト値を採用）
 
         private const string nicovideo_uri_ = "http://www.nicovideo.jp"; // ニコニコ動画URL
         private const string nicovideo_ext_uri_ = "http://ext.nicovideo.jp";
@@ -49,12 +50,15 @@ namespace NicoTools
         // ユーザエージェント（ニコニコ動画ではデータ取得アプリのユーザエージェントに連絡先を含めることを推奨している）
         private const string nicovideo_user_agent_ = "Niconico_Ranking_Maker/%%version%% (by rankingloid at daily-vocaran.info)";
 
+        private string issuer_ = "Niconico_Ranking_Maker/%%version%%";
+
         public NicoNetwork()
         {
             network_ = new IJNetwork();
             string version = System.Windows.Forms.Application.ProductVersion;
             version = version.Remove(version.Length - 4, 4); // 後ろの ".0.0" を削る
             network_.UserAgent = nicovideo_user_agent_.Replace("%%version%%", version);
+            issuer_ = issuer_.Replace("%%version%%", version);
         }
 
         /// <summary>
@@ -64,6 +68,12 @@ namespace NicoTools
         {
             get { return is_no_cache_; }
             set { is_no_cache_ = value; }
+        }
+
+        public string ProfileDir
+        {
+            get { return firefox_profile_dir_; }
+            set { firefox_profile_dir_ = value; }
         }
 
         /// <summary>
@@ -83,7 +93,23 @@ namespace NicoTools
             string str = network_.PostAndReadFromWebUTF8("https://secure.nicovideo.jp/secure/login?site=niconico", post_data);
             is_loaded_cookie_ = true;
 
-            return str.IndexOf("ログイン情報が間違っています！") < 0;
+            if (str.IndexOf("入力したメールアドレスまたはパスワードが間違っています") >= 0) // login failed
+            { 
+                return false;
+            }
+            else
+            {
+                Match m = Regex.Match(str, "var User = \\{ id: [0-9]+");
+
+                if (m.Success) // login succeeded
+                {
+                    return true;
+                }
+                else // html parse error
+                {
+                    throw new NiconicoFormatException();
+                }
+            }
         }
         
         /// <summary>
@@ -119,9 +145,13 @@ namespace NicoTools
                 is_loaded_cookie_ = true;
                 return true;
             }
-            else
+            else if (str.IndexOf("User = { id: ") >= 0)
             {
                 return false;
+            }
+            else
+            {
+                throw new NiconicoLoginException();
             }
         }
 
@@ -461,9 +491,16 @@ namespace NicoTools
         /// <param name="sort_method">検索時の並べ方指定</param>
         /// <param name="order">昇順 or 降順</param>
         /// <returns>検索結果のHTML</returns>
-        public string GetSearchKeyword(string search_word, int page, SearchSortMethod sort_method, SearchOrder order)
+        public string GetSearchKeyword(string search_word, int page, SearchSortMethod sort_method, SearchOrder order, bool is_use_api)
         {
-            return GetSearchKeywordOrTag(search_word, page, sort_method, order, false);
+            if (is_use_api)
+            {
+                return GetSearchKeywordOrTagByAPI(search_word, page, sort_method, order, false);
+            }
+            else
+            {
+                return GetSearchKeywordOrTag(search_word, page, sort_method, order, false);
+            }
         }
 
         /// <summary>
@@ -474,9 +511,16 @@ namespace NicoTools
         /// <param name="sort_method">検索時の並べ方指定</param>
         /// <param name="order">昇順 or 降順</param>
         /// <returns>検索結果のHTML</returns>
-        public string GetSearchTag(string search_word, int page, SearchSortMethod sort_method, SearchOrder order)
+        public string GetSearchTag(string search_word, int page, SearchSortMethod sort_method, SearchOrder order, bool is_use_api)
         {
-            return GetSearchKeywordOrTag(search_word, page, sort_method, order, true);
+            if (is_use_api)
+            {
+                return GetSearchKeywordOrTagByAPI(search_word, page, sort_method, order, true);
+            }
+            else
+            {
+                return GetSearchKeywordOrTag(search_word, page, sort_method, order, true);
+            }
         }
 
         /// <summary>
@@ -1254,6 +1298,15 @@ namespace NicoTools
             }
         }
 
+
+        public string GetDataFromNicoApi() // 実験用メソッド
+        {
+            network_.SetContentTypeJSON();
+            string str = network_.PostAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/snapshot/", "{\"query\":\"初音ミク\",\"service\":[\"video\"],\"search\":[\"title\",\"description\",\"tags\"],\"join\":[\"cmsid\",\"title\",\"tags\",\"start_time\",\"thumbnail_url\",\"view_counter\",\"comment_counter\",\"mylist_counter\",\"length_seconds\"],\"filters\":[{\"type\":\"equal\",\"field\":\"music_download\",\"value\":true}],\"from\":0,\"size\":3,\"sort_by\":\"view_counter\",\"issuer\":\"your service/application name\"}");
+            network_.SetDefaultContentType();
+            return str;
+        }
+
         //-------------------------------------------- private method -----------------------------------------------
 
         private void LoadCookies()
@@ -1265,7 +1318,7 @@ namespace NicoTools
                     user_session = NicoUserSession.GetUserSessionFromIE(nicovideo_uri_);
                     break;
                 case CookieKind.Firefox3:
-                    user_session = NicoUserSession.GetUserSessionFromFilefox3();
+                    user_session = NicoUserSession.GetUserSessionFromFilefox3(firefox_profile_dir_);
                     break;
                 case CookieKind.Opera:
                     user_session = NicoUserSession.GetUserSessionFromOpera();
@@ -1342,6 +1395,77 @@ namespace NicoTools
                 string str = network_.GetAndReadFromWebUTF8(nicovideo_uri_ + "/" + (is_tag ? "tag" : "search") +
                     "/" + escapedWord + GetOption(page, sort_method, order, is_tag));
                 CheckDenied(str);
+                return str;
+            }
+            finally
+            {
+                network_.Reset();
+            }
+        }
+
+        private string GetSearchKeywordOrTagByAPI(string word, int page, SearchSortMethod sort_method, SearchOrder order, bool is_tag)
+        {
+            CheckCookie();
+
+            if (is_no_cache_)
+            {
+                network_.SetMaxAgeZero();
+            }
+            try
+            {
+                string escapedWord = Uri.EscapeDataString(word).Replace("%20", "+");
+                string json = "{\"query\":\"";
+                //json += escapedWord;
+                json += word;
+                json += "\",\"service\":[\"video\"],\"search\":";
+                if (is_tag) { // tag search
+                    json += "[\"tags_exact\"]";
+                } else { // keyword search
+                    json += "[\"title\",\"description\",\"tags\"]";
+                }
+                // description と last_res_body は取得しない
+                json += ",\"join\":[\"cmsid\",\"title\",\"tags\",\"start_time\",\"thumbnail_url\",\"view_counter\"," +
+                    "\"comment_counter\",\"mylist_counter\",\"length_seconds\"],";
+                //json += "\"filters\":[{\"type\":\"equal\",\"field\":\"music_download\",\"value\":true}],"
+
+                json += "\"sort_by\":\"";
+                switch (sort_method)
+                {
+                    case SearchSortMethod.ResNew:
+                        json += "last_comment_time";
+                        break;
+                    case SearchSortMethod.View:
+                        json += "view_counter";
+                        break;
+                    case SearchSortMethod.SubmitDate:
+                        json += "start_time";
+                        break;
+                    case SearchSortMethod.Mylist:
+                        json += "mylist_counter";
+                        break;
+                    case SearchSortMethod.Res:
+                        json += "comment_counter";
+                        break;
+                    case SearchSortMethod.Time:
+                        json += "length_seconds";
+                        break;
+                }
+                json += "\",";
+
+                if (order == SearchOrder.Asc)
+                {
+                    json += "\"order\":\"asc\",";
+                }
+                json += "\"from\":";
+                json += ((page - 1) * 100).ToString();
+                json += ",\"size\":100,";
+                json += "\"issuer\":\"" + issuer_ + "\"}";
+
+                network_.SetContentTypeJSON();
+                string str = network_.PostAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/snapshot/", json);
+                network_.SetDefaultContentType();
+
+                //CheckDenied(str);
                 return str;
             }
             finally
@@ -1806,22 +1930,28 @@ namespace NicoTools
         }
 
         /// <summary>
-        /// Firefox3 から user_session を取得。エラーが起こった場合、例外を投げずに空文字を返す
+        /// Firefox3 から user_session を取得。
+        /// Firefox のプロファイルディレクトリを firefox_profile_dir に指定する。
+        /// Firefox のプロファイルディレクトリからデータを読み込めなかったときは、FileNotFoundException を投げる。
+        /// それ以外のエラーが起こった場合、例外を投げずに空文字を返す。
         /// </summary>
         /// <returns>user_session</returns>
-        public static string GetUserSessionFromFilefox3()
+        public static string GetUserSessionFromFilefox3(string firefox_profile_dir)
         {
             string cand_user_session = "";
             int cand_expire_time = 0;
-            
+            bool is_firefox_profile_dir_empty = string.IsNullOrEmpty(firefox_profile_dir);
+
             try
             {
-                string app_dir = System.Environment.GetEnvironmentVariable("APPDATA") + "\\Mozilla\\Firefox\\Profiles\\";
-
-                string sqlist_filename = SearchFile("cookies.sqlite", app_dir);
+                if (string.IsNullOrEmpty(firefox_profile_dir))
+                {
+                    firefox_profile_dir = System.Environment.GetEnvironmentVariable("APPDATA") + "\\Mozilla\\Firefox\\Profiles\\";
+                }
+                string sqlist_filename = SearchFile("cookies.sqlite", firefox_profile_dir);
                 if (sqlist_filename == "" || !File.Exists(sqlist_filename))
                 {
-                    return "";
+                    throw new FileNotFoundException();
                 }
                 FileStream fs = new FileStream(sqlist_filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 byte[] data = new byte[fs.Length];
@@ -1873,6 +2003,13 @@ namespace NicoTools
                         cand_user_session = user_session;
                     }
                     i = pos - 1;
+                }
+            }
+            catch (FileNotFoundException exception)
+            {
+                if (!is_firefox_profile_dir_empty)
+                {
+                    throw exception;
                 }
             }
             catch (Exception) { }
@@ -2125,27 +2262,32 @@ namespace NicoTools
         // dir_name 内を再帰的に調べて filename を含む最初のファイル名を返す
         private static string SearchFile(string filename, string dir_name)
         {
-            if (!dir_name.EndsWith("\\"))
+            try
             {
-                dir_name += "\\";
-            }
-            string[] files = Directory.GetFiles(dir_name);
-            for (int i = 0; i < files.Length; ++i)
-            {
-                if (Path.GetFileName(files[i]).IndexOf(filename) >= 0)
+                if (!dir_name.EndsWith("\\"))
                 {
-                    return files[i];
+                    dir_name += "\\";
+                }
+                string[] files = Directory.GetFiles(dir_name);
+                for (int i = 0; i < files.Length; ++i)
+                {
+                    if (Path.GetFileName(files[i]).IndexOf(filename) >= 0)
+                    {
+                        return files[i];
+                    }
+                }
+                string[] dirs = Directory.GetDirectories(dir_name);
+                for (int i = 0; i < dirs.Length; ++i)
+                {
+                    string ret = SearchFile(filename, dirs[i]);
+                    if (ret != "")
+                    {
+                        return ret;
+                    }
                 }
             }
-            string[] dirs = Directory.GetDirectories(dir_name);
-            for (int i = 0; i < dirs.Length; ++i)
-            {
-                string ret = SearchFile(filename, dirs[i]);
-                if (ret != "")
-                {
-                    return ret;
-                }
-            }
+            catch (UnauthorizedAccessException) { } // 無視
+            catch (IOException) { } // 無視
             return "";
         }
     }
@@ -2196,6 +2338,15 @@ namespace NicoTools
 
         public NiconicoAddingMylistExistException(string message)
             : base(message)
+        {
+
+        }
+    }
+
+    public class NiconicoFormatException : Exception
+    {
+        public NiconicoFormatException()
+            : base("HTMLの解析に失敗しました。")
         {
 
         }

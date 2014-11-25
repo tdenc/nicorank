@@ -142,6 +142,7 @@ namespace nicorank
         {
             try
             {
+                string profile_dir = "";
                 NicoNetwork.CookieKind cookie_kind = NicoNetwork.CookieKind.None;
                 if (radioButtonBrowserIE.Checked)
                 {
@@ -150,6 +151,7 @@ namespace nicorank
                 else if (radioButtonBrowserFirefox3.Checked)
                 {
                     cookie_kind = NicoNetwork.CookieKind.Firefox3;
+                    profile_dir = textBoxFirefoxProfileDir.Text;
                 }
                 else if (radioButtonBrowserOpera.Checked)
                 {
@@ -163,7 +165,16 @@ namespace nicorank
                 {
                     return;
                 }
-                nicorank_mgr_.ReloadCookie(cookie_kind);
+                try
+                {
+                    nicorank_mgr_.ReloadCookie(cookie_kind, profile_dir);
+                }
+                catch (FileNotFoundException)
+                {
+                    textBoxInfo.AppendText("Firefox のプロファイルフォルダからデータを読み込めませんでした。" +
+                        "Firefox のプロファイルフォルダの指定を確認してください。\r\n");
+                    return;
+                }
                 if (nicorank_mgr_.GetUserSession() == "")
                 {
                     throw new Exception("失敗");
@@ -370,6 +381,7 @@ namespace nicorank
             }
 
             SearchingTagOption searching_tag_option = new SearchingTagOption();
+            searching_tag_option.is_searching_get_kind_api = radioButtonSearchGetKindAPI.Checked;
             searching_tag_option.SetTagList(textBoxTagNew.Text);
             searching_tag_option.is_searching_kind_tag = radioButtonSearchKindTag.Checked;
             searching_tag_option.is_detail_getting = checkBoxIsGettingDetailNew.Checked;
@@ -386,7 +398,14 @@ namespace nicorank
             searching_tag_option.searching_interval = textBoxTagSearchInterval.Text;
             searching_tag_option.getting_detail_interval = textBoxGettingDetailInterval.Text;
             searching_tag_option.is_create_ticket = checkBoxSaveSearch.Checked;
-            searching_tag_option.SetRedundantSearchMethod(comboBoxRedundantSearchMethod.SelectedIndex);
+            if (searching_tag_option.is_searching_get_kind_api) // API検索のときは複数回検索はしない
+            {
+                searching_tag_option.SetRedundantSearchMethod(0);
+            }
+            else
+            {
+                searching_tag_option.SetRedundantSearchMethod(comboBoxRedundantSearchMethod.SelectedIndex);
+            }
             searching_tag_option.is_sending_user_session = checkBoxIsSendingUserSession.Checked;
 
             // 処理の最初にボタンのテキストを「中止」にする
@@ -1476,6 +1495,22 @@ namespace nicorank
         {
             FormMultipleMylist form = new FormMultipleMylist(this);
             form.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            StartThread(nicorank_mgr_.GetDataFromNicoApi, null, false);
+        }
+
+        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void radioButtonSearchGetKind_CheckedChanged(object sender, EventArgs e)
+        {
+            labelRedundantSearch.Enabled = radioButtonSearchGetKindHTML.Checked;
+            comboBoxRedundantSearchMethod.Enabled = radioButtonSearchGetKindHTML.Checked;
         }
     }
 }

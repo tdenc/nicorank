@@ -150,6 +150,7 @@ namespace nicorank
             buttonSelectAviFromScriptPath.Tag = textBoxAviFromScriptPath;
             buttonSelectCutListPath.Tag = textBoxCutListPath;
             buttonSelectVideocutPath.Tag = textBoxVideocutPath;
+            buttonSelectFirefoxProfileDir.Tag = textBoxFirefoxProfileDir;
             // これらは SelectFileBox に置き換える必要がある
         }
 
