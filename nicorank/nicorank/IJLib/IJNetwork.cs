@@ -266,7 +266,7 @@ namespace IJLib
             {
                 request.Accept = "application/json";
             }
-            request.Timeout = 15 * 60 * 1000;
+            request.Timeout = 15 * 1000;
             request.CookieContainer = container_;
             if (user_agent_ != null)
             {

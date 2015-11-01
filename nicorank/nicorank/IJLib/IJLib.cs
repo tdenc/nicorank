@@ -1075,7 +1075,7 @@ namespace IJLib
             }
             else if (lower_millisec > upper_millisec)
             {
-                Wait(random_.Next(lower_millisec, upper_millisec));
+                Wait(random_.Next(upper_millisec, lower_millisec));
             }
             else
             {

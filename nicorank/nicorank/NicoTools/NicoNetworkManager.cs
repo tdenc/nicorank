@@ -855,6 +855,7 @@ namespace NicoTools
                 Video video = new Video();
 
                 //投稿日時
+                index = html.IndexOf("video_uploaded", index + 1); // この行は 2015/11/1 に挿入。Thanks to marky-san.
                 string dateStr = IJStringUtil.GetStringBetweenTag(ref index, "span", html).Trim();
                 if (!DateTime.TryParseExact(dateStr, "MM/dd HH:mm", null, System.Globalization.DateTimeStyles.None, out video.submit_date))
                 {
