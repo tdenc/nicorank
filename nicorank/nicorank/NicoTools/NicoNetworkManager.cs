@@ -144,6 +144,23 @@ namespace NicoTools
             {
                 GetDetail(video_list, option.detail_info_lower, filter, option.getting_detail_interval);
             }
+            if (option.is_searching_get_kind_api) // Title が "false" になることがある不具合の回避
+            {
+                // Title が "false" になっているものが1つでもあれば、GetDetailForFixingTitle を実行
+                bool is_need_fix = false;
+                for (int i = 0; i < video_list.Count; ++i)
+                {
+                    if (video_list[i].title == "false")
+                    {
+                        is_need_fix = true;
+                        break;
+                    }
+                }
+                if (is_need_fix)
+                {
+                    GetDetailForFixingTitle(video_list, option.getting_detail_interval);
+                }
+            }
             for (int i = 0; i < video_list.Count; ++i)
             {
                 rank_file.Add(video_list[i]);
@@ -326,6 +343,33 @@ namespace NicoTools
                 cancel_object_.CheckCancel();
             }
             msgout_.Write("詳細情報を取得しました。\r\n");
+        }
+
+        // API 検索時に Title の項目が "false" になっているものを補正
+        private void GetDetailForFixingTitle(List<Video> video_list, string interval)
+        {
+            msgout_.Write("タイトル補正のための詳細情報を取得中…\r\n");
+            double interval_lower = 0.3, interval_upper = 0.5;
+            IJStringUtil.ParseDlInterval(interval, ref interval_lower, ref interval_upper);
+
+            for (int i = 0; i < video_list.Count; ++i)
+            {
+                if (video_list[i].title == "false") // Title の項目が "false" になっているものは補正する
+                {
+                    Video video = NicoUtil.GetVideo(niconico_network_, video_list[i].video_id, cancel_object_, msgout_);
+                    if (video.IsStatusOK())
+                    {
+                        video_list[i].title = video.title;
+                    }
+                    else
+                    {
+                        msgout_.Write(video.GetErrorMessage(video_list[i].video_id) + "\r\n");
+                    }
+                    cancel_object_.Wait((int)(interval_lower * 1000), (int)(interval_upper * 1000));
+                }
+                cancel_object_.CheckCancel();
+            }
+            msgout_.Write("タイトル補正のための詳細情報を取得しました。\r\n");
         }
 
         public void MylistSearch(string mylist_str, InputOutputOption iooption, RankingMethod ranking_method)
