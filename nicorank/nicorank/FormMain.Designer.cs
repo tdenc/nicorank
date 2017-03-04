@@ -3448,7 +3448,7 @@
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(244, 12);
             this.label14.TabIndex = 70;
-            this.label14.Text = "↓複数のワードを検索する場合は or で区切ります\r\n";
+            this.label14.Text = "↓HTML：or区切りで複数ワード指定可能、API：AND/OR/NOT/フレーズ検索可能\r\n";
             // 
             // textBoxTagSearchPageEnd
             // 
