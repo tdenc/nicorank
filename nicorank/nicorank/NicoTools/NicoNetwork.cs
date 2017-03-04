@@ -1413,7 +1413,7 @@ namespace NicoTools
             {
                 string query = "q=" + Uri.EscapeDataString(word);
                 if (is_tag) { // tag search
-                    query += "&targets=tags";
+                    query += "&targets=tagsExact";
                 } else { // keyword search
                     query += "&targets=title,description,tags";
                 }
