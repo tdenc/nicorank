@@ -1301,9 +1301,7 @@ namespace NicoTools
 
         public string GetDataFromNicoApi() // 実験用メソッド
         {
-            network_.SetContentTypeJSON();
-            string str = network_.PostAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/snapshot/", "{\"query\":\"初音ミク\",\"service\":[\"video\"],\"search\":[\"title\",\"description\",\"tags\"],\"join\":[\"cmsid\",\"title\",\"tags\",\"start_time\",\"thumbnail_url\",\"view_counter\",\"comment_counter\",\"mylist_counter\",\"length_seconds\"],\"filters\":[{\"type\":\"equal\",\"field\":\"music_download\",\"value\":true}],\"from\":0,\"size\":3,\"sort_by\":\"view_counter\",\"issuer\":\"your service/application name\"}");
-            network_.SetDefaultContentType();
+            string str = network_.GetAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/v2/snapshot/video/contents/search?" + "q=%8F%89%89%B9%83~%83N&targets=title,description,tags&fields=contentId,title,tags,viewCounter,mylistCounter,commentCounter,startTime,lastCommentTime,lengthSeconds&_offset=0&_limit=3&_sort=-viewCounter&_context=\"your service/application name\"");
             return str;
         }
 
@@ -1413,57 +1411,50 @@ namespace NicoTools
             }
             try
             {
-                //string escapedWord = Uri.EscapeDataString(word).Replace("%20", "+");
-                string json = "{\"query\":\"";
-                //json += escapedWord;
-                json += word;
-                json += "\",\"service\":[\"video\"],\"search\":";
+                string query = "q=" + Uri.EscapeDataString(word);
                 if (is_tag) { // tag search
-                    json += "[\"tags_exact\"]";
+                    query += "&targets=tags";
                 } else { // keyword search
-                    json += "[\"title\",\"description\",\"tags\"]";
+                    query += "&targets=title,description,tags";
                 }
                 // description と last_res_body は取得しない
-                json += ",\"join\":[\"cmsid\",\"title\",\"tags\",\"start_time\",\"thumbnail_url\",\"view_counter\"," +
-                    "\"comment_counter\",\"mylist_counter\",\"length_seconds\"],";
-                //json += "\"filters\":[{\"type\":\"equal\",\"field\":\"music_download\",\"value\":true}],"
+                query += "&fields=contentId,title,tags,viewCounter,mylistCounter,commentCounter,startTime,lastCommentTime,lengthSeconds";
 
-                json += "\"sort_by\":\"";
+                query += "&_sort=";
+                if (order == SearchOrder.Asc)
+                {
+                    query += "%2B";
+                }
+                else
+                {
+                    query += "-";
+                }
                 switch (sort_method)
                 {
                     case SearchSortMethod.ResNew:
-                        json += "last_comment_time";
+                        query += "lastCommentTime";
                         break;
                     case SearchSortMethod.View:
-                        json += "view_counter";
+                        query += "viewCounter";
                         break;
                     case SearchSortMethod.SubmitDate:
-                        json += "start_time";
+                        query += "startTime";
                         break;
                     case SearchSortMethod.Mylist:
-                        json += "mylist_counter";
+                        query += "mylistCounter";
                         break;
                     case SearchSortMethod.Res:
-                        json += "comment_counter";
+                        query += "commentCounter";
                         break;
                     case SearchSortMethod.Time:
-                        json += "length_seconds";
+                        query += "lengthSeconds";
                         break;
                 }
-                json += "\",";
+                query += "&_offset" + ((page - 1) * 100).ToString();
+                query += "&_limit=100";
+                query += "&_context=" + Uri.EscapeDataString(issuer_);
 
-                if (order == SearchOrder.Asc)
-                {
-                    json += "\"order\":\"asc\",";
-                }
-                json += "\"from\":";
-                json += ((page - 1) * 100).ToString();
-                json += ",\"size\":100,";
-                json += "\"issuer\":\"" + issuer_ + "\"}";
-
-                network_.SetContentTypeJSON();
-                string str = network_.PostAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/snapshot/", json);
-                network_.SetDefaultContentType();
+                string str = network_.GetAndReadFromWebUTF8("http://api.search.nicovideo.jp/api/v2/snapshot/video/contents/search?" + query);
 
                 //CheckDenied(str);
                 return str;

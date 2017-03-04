@@ -23,7 +23,7 @@ namespace NicoTools
         /// </summary>
         public static DateTime StringToDate(string date_str)
         {
-            string[] format = { "yyyy年MM月dd日 HH：mm：ss", "yyyy/MM/dd HH:mm:ss", "yy/MM/dd HH:mm", "yyyy年MM月dd日 HH:mm" };
+            string[] format = { "yyyy年MM月dd日 HH：mm：ss", "yyyy/MM/dd HH:mm:ss", "yy/MM/dd HH:mm", "yyyy年MM月dd日 HH:mm", "yyyy-MM-ddTHH:mm:ssZ" };
             return DateTime.ParseExact(date_str, format, null, System.Globalization.DateTimeStyles.None);
         }
 

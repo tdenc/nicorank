@@ -959,37 +959,27 @@ namespace NicoTools
             List<Video> list = new List<Video>();
             int count = 0;
 
-            string[] ar = json.Split(new char[]{'\n'}, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < ar.Length; ++i)
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(NiconicoAPIResult));
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(NiconicoAPIResult));
-                using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(ar[i])))
+                NiconicoAPIResult result = (NiconicoAPIResult)serializer.ReadObject(ms);
+                if (result.meta.status == 200)
                 {
-                    NiconicoAPIResult result = (NiconicoAPIResult)serializer.ReadObject(ms);
-                    if (result.values != null)
+                    for (int j = 0; j < result.data.Count; ++j)
                     {
-                        for (int j = 0; j < result.values.Count; ++j)
+                        Video video = new Video();
+                        video.video_id = result.data[j].contentId;
+                        video.point.view = result.data[j].viewCounter;
+                        video.point.res = result.data[j].commentCounter;
+                        video.point.mylist = result.data[j].mylistCounter;
+                        video.title = result.data[j].title;
+                        video.submit_date = DateTime.Parse(result.data[j].startTime);
+                        video.length = result.data[j].lengthSeconds;
+                        video.tag_set.ParseBlank(result.data[j].tags);
+                        ++count;
+                        if (count >= start_num)
                         {
-                            if (!string.IsNullOrEmpty(result.values[j].cmsid))
-                            {
-                                Video video = new Video();
-                                video.video_id = result.values[j].cmsid;
-                                video.point.view = int.Parse(result.values[j].view_counter);
-                                video.point.res = int.Parse(result.values[j].comment_counter);
-                                video.point.mylist = int.Parse(result.values[j].mylist_counter);
-                                video.title = result.values[j].title;
-                                video.submit_date = DateTime.ParseExact(result.values[j].start_time, "yyyy-MM-dd HH:mm:ss",
-                                    null, System.Globalization.DateTimeStyles.None);
-                                video.thumbnail_url = result.values[j].thumbnail_url;
-                                video.length = result.values[j].length_seconds;
-                                video.tag_set.ParseBlank(result.values[j].tags);
-                                ++count;
-                                if (count >= start_num)
-                                {
-                                    list.Add(video);
-                                }
-                            }
+                            list.Add(video);
                         }
                     }
                 }
@@ -1269,49 +1259,56 @@ namespace NicoTools
     class NiconicoAPIResult
     {
         [DataMember]
-        public string dqnid = "";
+        public ResponseMeta meta = null;
 
         [DataMember]
-        public string type = "";
-
-        [DataMember]
-        public List<ValueC> values = null;
-
-        [DataMember]
-        public string endofstream = "";
+        public List<ResponseData> data = null;
 
         [DataContract]
-        public class ValueC
+        public class ResponseMeta
         {
             [DataMember]
-            public string _rowid = "";
+            public int status = 0;
 
             [DataMember]
-            public string cmsid = "";
+            public string id = "";
 
             [DataMember]
-            public string comment_counter = "";
+            public int totalCount = 0;
+        }
 
+        [DataContract]
+        public class ResponseData
+        {
             [DataMember]
-            public string length_seconds = "";
-
-            [DataMember]
-            public string mylist_counter = "";
-
-            [DataMember]
-            public string start_time = "";
-
-            [DataMember]
-            public string tags = "";
-
-            [DataMember]
-            public string thumbnail_url = "";
+            public string contentId = "";
 
             [DataMember]
             public string title = "";
 
             [DataMember]
-            public string view_counter = "";
+            public string description = "";
+
+            [DataMember]
+            public string tags = "";
+
+            [DataMember]
+            public int viewCounter = 0;
+
+            [DataMember]
+            public int mylistCounter = 0;
+
+            [DataMember]
+            public int commentCounter = 0;
+
+            [DataMember]
+            public string startTime = "";
+
+            [DataMember]
+            public string lastCommentTime = "";
+
+            [DataMember]
+            public string lengthSeconds = "";
         }
     }
 }
