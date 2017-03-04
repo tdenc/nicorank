@@ -1450,7 +1450,7 @@ namespace NicoTools
                         query += "lengthSeconds";
                         break;
                 }
-                query += "&_offset" + ((page - 1) * 100).ToString();
+                query += "&_offset=" + ((page - 1) * 100).ToString();
                 query += "&_limit=100";
                 query += "&_context=" + Uri.EscapeDataString(issuer_);
 
